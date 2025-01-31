@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import store from '../store' 
+import store from '../store'
 
 // Importing components (pages)
 import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard/Dashboard.vue'
 import ManageGrantees from '../views/Manage/ManageGrantees.vue'
+import ManageBilling from '../views/Billings/Billing.vue'
 
 // Create the router instance
 const router = createRouter({
@@ -25,7 +26,14 @@ const router = createRouter({
       children: [
         {
           path: 'manage_grantees',
+          name: 'ManageGrantees',
           component: ManageGrantees,
+        },
+
+        {
+          path: 'manage_billings',
+          name: 'ManageBillings',
+          component: ManageBilling,
         },
 
       ],

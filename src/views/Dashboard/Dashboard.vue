@@ -6,7 +6,7 @@
       <div class="flex items-center justify-start rtl:justify-end">
         <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
             <span class="sr-only">Open sidebar</span>
-            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
             </svg>
          </button>
@@ -53,7 +53,7 @@
       <ul class="space-y-2 font-medium">
          <li>
             <router-link to="/home" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+               <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                   <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
                   <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
                </svg>
@@ -71,13 +71,13 @@
          </li>
 
          <li>
-            <router-link to="/home/manage_grantees" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <button @click="handleSemSY" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.345a4.76 4.76 0 0 0 2.558 1.618c2.274.589 4.512-.446 4.999-2.31.487-1.866-1.273-3.9-3.546-4.49-2.273-.59-4.034-2.623-3.547-4.488.486-1.865 2.724-2.899 4.998-2.31.982.236 1.87.793 2.538 1.592m-3.879 12.171V21m0-18v2.2"/>
             </svg>
 
                <span class="flex-1 ms-3 whitespace-nowrap">Manage Billings</span>
-              </router-link>
+              </button>
          </li>
 
       </ul>
@@ -88,6 +88,31 @@
     <router-view></router-view>
 </div>
 
+<Modal
+      :isVisible="showModal"
+      @update:isVisible="showModal = $event"
+      title="Select SY and Semester"
+      :isSubmit="true"
+      buttonText="Proceed"
+       @submit="handleSubmit"
+    >
+
+  <form>
+  <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">School Year</label>
+  <select v-model="selectedsy" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+    <option value="">Select School Year</option>
+    <option v-for="schoolyear in schoolyears" :key="schoolyear.id" :value="schoolyear.id">{{ schoolyear.school_year }}</option>
+  </select>
+
+  <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Semester</label>
+  <select v-model="selectedsem" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+    <option value="">Select School Year</option>
+    <option v-for="semester in semesters" :key="semester.id" :value="semester.id">{{ semester.semester }}</option>
+
+  </select>
+</form>
+
+</Modal>
 </template>
 
 
@@ -100,10 +125,15 @@ export default {
 
   data() {
     return {
+      showModal: false, 
       email: '',
       password: '',
       message: '',
       loading: false,
+      semesters: [],
+      schoolyears: [],
+      selectedsy: '',
+      selectedsem: '',
     };
   },
 
@@ -115,7 +145,9 @@ export default {
     ...mapActions('auth', ['login']),
 
 
-
+    handleSemSY(){
+      this.showModal = true;
+    },
 
 
     async handleLogout() {
@@ -144,6 +176,35 @@ export default {
             console.error(error);
         }
         },
+
+    async sysem(){
+        try {
+            const res = await this.$api.get(`/sy-sem`, {
+                    headers: {
+                    Authorization: `Bearer ${this.accessToken}`,
+                    }
+                });
+            this.semesters = res.data.semesters;
+            this.schoolyears = res.data.school_years;
+    
+        } catch (error) {
+            console.error(error);
+        }
+    },
+
+    handleSubmit(){
+
+      localStorage.setItem('sem', this.selectedsem);
+      localStorage.setItem('sy', this.selectedsy);
+      this.$router.replace({ name: 'ManageBillings'});
+
+
+
+    }
+  },
+
+  mounted(){
+    this.sysem();
   },
 };
 </script>
