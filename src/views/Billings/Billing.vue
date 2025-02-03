@@ -22,6 +22,15 @@
         <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Manage Billings</span>
     </div>
     </li>
+
+    <li aria-current="page">
+    <div class="flex items-center">
+        <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+        </svg>
+        <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">{{ currentTab }}</span>
+    </div>
+    </li>
 </ol>
 </nav>
 
@@ -31,7 +40,7 @@
 <ul class="mt-4 flex flex-wrap text-sm font-medium text-center text-gray-500 dark:text-gray-400" 
     data-tabs-toggle="#tabContent" 
     role="tablist">
-    
+
     <li class="me-2">
         <button id="billing-tab" 
                 data-tabs-target="#billing-documents" 
@@ -39,7 +48,12 @@
                 role="tab" 
                 aria-controls="billing-documents" 
                 aria-selected="true"
-                class="inline-block px-4 py-3 text-white bg-blue-600 rounded-lg active">
+                :class="{
+                'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg': currentTab === 'Billing Documents',
+                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'generate-billing-documents'
+                }"
+                @click="switchToBillingDocuments"
+                >
             Billing Documents
         </button>
     </li>
@@ -51,7 +65,12 @@
                 role="tab" 
                 aria-controls="generate-billing-documents" 
                 aria-selected="false"
-                class="inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white">
+                :class="{
+                'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg hover:text-blue-900': currentTab === 'Generate Billing Documents',
+                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'Generate Billing Documents'
+                }"
+                @click="switchToGenerateVoucher"
+                >
             Generate Billing Documents
         </button>
     </li>
@@ -60,15 +79,15 @@
 
 <div id="tabContent">
     <div id="billing-documents" role="tabpanel" class="p-4 bg-white rounded-lg dark:bg-gray-800">
-        <BillingDocuments />
+        <BillingDocuments :schoolYearId="schoolYearId" :semesterId="semesterId"/>
     </div>
 
     <div id="generate-billing-documents" role="tabpanel" class="hidden p-4 bg-white rounded-lg dark:bg-gray-800">
-        <GenerateBilling />
+        <GenerateBilling :schoolYearId="schoolYearId" :semesterId="semesterId"/>
     </div>
 </div>
 <!-- Ends Here -->
-
+ 
 
 </div>  
 </template>
@@ -87,13 +106,42 @@ export default {
 
   data() {
     return {
+        semesterId: '',
+        schoolYearId: '',
+        currentTab: 'Billing Documents'
     };
   },
 
-  methods: {
-    ...mapActions('auth', ['login']),
-
+  watch: {
+    '$route.query': {
+      handler(newQuery) {
+        this.updateQueryParams();
+      },
+      deep: true,
+      immediate: true
+    }
   },
+
+  methods: {
+    updateQueryParams() {
+      this.schoolYearId = this.$route.query.schoolYearId || '';
+      this.semesterId = this.$route.query.semesterId || '';
+    },
+
+    switchToBillingDocuments(){
+      this.currentTab = 'Billing Documents'
+    },
+
+    switchToGenerateVoucher(){
+      this.currentTab = 'Generate Billing Documents'
+    }
+  },
+
+  mounted(){
+    this.updateQueryParams();
+  }
+
+  
 };
 </script>
 

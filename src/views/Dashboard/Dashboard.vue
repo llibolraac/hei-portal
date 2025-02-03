@@ -94,7 +94,7 @@
       title="Select SY and Semester"
       :isSubmit="true"
       buttonText="Proceed"
-       @submit="handleSubmit"
+       @submit="handleSubmit()"
     >
 
   <form>
@@ -193,10 +193,14 @@ export default {
     },
 
     handleSubmit(){
-
-      localStorage.setItem('sem', this.selectedsem);
-      localStorage.setItem('sy', this.selectedsy);
-      this.$router.replace({ name: 'ManageBillings'});
+      console.log('it works')
+      this.$router.push({
+        name: 'ManageBillings',
+        query: {
+          schoolYearId: this.selectedsy,
+          semesterId: this.selectedsem,
+        }
+      })
 
 
 
