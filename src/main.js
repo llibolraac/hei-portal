@@ -4,6 +4,7 @@ import router from './router'
 import store from './store';
 import axios from 'axios';
 import 'flowbite';
+import 'flowbite/dist/flowbite.js';
 import 'axios'
 import ToastPlugin from './plugins/toast'
 import './index.css' // Import Tailwind CSS

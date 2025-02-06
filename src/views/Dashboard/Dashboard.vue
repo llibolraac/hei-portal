@@ -193,7 +193,6 @@ export default {
     },
 
     handleSubmit(){
-      console.log('it works')
       this.$router.push({
         name: 'ManageBillings',
         query: {

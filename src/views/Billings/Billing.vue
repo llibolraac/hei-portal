@@ -50,7 +50,7 @@
                 aria-selected="true"
                 :class="{
                 'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg': currentTab === 'Billing Documents',
-                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'generate-billing-documents'
+                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'beta'
                 }"
                 @click="switchToBillingDocuments"
                 >
@@ -67,7 +67,7 @@
                 aria-selected="false"
                 :class="{
                 'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg hover:text-blue-900': currentTab === 'Generate Billing Documents',
-                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'Generate Billing Documents'
+                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'beta'
                 }"
                 @click="switchToGenerateVoucher"
                 >

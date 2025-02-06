@@ -192,6 +192,7 @@ export default {
         )
         .then(res => {
             console.log(res);
+            window.location.reload();
         })
         .catch(error => {
             console.error("Error in billing request:", error);
@@ -229,6 +230,7 @@ export default {
 
             .then(res => {
                 this.programs = res.data.programs;
+                console.log(res);
             })
 
     },
