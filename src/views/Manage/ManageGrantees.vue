@@ -52,7 +52,7 @@
             <div>
                 <select id="schoolyear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>Program</option>
-                <option v-for="program in programs" :key="program.id"></option>
+                <option v-for="program in programs" :key="program.id" :value="program.id">{{ program.batch_name }} || {{ program.batch_no }}</option>
             </select>
             </div>
 
@@ -317,7 +317,7 @@ export default {
 
         async sysem(page = 1){
             try {
-                const res = await this.$api.get(`/sy-sem`, {
+                const res = await this.$api.get(`/sy-sem?page=${page}`, {
                         headers: {
                         Authorization: `Bearer ${this.accessToken}`,
                         }

@@ -7,6 +7,7 @@ import Dashboard from '../views/Dashboard/Dashboard.vue'
 import ManageGrantees from '../views/Manage/ManageGrantees.vue'
 import ManageBilling from '../views/Billings/Billing.vue'
 import Form1 from '../views/Templates/Form1.vue'
+import Form2 from '../views/Templates/Form2.vue'
 
 // Create the router instance
 const router = createRouter({
@@ -27,6 +28,16 @@ const router = createRouter({
       path: '/print_form_1',
       name: 'PrintForm1',
       component: Form1,
+      meta: {
+        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
+      }
+    },
+
+
+    {
+      path: '/print_form_2',
+      name: 'PrintForm2',
+      component: Form2,
       meta: {
         requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
       }
