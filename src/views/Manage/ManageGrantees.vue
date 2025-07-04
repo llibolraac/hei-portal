@@ -33,7 +33,7 @@
 
             <div>
                 <div class="max-w-sm mx-auto">
-            <select v-model="searchForm.school_year_id" id="schoolyear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <select @change="fetchPrograms" v-model="searchForm.school_year_id" id="schoolyear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="">Select School Year</option>
                 <option v-for="schoolyear in schoolyears" :key="schoolyear.id" :value="schoolyear.id">{{ schoolyear.school_year }}</option>
             </select>
@@ -44,13 +44,13 @@
 
 
             <div>
-                <select v-model="searchForm.semester_id" id="schoolyear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select @change="fetchPrograms" v-model="searchForm.semester_id" id="schoolyear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="">Semester</option>
                 <option v-for="semester in semesters" :key="semester.id" :value="semester.id">{{ semester.semester }}</option>
             </select>
             </div>
             <div>
-                <select id="schoolyear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select v-model="searchForm.program_id" id="schoolyear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>Program</option>
                 <option v-for="program in programs" :key="program.id" :value="program.id">{{ program.batch_name }} || {{ program.batch_no }}</option>
             </select>
@@ -90,6 +90,14 @@
                     Middle Name
                 </th>
 
+                 <th scope="col" class="px-6 py-3">
+                    Grant
+                </th>
+
+                <th scope="col" class="px-6 py-3">
+                    Batch
+                </th>
+
                 <th scope="col" class="px-6 py-3">
                     Course
                 </th>
@@ -123,13 +131,20 @@
                 </th>
 
                 <td class="px-6 py-4">
-                    {{ grantee.lastname}}
+                     <p style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ grantee.lastname}}</p>
                 </td>
                 <td class="px-6 py-4">
-                    {{ grantee.firstname}}
+                     <p style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ grantee.firstname}}</p>
                 </td>
                 <td class="px-6 py-4">
-                    {{ grantee.middlename }}
+                     <p style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ grantee.middlename }}</p>
+                </td>
+                <td class="px-6 py-4">
+                    {{ grantee.grant }}
+                </td>
+
+                <td class="px-6 py-4">
+                    {{ grantee.batch_no }}
                 </td>
                 <td class="px-6 py-4">
                     {{ grantee.course_program }}
@@ -266,17 +281,20 @@ export default {
     methods: {
 
         async fetchPrograms(){
-        try {
-            const res = await this.$api.get(`/program`, {
-                    headers: {
-                    Authorization: `Bearer ${this.accessToken}`,
-                    }
-                });
-            this.programs = res.data.programs;
-            console.log(this.programs);
-        } catch (error) {
-            
-        }
+            this.$api.get(`/get-programs/${this.heiId}`, {
+              params: {
+                sy: this.searchForm.school_year_id,
+                sem: this.searchForm.semester_id,
+              },
+                headers: {
+            Authorization: `Bearer ${this.accessToken}`,
+          },
+            })
+
+            .then(res => {
+                this.programs = res.data.programs;
+                console.log(res);
+            })
         },
         
         handleViewProfile(granteeId) {
@@ -330,6 +348,8 @@ export default {
                 console.error(error);
             }
         },
+
+        
     },
 
     mounted() {

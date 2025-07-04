@@ -6,8 +6,13 @@ import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard/Dashboard.vue'
 import ManageGrantees from '../views/Manage/ManageGrantees.vue'
 import ManageBilling from '../views/Billings/Billing.vue'
+import BatchUpdate from '../views/BatchUpdate/BatchUpdate.vue'
 import Form1 from '../views/Templates/Form1.vue'
 import Form2 from '../views/Templates/Form2.vue'
+import Form3 from '../views/Templates/Form3.vue'
+import Form4 from '../views/Templates/Form4.vue'
+import TravelAuthority from '../views/Templates/TravelAuthority.vue'
+import Home from '../views/Home/Home.vue'
 
 // Create the router instance
 const router = createRouter({
@@ -43,6 +48,31 @@ const router = createRouter({
       }
     },
 
+    {
+      path: '/print_form_3',
+      name: 'PrintForm3',
+      component: Form3,
+      meta: {
+        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
+      }
+    },
+
+    {
+      path: '/print_form_4',
+      name: 'PrintForm4',
+      component: Form4,
+      meta: {
+        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
+      }
+    },
+
+    {
+      path: '/travel_authority',
+      name: 'TravelAuthority',
+      component: TravelAuthority,
+
+    },
+
 
     {
       path: '/home', // Home route
@@ -56,9 +86,22 @@ const router = createRouter({
         },
 
         {
+          path: 'dashboard',
+          name: 'Home',
+          component: Home,
+        },
+
+        {
           path: 'manage_billings',
           name: 'ManageBillings',
           component: ManageBilling,
+        },
+
+
+        {
+          path: 'batch_update',
+          name: 'BatchUpdate',
+          component: BatchUpdate,
         },
 
       ],

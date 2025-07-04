@@ -82,28 +82,56 @@
                 </td>
                 
                 <td class="px-6 py-4">
-                    {{ billing.amount }}
+                    {{ formatDecimalValue(billing.amount) }}
                 </td>
 
                 <td class="px-6 py-4">
-                    {{ billing.program_oc }}
+                    {{ formatDecimalValue(billing.program_oc) }}
                 </td>
 
                 <td class="px-6 py-4">
-                    {{ billing.total_amount }}
+                    {{ formatDecimalValue(billing.total_amount) }}
                 </td>
 
                 <td class="px-6 py-4">
-                    {{ billing.total_amount }}
+                    {{ formatDecimalValue(billing.total_amount) }}
                 </td>
 
                 <td class="px-6 py-4">
-                    <span v-if="billing.billing_status.id === 1" class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">{{ billing.billing_status.status_name }}</span>
+                <span
+                    :class="getStatusClass(billing.billing_status.id)"
+                    class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm"
+                >
+                    {{ billing.billing_status.status_name }}
+                </span>
                 </td>
 
+
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline" @click="handleViewBilling(billing.id)">View</a>
-                    </td>
+                    <div class="flex space-x-4">
+                    <button
+                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        @click="handleViewBilling(billing.id)"
+                    >
+                        View
+                    </button>
+
+                    <button
+                        @click.prevent="handleBillingDelete(billing.id)"
+                        :disabled="billing.billing_status.id !== 1"
+                        :class="[
+                        'font-medium hover:underline',
+                        billing.billing_status.id === 1 
+                            ? 'text-red-600 dark:text-red-600' 
+                            : 'text-gray-400 dark:text-gray-500 cursor-not-allowed'
+                        ]"
+                    >
+                        Delete
+                    </button>
+                    </div>
+
+                </td>
+
 
 
             </tr>
@@ -300,6 +328,26 @@ export default {
     },
 
     methods: {
+
+        formatDecimalValue(decimalValue) {
+            return Number(decimalValue).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            });
+            },
+
+        getStatusClass(id) {
+            const classes = {
+            1: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
+            2: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+            3: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
+            // Add more status IDs as needed
+            };
+
+            return classes[id] || 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'; // default
+        },
+
+
         handleBillingDetails() {
             this.currentTab = 'billing_details'; // Switch to billing details tab
         },
@@ -307,6 +355,30 @@ export default {
         handleGranteeDetails() {
             this.currentTab = 'grantee_details'; // Switch to grantee details tab
         },
+
+        handleBillingDelete(id) {
+            if (window.confirm('Are you sure you want to delete this billing document?')) {
+                this.$api.delete(`/delete-billing-hei/${id}`, {
+                    data: {
+                        school_year_id: this.schoolYearId,
+                        semester_id: this.semesterId,
+                        billing_id: id,
+                    },
+                    headers: {
+                        Authorization: `Bearer ${this.accessToken}`,
+                    },
+                })
+                .then(res => {
+                    alert(res.data.message);
+                    this.billings.data = this.billings.data.filter(billing => billing.id !== id);
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Failed to delete billing. Please try again.');
+                });
+            }
+        },
+
 
         handleViewBilling(billingId) {
             this.showModal = true;

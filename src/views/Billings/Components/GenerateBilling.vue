@@ -1,12 +1,23 @@
 <template>
+
+
+
+<div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+  <span class="font-medium">Instructions:</span> Please ensure that the grantee's profile — including Student Number, Contact Number, Zip Code, and Email Address — is updated before generating a billing document to facilitate a smooth process.
+</div>
+
+<div class="mt-3">
+
+<label for="small-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program:</label>
 <select v-model="programId" id="schoolyear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" @change="fetchGrantees">
-                <option selected>Select a Program</option>
+                <option value="">Select a Program</option>
                 <option v-for="program in programs" :key="program.id" :value="program.id" >Program: {{ program.grant }} || Batch No: {{ program.batch_no }} || Batch type: {{ program.batch_type }}</option>
             </select>
 
 <p class="text-gray-900 text-right font-bold text-sm mt-3">No. of Grantees: {{ formatDecimalValue(selectedGrantees.length) }}</p>
+</div>
 
-<table  class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mt-6">
+<table v-if="grantees && grantees.data && grantees.data.length > 0" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mt-6">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
 
@@ -58,13 +69,13 @@
                 </th>
 
                 <td class="px-6 py-4">
-                    {{ grantee.lastname}}
+                  <p style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ grantee.lastname}}</p> 
                 </td>
                 <td class="px-6 py-4">
-                    {{ grantee.firstname}}
+                    <p style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ grantee.firstname}}</p>
                 </td>
                 <td style="overflow: hidden;" class="px-6 py-4">
-                    {{ grantee.middlename }}
+                                        <p style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ grantee.middlename }}</p>
                 </td>
                 <td class="px-6 py-4">
                     {{ grantee.course_program }}
@@ -117,7 +128,11 @@
                 <!-- <button @click="selectAllGrantees" class="bg-green-600 hover:bg-green-700 text-white text-sm py-2 px-4 m-1 rounded-lg">
                     Select All
                 </button> -->
-                <button @click="fwdBilling" class="bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded-lg">
+
+                <button v-if="grantees && grantees.data && grantees.data.length > 0"  @click="exportGrantees" class="bg-orange-600 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded-lg">
+                    Export Grantees
+                </button>
+                <button v-if="grantees && grantees.data && grantees.data.length > 0"  @click="fwdBilling" class="bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded-lg">
                     Generate Billing
                 </button>
             </div>
@@ -154,7 +169,7 @@ export default {
         granteeIds: [],
         selectedGrantees: [],
         programs: [],
-        programId: null,
+        programId: "",
         billingForm:{
             hei_id: null,
             semester_id: null,
@@ -266,13 +281,48 @@ export default {
             .then(res => {
                 this.grantees = res.data.grantees;
                 this.granteeIds = res.data.granteeIds;
+                this.selectedGrantees = this.granteeIds;
 
                 this.updateBillingForm();
-
-
             })
 
     },
+
+exportGrantees() {
+
+
+if(window.confirm('Are you Sure you want to export grantees?')){
+  this.$api.post('/tes-grantees-export', {
+    sy: this.schoolYearId,
+    sem: this.semesterId,
+    hei_id: this.heiId,
+    programId: this.programId,
+  }, {
+    headers: {
+      Authorization: `Bearer ${this.accessToken}`,
+    },
+    responseType: 'blob', // Important for downloading files
+  })
+  .then((response) => {
+    // Create a blob from the response
+    const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+    // Create a download link
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'tes-grantees-export.xlsx';
+    link.click();
+    URL.revokeObjectURL(link.href);
+  })
+  .catch((error) => {
+    console.error('Export failed:', error);
+  });
+}
+}
+
+
+
+
   },
 
   watch: {

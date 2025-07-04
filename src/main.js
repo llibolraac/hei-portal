@@ -29,6 +29,8 @@ const api = axios.create({
 //   }
 // );
 
+
+
 const app = createApp(App)
 app.use(ToastPlugin) // Register the toast plugin
 app.config.globalProperties.$api = api;

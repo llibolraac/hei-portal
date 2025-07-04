@@ -300,7 +300,7 @@
       @page {
         size: A4 portrait;
         margin: 15px;
-        /* Ensure no margin is added when printing */
+
       }
 
     

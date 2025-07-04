@@ -35,8 +35,6 @@
 </nav>
 
 <!-- Starts Here -->
-
-
 <ul class="mt-4 flex flex-wrap text-sm font-medium text-center text-gray-500 dark:text-gray-400" 
     data-tabs-toggle="#tabContent" 
     role="tablist">
@@ -49,12 +47,12 @@
                 aria-controls="billing-documents" 
                 aria-selected="true"
                 :class="{
-                'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg': currentTab === 'Billing Documents',
+                'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg': currentTab === 'Generate Template',
                 'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'beta'
                 }"
-                @click="switchToBillingDocuments"
+                @click="switchToGenerateTemplate"
                 >
-            Billing Documents
+            Generate Template
         </button>
     </li>
     
@@ -66,12 +64,12 @@
                 aria-controls="generate-billing-documents" 
                 aria-selected="false"
                 :class="{
-                'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg hover:text-blue-900': currentTab === 'Generate Billing Documents',
+                'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg hover:text-blue-900': currentTab === 'Update Grantees',
                 'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'beta'
                 }"
-                @click="switchToGenerateVoucher"
+                @click="switchToUpdateGrantees"
                 >
-            Generate Billing Documents
+            Update Grantees
         </button>
     </li>
 
@@ -79,11 +77,12 @@
 
 <div id="tabContent">
     <div id="billing-documents" role="tabpanel" class="p-4 bg-white rounded-lg dark:bg-gray-800">
-        <BillingDocuments v-if="currentTab === 'Billing Documents'" :schoolYearId="schoolYearId" :semesterId="semesterId"/>
+        
+      <GenerateTemplate v-if="currentTab === 'Generate Template'"/>
     </div>
 
     <div id="generate-billing-documents" role="tabpanel" class="hidden p-4 bg-white rounded-lg dark:bg-gray-800">
-        <GenerateBilling v-if="currentTab === 'Generate Billing Documents'" :schoolYearId="schoolYearId" :semesterId="semesterId"/>
+      <UpdateGrantees v-if="currentTab === 'Update Grantees'"/>
     </div>
 </div>
 <!-- Ends Here -->
@@ -93,14 +92,15 @@
 </template>
 <script>
 import { mapActions } from 'vuex';
-import BillingDocuments from './Components/BillingDocuments.vue';
-import GenerateBilling from './Components/GenerateBilling.vue'
+import GenerateTemplate from './Components/GenerateTemplate.vue';
+import UpdateGrantees from './Components/UpdateGrantees.vue';
   
 export default {
 
   components: {
-    BillingDocuments,
-    GenerateBilling
+    GenerateTemplate,
+    UpdateGrantees,
+
   },
 
 
@@ -108,38 +108,22 @@ export default {
     return {
         semesterId: '',
         schoolYearId: '',
-        currentTab: 'Billing Documents'
+        currentTab: 'Generate Template'
     };
   },
 
-  watch: {
-    '$route.query': {
-      handler(newQuery) {
-        this.updateQueryParams();
-      },
-      deep: true,
-      immediate: true
-    }
-  },
-
   methods: {
-    updateQueryParams() {
-      this.schoolYearId = this.$route.query.schoolYearId || '';
-      this.semesterId = this.$route.query.semesterId || '';
+
+
+    switchToGenerateTemplate(){
+      this.currentTab = 'Generate Template'
     },
 
-    switchToBillingDocuments(){
-      this.currentTab = 'Billing Documents'
-    },
-
-    switchToGenerateVoucher(){
-      this.currentTab = 'Generate Billing Documents'
+    switchToUpdateGrantees(){
+      this.currentTab = 'Update Grantees'
     }
   },
 
-  mounted(){
-    this.updateQueryParams();
-  }
 
   
 };

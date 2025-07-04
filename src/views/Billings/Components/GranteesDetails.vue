@@ -20,15 +20,16 @@
             <tr v-for="(grantee, i) in grantees.data" :key="grantee.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
 
                 <td class="px-6 py-4">
-                    {{ grantee.grantees.lastname}}
+
+                     <p style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ grantee.grantees.lastname}}</p>
                 </td>   
 
                 <td class="px-6 py-4">
-                    {{ grantee.grantees.firstname}}
+                    <p style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ grantee.grantees.firstname}}</p>
                 </td>
 
                 <td class="px-6 py-4">
-                    {{ grantee.grantees.middlename}}
+                    <p style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ grantee.grantees.middlename}}</p>
                 </td>
 
             </tr>
