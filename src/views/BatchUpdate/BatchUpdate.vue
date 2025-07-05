@@ -8,7 +8,7 @@
 <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
     <li class="inline-flex items-center">
     <a href="#" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
-        <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+        <svg class="w-3 h-3 me-2.5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
         <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
         </svg>
         Home
@@ -16,7 +16,7 @@
     </li>
     <li aria-current="page">
     <div class="flex items-center">
-        <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+        <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
         </svg>
         <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Manage Billings</span>
@@ -25,7 +25,7 @@
 
     <li aria-current="page">
     <div class="flex items-center">
-        <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+        <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
         </svg>
         <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">{{ currentTab }}</span>
@@ -40,6 +40,22 @@
     role="tablist">
 
     <li class="me-2">
+        <button id="update-tab" 
+                data-tabs-target="#update-status" 
+                type="button" 
+                role="tab" 
+                :class="{
+                'inline-block px-4 py-3 text-white hover:text-white dark:hover:text-white bg-blue-600 rounded-lg': currentTab === 'Update Status',
+                'inline-block px-4 py-3 rounded-lg hover:text-white-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'Update Status'
+              }"
+
+                @click="switchToUpdateStatus "
+                >
+            Status
+        </button>
+    </li>
+
+    <li class="me-2">
         <button id="billing-tab" 
                 data-tabs-target="#billing-documents" 
                 type="button" 
@@ -48,7 +64,7 @@
                 aria-selected="true"
                 :class="{
                 'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg': currentTab === 'Generate Template',
-                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'beta'
+                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'Generate Template'
                 }"
                 @click="switchToGenerateTemplate"
                 >
@@ -65,7 +81,7 @@
                 aria-selected="false"
                 :class="{
                 'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg hover:text-blue-900': currentTab === 'Update Grantees',
-                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'beta'
+                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'Update Grantees'
                 }"
                 @click="switchToUpdateGrantees"
                 >
@@ -76,12 +92,18 @@
 </ul>
 
 <div id="tabContent">
-    <div id="billing-documents" role="tabpanel" class="p-4 bg-white rounded-lg dark:bg-gray-800">
+
+  <div id="update-status" role="tabpanel" class="p-2 bg-white rounded-lg dark:bg-gray-800">
+        
+        <UpdateStatus v-if="currentTab === 'Update Status'"/>
+      </div>
+      
+    <div id="billing-documents" role="tabpanel" class="p-3 bg-white rounded-lg dark:bg-gray-800">
         
       <GenerateTemplate v-if="currentTab === 'Generate Template'"/>
     </div>
 
-    <div id="generate-billing-documents" role="tabpanel" class="hidden p-4 bg-white rounded-lg dark:bg-gray-800">
+    <div id="generate-billing-documents" role="tabpanel" class="p-2 bg-white rounded-lg dark:bg-gray-800">
       <UpdateGrantees v-if="currentTab === 'Update Grantees'"/>
     </div>
 </div>
@@ -94,10 +116,12 @@
 import { mapActions } from 'vuex';
 import GenerateTemplate from './Components/GenerateTemplate.vue';
 import UpdateGrantees from './Components/UpdateGrantees.vue';
+import UpdateStatus from './Components/UpdateStatus.vue';
   
 export default {
 
   components: {
+    UpdateStatus,
     GenerateTemplate,
     UpdateGrantees,
 
@@ -108,7 +132,7 @@ export default {
     return {
         semesterId: '',
         schoolYearId: '',
-        currentTab: 'Generate Template'
+        currentTab: 'Update Status'
     };
   },
 
@@ -117,10 +141,17 @@ export default {
 
     switchToGenerateTemplate(){
       this.currentTab = 'Generate Template'
+      console.log(this.currentTab)
     },
 
     switchToUpdateGrantees(){
       this.currentTab = 'Update Grantees'
+      console.log(this.currentTab)
+    },
+
+    switchToUpdateStatus(){
+      this.currentTab = 'Update Status'
+      console.log(this.currentTab)
     }
   },
 

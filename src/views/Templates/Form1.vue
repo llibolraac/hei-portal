@@ -32,7 +32,7 @@
       </tr>
       <tr>
         <td colspan="5" style="text-align: right;" class="border-right"><p>TES Billing Statement Reference No.:</p></td>
-        <td style="text-align: left" class="border-bottom"><p>CARAGA-BGFC-2024-1-1</p></td> <br/>
+        <td style="text-align: left" class="border-bottom"><p>CARAGA-BGFC-2024-1-1</p></td>
         
       </tr>
       <tr>

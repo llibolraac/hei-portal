@@ -4,7 +4,7 @@
     Loading ...
 </div>
 
-<div v-else>
+<div v-else class="p-3">
     <form @submit.prevent="downloadTemplate">
 
     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">School Year</label>
@@ -66,12 +66,11 @@ export default {
 
     downloadTemplate() {
     const filters = {
-        selectedsy: this.selectedsy,
-        selectedsem: this.selectedsem,
-        batch_no: this.selected_program['batch_no'],// ensure this is not null/undefined
+        sy: this.selectedsy,
+        sem: this.selectedsem,
+        program_id: this.selected_program['id'],// ensure this is not null/undefined
         hei_id: this.heiId,
-        batch_type: this.selected_program['batch_type'],// ensure this is not null/undefined
-        grant: this.selected_program['grant'],// ensure this is not null/undefined
+
 
     };
 
@@ -87,7 +86,7 @@ export default {
         });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'grantee_update_template.xlsx';
+        link.download = 'grantee_update_template.csv';
         link.click();
     })
     .catch(error => {

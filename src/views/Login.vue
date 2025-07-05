@@ -58,10 +58,11 @@ export default {
         const res = await this.login({ email: this.email, password: this.password });
         if (res.success) {
           console.log('Login successful:', res.message);
+          this.$toast.success(res.message.data.message);
           this.$router.push({ name: 'Dashboard' });
         } else {
-          this.message = res.message;
-          console.error('Login failed:', res.message);
+          // Can accept an Object of options
+          this.$toast.error(res.message);
         }
       } catch (error) {
         this.message = 'Login failed. Please try again.';
