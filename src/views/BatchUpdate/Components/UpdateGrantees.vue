@@ -221,7 +221,7 @@ async uploadTemplate() {
   }
 
   if (!this.selectedFile) {
-    alert("No file selected.");
+    this.$toast.error('No file selected for upload.');
     return;
   }
 
@@ -239,8 +239,7 @@ async uploadTemplate() {
           Authorization: `Bearer ${this.accessToken}`,
         },
       });
-
-      alert('Batch update successful!');
+      this.$toast.success('Batch update Successful!');
     } catch (e) {
       if (e.response?.data?.errors) {
         console.error('Validation errors:', e.response.data.errors);

@@ -19,7 +19,7 @@
         <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
         </svg>
-        <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Manage Billings</span>
+        <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Batch Update</span>
     </div>
     </li>
 
@@ -44,6 +44,8 @@
                 data-tabs-target="#update-status" 
                 type="button" 
                 role="tab" 
+                aria-controls="billing-documents" 
+                aria-selected="true"
                 :class="{
                 'inline-block px-4 py-3 text-white hover:text-white dark:hover:text-white bg-blue-600 rounded-lg': currentTab === 'Update Status',
                 'inline-block px-4 py-3 rounded-lg hover:text-white-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'Update Status'
@@ -61,7 +63,7 @@
                 type="button" 
                 role="tab" 
                 aria-controls="billing-documents" 
-                aria-selected="true"
+                aria-selected="false"
                 :class="{
                 'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg': currentTab === 'Generate Template',
                 'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'Generate Template'
@@ -93,7 +95,7 @@
 
 <div id="tabContent">
 
-  <div id="update-status" role="tabpanel" class="p-2 bg-white rounded-lg dark:bg-gray-800">
+  <div id="update-status" role="tabpanel" class="p-3 bg-white rounded-lg dark:bg-gray-800">
         
         <UpdateStatus v-if="currentTab === 'Update Status'"/>
       </div>

@@ -5,6 +5,12 @@
 </div>
 
 <div v-else class="p-3">
+
+    <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+  <span class="font-medium">Instructions:</span> Please ensure that the grantee's profile — including Student Number, Contact Number, Zip Code, and Email Address — is updated before generating a billing document to facilitate a smooth process.
+</div>
+
+
     <form @submit.prevent="downloadTemplate">
 
     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">School Year</label>
