@@ -4,7 +4,12 @@
     Loading...
   </div>
 
-  <table v-else width="80%">
+  <div v-else>
+    <div style="text-align: right;">
+ <span style="text-align: right; font-size: 12px; font-style: italic;;">System Generated Billing Document</span>
+    </div>
+   
+  <table  width="80%">
     <tbody>
       <tr >
         <td height="3" colspan="6" style="text-align: right; border-bottom: hidden;"><h3>ANNEX 2 - TES Form 1</h3></td>
@@ -193,6 +198,8 @@
       </tr>
     </tbody>
   </table>
+  </div>
+
 
   </template>
           
@@ -296,15 +303,12 @@
   </script>
 
   <style scoped>
-  @media print {
-      @page {
-        size: A4 portrait;
-        margin: 15px;
-
-      }
-
-    
-    }
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 15mm;
+  }
+}
 
       body {
         font-family: Arial, sans-serif;

@@ -1,4 +1,13 @@
 <template>
+
+<div v-if="loading">
+  Loading...
+</div>
+
+<div id ="form2-wrapper" v-else>
+      <div style="text-align: right;">
+ <span style="text-align: right; font-size: 12px; font-style: italic;;">System Generated Billing Document</span>
+    </div>
 <table width="200">
   <tbody>
     <tr>
@@ -12,8 +21,8 @@
           </div>
           <div class="flex-item" style="text-align: center;">
             <p >Republic of the Philippines</p>
-            <p><strong>Name of Higher Education Institution</strong></p>
-            <p>Address of Higher Education Institution</p>
+            <p><strong>{{ this.billing_data.hei.hei_name }}</strong></p>
+            <p>{{ this.billing_data.hei.municipality }}, {{ this.billing_data.hei.province }}</p>
             <p style="font-size: 17px; font-weight: bold;">CONSOLIDATED TES BILLING STATEMENT</p>
           </div>
 
@@ -27,11 +36,11 @@
     </tr>
     <tr>
       <td colspan="15" class="border-top border-right" style="text-align: right;"><p>TES Billing Details Reference Number:</p></td>
-      <td colspan="2" class="border-top">&nbsp;</td>
+      <td colspan="2" class="border-top"><p>{{ this.billing_data.tes_ref_no }}</p></td>
     </tr>
     <tr>
       <td colspan="15" class="border-top border-right" style="text-align:  right;"><p>Date:</p></td>
-      <td colspan="2" class="border-top">&nbsp;</td>
+      <td colspan="2" class="border-top"><p>{{ formattedDate }}</p></td>
     </tr>
     <tr>
       <td colspan="5"><p><strong>INSTRUCTIONS</strong></p>
@@ -44,7 +53,7 @@
         <p>&nbsp;</p>
         <p>4. Assign a 5-digit Control Number for each enrolled student. The control number should be assigned in chronological order to the students listed according to the instruction no. 2.</p>
         <p>&nbsp;</p>
-      <p>5.Submit pdf files of the Certificate of Registration (COR) of Official Enrollment in the 1st and / or 2nd Semester of Academic Year _____ in the order as it appears in the TES Continuing Form 2.</p></td>
+      <p>5.Submit pdf files of the Certificate of Registration (COR) of Official Enrollment in the {{ this.billing_data.semester.semester }} of Academic Year {{this.billing_data.schoolyear.school_year}} in the order as it appears in the TES Continuing Form 2.</p></td>
       <td colspan="10" style="vertical-align: top;" class="border-right"><p>6. Submit the Notarized Registrar's Certification of TES Grantees, as an endorsement document, for all the PDF files of the CORs submitted.</p>
         <p>7. Submit electronic and hard copies of the following forms to CHEDRO as supporting documents:      </p>
       <ul>
@@ -65,7 +74,7 @@
       <td colspan="2"><p>&nbsp;</p></td>
     </tr>
     <tr>
-      <td colspan="17"><p>TO: <strong>CHED - Regional Office ___________</strong></p></td>
+      <td colspan="17"><p>TO: <strong>CHED - Regional Office CARAGA</strong></p></td>
     </tr>
     <tr>
       <td colspan="17"><p>Address: <strong>Address of CHED Regional Office</strong></p></td>
@@ -113,7 +122,7 @@
       <td><p><strong>TOTAL AMOUNT</strong></p></td>
     </tr>
     <tr v-for="(grantee,i) in grantees" :key="grantee.id"> 
-      <td><p>{{ i+1 }}</p></td>
+      <td><p>{{ String(i + 1).padStart(5, '0') }}</p></td>
       <td><p>{{ grantee.grantees.student_number }}</p></td>
       <td><p>{{ grantee.grantees.award_no }}</p></td>
       <td><p style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ grantee.grantees.lastname }}</p></td>
@@ -142,11 +151,11 @@
     </tr>
     <tr>
       <td colspan="16"><p><strong>TOTAL TERTIARY EDUCATION SUBSIDY</strong></p></td>
-      <td><p>&nbsp;</p></td>
+      <td><p>{{ formatDecimalValue(billing_data.amount) }}</p></td>
     </tr>
     <tr>
       <td colspan="16"><p>Add 1 percent (1%) Administrative Support for Partner Instsitutions</p></td>
-      <td><p>&nbsp;</p></td>
+      <td><p>{{ formatDecimalValue(billing_data.program_oc) }}</p></td>
     </tr>
     <tr>
       <td colspan="16"><p><strong>TOTAL TES BILLING PER CAMPUS</strong></p></td>
@@ -154,7 +163,7 @@
     </tr>
     <tr>
       <td colspan="16"><p><strong>TOTAL TES BILLING ALL CAMPUSES</strong></p></td>
-      <td><p>&nbsp;</p></td>
+      <td><p>{{ formatDecimalValue(billing_data.total_amount) }}</p></td>
     </tr>
     <tr style="margin-top: 15px;">
       <td class="border-left border-bottom" colspan="3"><p>Prepared By:</p>
@@ -203,6 +212,9 @@
     </tr>
   </tbody>
 </table>
+</div>
+
+
 </template>
 
 <script>
@@ -307,24 +319,13 @@ export default {
 </script>
 
 <style scoped>
-/* Optional: Landscape override example */
+
 @media print {
-@page {
-  size: A4 landscape;
+  @page {
+    size: A4 landscape;
+    margin: 15mm;
+  }
 }
-
-/* Size in mm */    
-@page {
-  size: 100mm 200mm landscape;
-}
-
-/* Size in inches */    
-@page {
-  size: 4in 6in landscape;
-}
-  
-}
-
 
 
     body {

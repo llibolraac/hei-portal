@@ -4,8 +4,18 @@
     Loading...
   </div>    
 <div v-else style="padding: 50px;">
-  <h2 style="margin-bottom: 60px;">Annex 2 - TES Continuing Form</h2>
-  <img src="/src/assets/unifast.png" alt="logo" style="width: 70px; height: 70px; position: absolute; left: 20%; top: 9%;">
+
+
+
+<div style="display: flex; justify-content: space-between;">
+<h2 style="margin-bottom: 60px;">
+  Annex 2 - {{ billing_Data.program.batch_name.slice(-3) }} Continuing Form
+</h2> 
+  <span style="font-size: 12px; font-style: italic;">System Generated Billing Document</span>
+</div>
+
+
+  <img src="/src/assets/unifast.png" alt="logo" style="width: 70px; height: 70px; position: absolute; left: 20%; top: 11.5%;">
 <div style="display: flex; align-items: center; justify-content: center; margin-top: 30px;">
 
   <div style="text-align: left;">
@@ -16,7 +26,7 @@
 </div>
 
 
-  <p style="text-align: right;">Date: June 16, 2025</p>
+  <p style="text-align: right;">Date: {{ formattedDate }}</p>
 
   <h2 style="text-align: center; font-weight: bold; font-size: 20px; margin-top: 20px;">CERTIFICATION OF ENROLLED GRANTEES</h2>
 

@@ -1,5 +1,16 @@
 <template>
+  
+  <div v-if="loading">
+    Loading...
+  </div>
+
+<div v-else>
+  <div style="text-align: right;">
+ <span style="text-align: right; font-size: 12px; font-style: italic;;">System Generated Billing Document</span>
+    </div>
+
 <table width="200">
+  
   <tbody>
     <tr>
       <td class="border-bottom" colspan="13"><h2 style="text-align: right; font-size: 10px;">Annex 2 - TES Continuing Form 3</h2></td>
@@ -27,7 +38,7 @@
     </tr>
     <tr>
       <td colspan="11" class="border-top border-right" style="text-align:  right;"><p>Date:</p></td>
-      <td colspan="2" class="border-top">&nbsp;</td>
+      <td colspan="2" class="border-top">{{ formattedDate }}</td>
     </tr>
     <tr>
       <td colspan="5"><p><strong>INSTRUCTIONS</strong></p>
@@ -147,6 +158,9 @@
     </tr>
   </tbody>
 </table>
+</div>
+
+    
 </template>
 
 <script>
