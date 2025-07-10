@@ -207,7 +207,7 @@ export default {
       selectedsy: '',
       selectedsem: '',
       notifications: [],
-      isDisabled: true,
+      isDisabled: false,
     };
   },
 

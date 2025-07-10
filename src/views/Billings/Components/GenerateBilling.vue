@@ -193,27 +193,32 @@ export default {
 
 
     fwdBilling() {
-    if (window.confirm('Do you want to proceed?')) {
-        this.$api.post('/gen-billing', 
-            {   // ✅ Send data directly in the body
-                granteeIds: this.granteeIds,
-                billingForm: this.billingForm
-            }, 
-            {   // ✅ Headers should be in a separate object
-                headers: {
-                    Authorization: `Bearer ${this.accessToken}`
-                }
-            }
-        )
-        .then(res => {
-            console.log(res);
-            window.location.reload();
-        })
-        .catch(error => {
-            console.error("Error in billing request:", error);
-        });
-    }
+  if (window.confirm('Do you want to proceed?')) {
+    this.$api.post('/gen-billing',
+      {
+        granteeIds: this.granteeIds,
+        billingForm: this.billingForm
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`
+        }
+      }
+    )
+    .then(res => {
+      if (res.data.success) {
+        window.location.reload();
+      } else {
+        this.$toast.error(res.data.message || 'Failed to generate billing.');
+      }
+    })
+    .catch(error => {
+      console.error("Billing error:", error);
+      this.$toast.error('An unexpected error occurred.');
+    });
+  }
 },
+
 
     selectAllGrantees() {
         if(this.selectedGrantees.length === this.granteeIds.length){
