@@ -59,7 +59,7 @@ export default {
         if (res.success) {
           console.log('Login successful:', res.message);
           this.$toast.success(res.message.data.message);
-          this.$router.push({ name: 'Dashboard' });
+          this.$router.push({ name: 'Home' });
         } else {
           // Can accept an Object of options
           this.$toast.error(res.message);
