@@ -23,53 +23,70 @@
       </ol>
     </nav>
 
-    <!-- Filters -->
-    <div class="mt-5 pb-4 bg-white dark:bg-gray-900">
-      <div class="grid grid-cols-7 gap-3">
-        <div>
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lastname</label>
-          <input v-model="searchForm.lastname" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" />
-        </div>
-
-        <div>
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Firstname</label>
-          <input v-model="searchForm.firstname" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" />
-        </div>
-
-        <div>
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Middlename</label>
-          <input v-model="searchForm.middlename" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" />
-        </div>
-
-        <div>
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">School Year</label>
-          <select @change="fetchPrograms" v-model="searchForm.school_year_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-            <option value="">Select</option>
-            <option v-for="sy in schoolyears" :key="sy.id" :value="sy.id">{{ sy.school_year }}</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Semester</label>
-          <select @change="fetchPrograms" v-model="searchForm.semester_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-            <option value="">Select</option>
-            <option v-for="sem in semesters" :key="sem.id" :value="sem.id">{{ sem.semester }}</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program</label>
-          <select v-model="searchForm.program_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-            <option value="">Select</option>
-            <option v-for="program in programs" :key="program.id" :value="program.id">{{ program.batch_name }} || Batch {{ program.batch_no }}</option>
-          </select>
-        </div>
-
-        <div>
-          <button @click="fetch_grantees" class="mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">Filter</button>
-        </div>
-      </div>
+<!-- Filters -->
+<div class="mt-5 pb-4 bg-white dark:bg-gray-900">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+    <!-- Lastname -->
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lastname</label>
+      <input v-model="searchForm.lastname" type="text"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" />
     </div>
+
+    <!-- Firstname -->
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Firstname</label>
+      <input v-model="searchForm.firstname" type="text"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" />
+    </div>
+
+    <!-- Middlename -->
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Middlename</label>
+      <input v-model="searchForm.middlename" type="text"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" />
+    </div>
+
+    <!-- School Year -->
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">School Year</label>
+      <select @change="fetchPrograms" v-model="searchForm.school_year_id"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+        <option value="">Select</option>
+        <option v-for="sy in schoolyears" :key="sy.id" :value="sy.id">{{ sy.school_year }}</option>
+      </select>
+    </div>
+
+    <!-- Semester -->
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Semester</label>
+      <select @change="fetchPrograms" v-model="searchForm.semester_id"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+        <option value="">Select</option>
+        <option v-for="sem in semesters" :key="sem.id" :value="sem.id">{{ sem.semester }}</option>
+      </select>
+    </div>
+
+    <!-- Program -->
+    <div>
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program</label>
+      <select v-model="searchForm.program_id"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+        <option value="">Select</option>
+        <option v-for="program in programs" :key="program.id" :value="program.id">
+          {{ program.batch_name }} || Batch {{ program.batch_no }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Filter Button -->
+    <div class="flex items-end">
+      <button @click="fetch_grantees"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">Filter</button>
+    </div>
+  </div>
+</div>
+
 
     <!-- Table -->
     <table class="w-full text-sm text-left text-gray-500">

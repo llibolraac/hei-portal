@@ -16,15 +16,15 @@
     <div class="max-w-screen-xl mx-auto px-4 pb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <div class="bg-white border border-gray-200 rounded-lg shadow p-6 text-center">
         <h3 class="text-lg font-medium text-gray-700 mb-2">TES Grantees</h3>
-        <p class="text-3xl font-bold text-blue-600">{{ statistics.tes ?? 0 }}</p>
+        <p class="text-3xl font-bold text-blue-600">{{ formatDecimalValue(statistics.tes) ?? 0 }}</p>
       </div>
       <div class="bg-white border border-gray-200 rounded-lg shadow p-6 text-center">
         <h3 class="text-lg font-medium text-gray-700 mb-2">TDP Grantees</h3>
-        <p class="text-3xl font-bold text-green-600">{{ statistics.tdp ?? 0 }}</p>
+        <p class="text-3xl font-bold text-green-600">{{ formatDecimalValue(statistics.tdp) ?? 0 }}</p>
       </div>
       <div class="bg-white border border-gray-200 rounded-lg shadow p-6 text-center">
         <h3 class="text-lg font-medium text-gray-700 mb-2">Total Grantees</h3>
-        <p class="text-3xl font-bold text-indigo-600">{{ statistics.total ?? 0 }}</p>
+        <p class="text-3xl font-bold text-indigo-600">{{ formatDecimalValue(statistics.total) ?? 0 }}</p>
       </div>
     </div>
 
@@ -68,6 +68,12 @@ export default {
   },
 
   methods:{
+
+    formatDecimalValue(decimalValue) {
+       return Number(decimalValue).toLocaleString(); // Format to a string
+    },
+
+
     async fetchHEIStats() {
 
     try {
