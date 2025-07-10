@@ -188,6 +188,7 @@
 
 
 <script>
+import { Dropdown, initDropdowns, initDrawers } from 'flowbite';
 import { mapActions } from 'vuex';
 import { mapGetters } from 'vuex';
 
@@ -300,6 +301,12 @@ export default {
   mounted(){
     this.sysem();
     this.fetchNotifications();
+
+        // Fix dropdowns not working
+     setTimeout(() => {
+      initDropdowns(); // ✅ initialize all dropdowns that use data-dropdown-toggle
+      initDrawers();
+    }, 0);
   },
 };
 </script>
