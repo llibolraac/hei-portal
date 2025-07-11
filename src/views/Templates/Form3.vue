@@ -111,7 +111,7 @@
       <td colspan="2"><p>Remarks</p></td>
     </tr>
     <tr v-for="(grantee,i) in grantees" :key="grantee.id"> 
-      <td><p>{{ i+1 }}</p></td>
+      <td><p>{{ String(i + 1).padStart(5, '0') }}</p></td>
       <td><p> Student Number </p></td>
       <td><p>{{ grantee.award_no }}</p></td>
       <td><p style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ grantee.lastname }}</p></td>

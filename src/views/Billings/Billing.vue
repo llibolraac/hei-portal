@@ -50,7 +50,7 @@
                 aria-selected="true"
                 :class="{
                 'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg': currentTab === 'Billing Documents',
-                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'beta'
+                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'Billing Documents'
                 }"
                 @click="switchToBillingDocuments"
                 >
@@ -67,13 +67,32 @@
                 aria-selected="false"
                 :class="{
                 'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg hover:text-blue-900': currentTab === 'Generate Billing Documents',
-                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'beta'
+                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'Generate Billing Documents'
                 }"
                 @click="switchToGenerateVoucher"
                 >
             Generate Billing Documents
         </button>
     </li>
+
+        <li class="me-2">
+        <button id="unbilled-grantees-tab" 
+                data-tabs-target="#unbilled-grantees" 
+                type="button" 
+                role="tab" 
+                aria-controls="unbilled-grantees" 
+                aria-selected="false"
+                :class="{
+                'inline-block px-4 py-3 text-white bg-blue-600 rounded-lg hover:text-blue-900': currentTab === 'Unbilled Grantees',
+                'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': currentTab !== 'Unbilled Grantees'
+                }"
+                @click="switchToUnbilledGrantees"
+                >
+            Ineligible Grantees
+        </button>
+    </li>
+
+
 
 </ul>
 
@@ -85,6 +104,10 @@
     <div id="generate-billing-documents" role="tabpanel" class="p-4 bg-white rounded-lg dark:bg-gray-800">
         <GenerateBilling v-if="currentTab === 'Generate Billing Documents'" :schoolYearId="schoolYearId" :semesterId="semesterId"/>
     </div>
+
+    <div id="unbilled-grantees" role="tabpanel" class="p-4 bg-white rounded-lg dark:bg-gray-800">
+        <UnbilledGrantees v-if="currentTab === 'Unbilled Grantees'" :schoolYearId="schoolYearId" :semesterId="semesterId"/>
+    </div>
 </div>
 <!-- Ends Here -->
  
@@ -95,12 +118,14 @@
 import { mapActions } from 'vuex';
 import BillingDocuments from './Components/BillingDocuments.vue';
 import GenerateBilling from './Components/GenerateBilling.vue'
+import UnbilledGrantees from './Components/UnbilledGrantees.vue'
   
 export default {
 
   components: {
     BillingDocuments,
-    GenerateBilling
+    GenerateBilling,
+    UnbilledGrantees,
   },
 
 
@@ -134,6 +159,10 @@ export default {
 
     switchToGenerateVoucher(){
       this.currentTab = 'Generate Billing Documents'
+    },
+
+    switchToUnbilledGrantees(){
+      this.currentTab = 'Unbilled Grantees'
     }
   },
 
