@@ -13,11 +13,7 @@ import { TailwindPagination } from 'laravel-vue-pagination';
 
 
 const api = axios.create({
-<<<<<<< HEAD
-  baseURL: 'https://ucmis-api.chedcaraga.ph/api', // Adjust as needed
-=======
   baseURL: 'http://localhost:8000/api/', // Adjust as needed
->>>>>>> 5a84d48 (Latest Update)
   // other configurations
 });
 
