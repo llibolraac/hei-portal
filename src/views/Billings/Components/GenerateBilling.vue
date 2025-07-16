@@ -211,7 +211,8 @@ export default {
     this.$api.post('/gen-billing',
       {
         granteeIds: this.granteeIds,
-        billingForm: this.billingForm
+        billingForm: this.billingForm,
+        userId: this.userId,
       },
       {
         headers: {

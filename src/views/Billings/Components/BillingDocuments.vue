@@ -58,6 +58,10 @@
                 </th>
 
                 <th scope="col" class="px-6 py-3">
+                    Voucher Status
+                </th>
+
+                <th scope="col" class="px-6 py-3">
                     Status
                 </th>
 
@@ -108,6 +112,23 @@
 
                 <td class="px-6 py-4">
                     {{ formatDecimalValue(billing.total_amount) }}
+                </td>
+
+                
+                <td class="px-6 py-4">
+                    <span
+                        v-if="billing.voucher_id"
+                        class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+                        >
+                        Processed
+                        </span>
+
+                        <span
+                        v-else
+                        class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
+                        >
+                        NO DV
+                        </span>
                 </td>
 
                 <td class="px-6 py-4">
@@ -204,6 +225,20 @@
         </button>
       </li>
 
+      
+      <li>
+        <button
+          :class="{
+            'border-b-2 border-blue-500 text-blue-600 text-sm': currentTab === 'BillingLog',
+            'text-gray-500 hover:text-gray-700 text-sm': currentTab !== 'BillingLog',
+          }"
+          @click="currentTab = 'BillingLog'"
+          class="py-2 px-4"
+        >
+          Billing Log
+        </button>
+      </li>
+
 
     </ul>
 
@@ -283,6 +318,10 @@
       <div v-show="currentTab === 'print_billing_documents'" class="p-4">
         <PrintBillingDocuments v-if="currentTab === 'print_billing_documents'" :billingId="billingId" />
       </div>
+
+      <div v-show="currentTab === 'BillingLog'" class="p-4">
+        <BillingLog v-if="currentTab === 'BillingLog'" :voucherId="formData.voucher_id" :billingId="this.billingId"/>
+      </div>
     </div>
   </div>
 
@@ -296,6 +335,7 @@
 <script>
 import { mapActions } from 'vuex';
 import { mapGetters } from 'vuex';
+import BillingLog from '../../BillingLog/BillingLog.vue'
 import GranteesDetails from './GranteesDetails.vue'
 import PrintBillingDocuments from './PrintBillingDocuments.vue'
 
@@ -315,7 +355,8 @@ export default {
 
     components: {
         GranteesDetails,
-        PrintBillingDocuments
+        PrintBillingDocuments,
+        BillingLog,
     },
 
     data() {
@@ -335,6 +376,7 @@ export default {
                 program_oc: null,
                 total_amount: null,
                 billing_status: null,
+                voucher_id: null,
             }
         };
     },
@@ -371,7 +413,10 @@ export default {
         handleGranteeDetails() {
             this.currentTab = 'grantee_details'; // Switch to grantee details tab
         },
-
+        
+        handleBillingLog() {
+            this.currentTab = 'BillingLog'; // Switch to grantee details tab
+        },
         handleBillingDelete(id) {
             if (window.confirm('Are you sure you want to delete this billing document?')) {
                 this.$api.delete(`/delete-billing-hei/${id}`, {
@@ -411,6 +456,7 @@ export default {
                 program_oc: selectedBilling.program_oc,
                 total_amount: selectedBilling.total_amount,
                 billing_status: selectedBilling.billing_status,
+                voucher_id: selectedBilling.voucher_id,
             };
         },
 
