@@ -95,12 +95,9 @@ export default {
   },
 
   methods: {
-<<<<<<< HEAD
-=======
     toggleDropdown() {
       this.showDropdown = !this.showDropdown;
     },
->>>>>>> origin/new-feature
     fetchBillingGrantees(page = 1) {
       this.$api
         .get(`/fetch-billing-details/${this.billingId}?page=${page}`, {
@@ -114,10 +111,7 @@ export default {
     },
 
     async printForm1() {
-<<<<<<< HEAD
-=======
       this.showDropdown = false;
->>>>>>> origin/new-feature
       const childRouteURL = this.$router.resolve({
         name: "PrintForm1",
         query: {
@@ -133,10 +127,7 @@ export default {
     },
 
     async printForm2() {
-<<<<<<< HEAD
-=======
       this.showDropdown = false;
->>>>>>> origin/new-feature
       const childRouteURL = this.$router.resolve({
         name: "PrintForm2",
         query: {
@@ -165,10 +156,7 @@ export default {
     },
 
     async printForm3() {
-<<<<<<< HEAD
-=======
       this.showDropdown = false;
->>>>>>> origin/new-feature
       const childRouteURL = this.$router.resolve({
         name: "PrintForm3",
         query: {
@@ -197,10 +185,7 @@ export default {
     },
 
     async printForm4() {
-<<<<<<< HEAD
-=======
       this.showDropdown = false;
->>>>>>> origin/new-feature
       const childRouteURL = this.$router.resolve({
         name: "PrintForm4",
         query: {
