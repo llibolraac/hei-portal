@@ -199,21 +199,6 @@
             <button
               :class="{
                 'border-b-2 border-blue-500 text-blue-600 text-sm':
-                  currentTab === 'print_billing_documents',
-                'text-gray-500 hover:text-gray-700 text-sm':
-                  currentTab !== 'print_billing_documents',
-              }"
-              @click="currentTab = 'print_billing_documents'"
-              class="py-2 px-4"
-            >
-              Print Billing Documents
-            </button>
-          </li>
-
-          <li>
-            <button
-              :class="{
-                'border-b-2 border-blue-500 text-blue-600 text-sm':
                   currentTab === 'BillingLog',
                 'text-gray-500 hover:text-gray-700 text-sm':
                   currentTab !== 'BillingLog',
@@ -231,140 +216,16 @@
           <div v-show="currentTab === 'billing_details'" class="p-4 bg-white">
             <!-- Billing Details -->
 
-            <form class="max-w mx-auto">
-              <div class="mb-2">
-                <label
-                  for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Transaction No.</label
-                >
-                <input
-                  v-model="formData.transaction_no"
-                  type="text"
-                  id="email"
-                  class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  disabled
-                />
-              </div>
-              <div class="flex gap-4 mb-2">
-                <!-- School Year -->
-                <div class="w-1/2">
-                  <label
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >School Year</label
-                  >
-                  <input
-                    v-model="formData.school_year"
-                    type="text"
-                    class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    disabled
-                  />
-                </div>
-
-                <!-- Semester -->
-                <div class="w-1/2 mb-1">
-                  <label
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >Semester</label
-                  >
-                  <input
-                    v-model="formData.semester"
-                    type="text"
-                    class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    disabled
-                  />
-                </div>
-              </div>
-
-              <div class="flex gap-4">
-                <!-- School Year -->
-                <div class="w-1/2">
-                  <label
-                    for="email"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >Batch name</label
-                  >
-                  <input
-                    v-model="formData.batch_name"
-                    type="text"
-                    id="email"
-                    class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    disabled
-                  />
-                </div>
-
-                <!-- Semester -->
-                <div class="w-1/2">
-                  <label
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >Semester</label
-                  >
-                  <input
-                    v-model="formData.batch_no"
-                    type="text"
-                    class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    disabled
-                  />
-                </div>
-              </div>
-
-              <div class="mb-5">
-                <label
-                  for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Amount</label
-                >
-                <input
-                  v-model="formData.amount"
-                  type="text"
-                  id="email"
-                  class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  disabled
-                />
-              </div>
-
-              <div class="mb-5">
-                <label
-                  for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Administrative Support Cost:</label
-                >
-                <input
-                  v-model="formData.program_oc"
-                  type="text"
-                  id="email"
-                  class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  disabled
-                />
-              </div>
-              <div class="mb-5">
-                <label
-                  for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Total Amount:</label
-                >
-                <input
-                  v-model="formData.total_amount"
-                  type="text"
-                  id="email"
-                  class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  disabled
-                />
-              </div>
-            </form>
-
+            <BillingDetails
+              v-if="currentTab === 'billing_details'"
+              :formData="formData"
+              :billingId="billingId"
+            />
             <!-- Ends Here -->
           </div>
           <div v-show="currentTab === 'grantee_details'" class="p-4">
             <GranteesDetails
               v-if="currentTab === 'grantee_details'"
-              :billingId="billingId"
-            />
-          </div>
-
-          <div v-show="currentTab === 'print_billing_documents'" class="p-4">
-            <PrintBillingDocuments
-              v-if="currentTab === 'print_billing_documents'"
               :billingId="billingId"
             />
           </div>
@@ -387,7 +248,7 @@ import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
 import BillingLog from "../../BillingLog/BillingLog.vue";
 import GranteesDetails from "./GranteesDetails.vue";
-import PrintBillingDocuments from "./PrintBillingDocuments.vue";
+import BillingDetails from "../Components/BillingDetails.vue";
 
 export default {
   props: {
@@ -403,8 +264,8 @@ export default {
 
   components: {
     GranteesDetails,
-    PrintBillingDocuments,
     BillingLog,
+    BillingDetails,
   },
 
   data() {
@@ -434,6 +295,16 @@ export default {
   },
 
   methods: {
+    formatCurrency(value) {
+      if (!value) return "₱0.00";
+      const number = parseFloat(value);
+      return number.toLocaleString("en-PH", {
+        style: "currency",
+        currency: "PHP",
+        minimumFractionDigits: 2,
+      });
+    },
+
     formatDecimalValue(decimalValue) {
       return Number(decimalValue).toLocaleString(undefined, {
         minimumFractionDigits: 2,
