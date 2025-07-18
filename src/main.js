@@ -12,26 +12,21 @@ import Modal from "./views/Modal/Modal.vue";
 import { TailwindPagination } from "laravel-vue-pagination";
 
 const api = axios.create({
-  baseURL: "http://ucmis-api.chedcaraga.ph/api", // Adjust as needed
+  baseURL: "http://localhost:8000/api/", // Adjust as needed
   // other configurations
 });
 
-// const api = axios.create({
-//   baseURL: "http://localhost:8000/api/", // Adjust as needed
-//   // other configurations
-// });
-
-// api.interceptors.response.use(
-//   (response) => {
-//     // console.log('API Response Intercepted:', response.data);
-//     return response;
-//   },
-//   (error) => {
-//     if (error.response.data.message) {
-//       store.dispatch("auth/logout");
-//     }
-//   }
-// );
+api.interceptors.response.use(
+  (response) => {
+    // console.log('API Response Intercepted:', response.data);
+    return response;
+  },
+  (error) => {
+    if (error.response.data.message) {
+      store.dispatch("auth/logout");
+    }
+  }
+);
 
 const app = createApp(App);
 app.use(ToastPlugin); // Register the toast plugin
