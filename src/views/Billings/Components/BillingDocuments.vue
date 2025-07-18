@@ -49,7 +49,7 @@
 
           <th scope="col" class="px-6 py-3">Voucher Status</th>
 
-          <th scope="col" class="px-6 py-3">Status</th>
+          <th scope="col" class="px-6 py-3">Billing Status</th>
 
           <th scope="col" class="px-6 py-3">Action</th>
         </tr>

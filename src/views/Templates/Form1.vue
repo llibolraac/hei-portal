@@ -16,7 +16,55 @@
             colspan="6"
             style="text-align: right; border-bottom: hidden"
           >
-            <h3>ANNEX 2 - TES Form 1</h3>
+            <h3 style="font-weight: 700; font-size: 10px">
+              TES
+              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
+                >CONTINUING</span
+              >
+              <span v-else>NEW</span>
+
+              Form 1 -
+
+              <span
+                v-if="
+                  billing_data.program.batch_type === 'ON-GOING' &&
+                  billing_data.program.program_name ===
+                    'Tertiary Education Subsidy (TES)'
+                "
+              >
+                ANNEX 2
+              </span>
+
+              <span
+                v-if="
+                  billing_data.program.batch_type === 'NEW' &&
+                  billing_data.program.program_name ===
+                    'Tertiary Education Subsidy (TES)'
+                "
+              >
+                ANNEX 5
+              </span>
+
+              <span
+                v-if="
+                  billing_data.program.batch_type === 'ON-GOING' &&
+                  billing_data.program.program_name ===
+                    'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+              >
+                ANNEX 5
+              </span>
+
+              <span
+                v-if="
+                  billing_data.program.batch_type === 'NEW' &&
+                  billing_data.program.program_name ===
+                    'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+              >
+                ANNEX 7
+              </span>
+            </h3>
           </td>
         </tr>
         <tr>
@@ -134,7 +182,7 @@
           <td colspan="2" class="border-left">
             <p>
               <strong>TES Benefits</strong> for all the TES
-              <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
               <span v-else>NEW</span> grantees enrolled in the HEI
@@ -151,7 +199,7 @@
           <td colspan="2" class="border-left border-top">
             <p>
               <strong>TES-3a </strong>for all TES
-              <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
               <span v-else>NEW</span> grantees with disability enrolled in the
@@ -172,8 +220,18 @@
           <td class="border-bottom"><p>&nbsp;</p></td>
           <td colspan="2" class="border-left border-bottom">
             <p>
-              Add: 1 percent (1%) Administrative Support Cost (ASC) for partner
-              HEI
+              Add: 1 percent (1%)
+              <span
+                v-if="
+                  [1, 2].includes(billing_data.schoolyear.id) &&
+                  [1, 2].includes(billing_data.semester.id)
+                "
+              >
+                Administrative Support Cost (ASC)
+              </span>
+              <span v-else>Management Fee</span>
+
+              for partner HEI
             </p>
           </td>
           <td>

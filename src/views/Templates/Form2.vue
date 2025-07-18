@@ -10,14 +10,56 @@
     <table width="200">
       <tbody>
         <tr>
-          <td class="border-bottom" colspan="17">
-            <h2 style="text-align: right; font-size: 10px">
-              Annex 2 - TES
-              <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+          <td class="border-bottom" colspan="17" style="text-align: right">
+            <h3 style="font-weight: 700; font-size: 10px">
+              TES
+              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
-              <span v-else>NEW</span> Form 2
-            </h2>
+              <span v-else>NEW</span>
+
+              Form 2 -
+
+              <span
+                v-if="
+                  billing_data.program.batch_type === 'ON-GOING' &&
+                  billing_data.program.program_name ===
+                    'Tertiary Education Subsidy (TES)'
+                "
+              >
+                ANNEX 2
+              </span>
+
+              <span
+                v-if="
+                  billing_data.program.batch_type === 'NEW' &&
+                  billing_data.program.program_name ===
+                    'Tertiary Education Subsidy (TES)'
+                "
+              >
+                ANNEX 5
+              </span>
+
+              <span
+                v-if="
+                  billing_data.program.batch_type === 'ON-GOING' &&
+                  billing_data.program.program_name ===
+                    'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+              >
+                ANNEX 5
+              </span>
+
+              <span
+                v-if="
+                  billing_data.program.batch_type === 'NEW' &&
+                  billing_data.program.program_name ===
+                    'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+              >
+                ANNEX 7
+              </span>
+            </h3>
           </td>
         </tr>
         <tr>
@@ -551,7 +593,7 @@ body {
 }
 
 table {
-  width: 100%;
+  width: 98%;
   border: 1px solid black;
   border-collapse: collapse;
   overflow: hidden;
