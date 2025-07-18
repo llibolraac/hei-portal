@@ -417,11 +417,6 @@ export default {
     },
 
     exportGrantees() {
-      if (!this.searchForm.program_id) {
-        alert("Please select a Program before exporting grantees.");
-        return;
-      }
-
       if (window.confirm("Are you sure you want to export grantees?")) {
         this.$api
           .post(

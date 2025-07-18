@@ -87,7 +87,15 @@
                   {{ this.billing_data.hei.province }}
                 </p>
                 <p style="font-size: 17px; font-weight: bold">
-                  CONSOLIDATED TES BILLING STATEMENT
+                  CONSOLIDATED
+                  <span
+                    v-if="
+                      billing_data.program.program_name ===
+                      'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                    "
+                    >TES-TDP</span
+                  >
+                  <span v-else>TES</span> BILLING STATEMENT
                 </p>
               </div>
 
@@ -103,7 +111,7 @@
         </tr>
         <tr>
           <td colspan="5" style="text-align: right" class="border-right">
-            <p>TES Billing Statement Reference No.:</p>
+            <p>TDP Billing Statement Reference No.:</p>
           </td>
           <td style="text-align: left" class="border-bottom">
             <p>CARAGA-BGFC-2024-1-1</p>
@@ -170,7 +178,15 @@
         <tr>
           <td colspan="3" class="border-bottom">
             <p>
-              Total Number of TES student-grantee in the Higher Education
+              Total Number of
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+                >TES-TDP</span
+              >
+              <span v-else>TES</span> student-grantee in the Higher Education
               Institution (HEI) : {{ this.grantees_count }}
             </p>
           </td>
@@ -185,7 +201,7 @@
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
-              <span v-else>NEW</span> grantees enrolled in the HEI
+              <span v-else>TES</span> grantees enrolled in the HEI
             </p>
           </td>
           <td>
@@ -195,9 +211,9 @@
         </tr>
 
         <tr>
-          <td class="border-top"><p>&nbsp;</p></td>
+          <td class="border-top"><p></p></td>
           <td colspan="2" class="border-left border-top">
-            <p>
+            <p v-if="billing_data.program.batch_type === 'NEW'">
               <strong>TES-3a </strong>for all TES
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
@@ -240,7 +256,19 @@
           <td class="border-bottom"><p></p></td>
         </tr>
         <tr>
-          <td colspan="3"><p>TOTAL: TES Billing Amount</p></td>
+          <td colspan="3">
+            <p>
+              TOTAL:
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+                >TES-TDP</span
+              >
+              <span v-else>TES</span> Billing Amount
+            </p>
+          </td>
           <td width="150"><p>PhP</p></td>
           <td width="450">
             <p>PhP {{ TotalTESAmount.toLocaleString() }}</p>
@@ -334,10 +362,18 @@
               per semester.
             </p>
             <p>
-              2. the TES statement reference number shall compromise of the
-              Regional Code (2-digit). HEII CODE (alpha codes), ACADEMIC YEAR
-              (4-digit), TERM 1(1-digit). and BATCH NUMBER (1 digit). The
-              description and codes are provided below:
+              2. the
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+                >TES-TDP</span
+              >
+              <span v-else>TES</span> statement reference number shall
+              compromise of the Regional Code (2-digit). HEII CODE (alpha
+              codes), ACADEMIC YEAR (4-digit), TERM 1(1-digit). and BATCH NUMBER
+              (1 digit). The description and codes are provided below:
             </p>
             <div style="clear: both"></div>
             <p>
@@ -385,19 +421,43 @@
             <p>&nbsp;</p>
             <p>
               <strong>Example of A Billing Statement No.</strong> <br />
-              The first batch of TES statement submitted by JRU in 1st sem AQY
+              The first batch of
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+                >TES-TDP</span
+              >
+              <span v-else>TES</span> statement submitted by JRU in 1st sem AQY
               2020-2021:
             </p>
             <p>
               <br />
-              The second batch of TES Statement submitted by Jose Rizal
+              The second batch of
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+                >TES-TDP</span
+              >
+              <span v-else>TES</span> Statement submitted by Jose Rizal
               University in the First Semester for AY 2020 - 2021
               NCR-JRU-2020-1-1
             </p>
 
             <p>
-              3. Submit A printed copy of complete TES Statement Form (Form 1)
-              including other required documents and a cover letter address to:
+              3. Submit A printed copy of complete
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+                >TES-TDP</span
+              >
+              <span v-else>TES</span> Statement Form (Form 1) including other
+              required documents and a cover letter address to:
             </p>
             <p>&nbsp;</p>
             <p>

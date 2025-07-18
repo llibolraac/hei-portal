@@ -107,11 +107,11 @@
             <p><strong>INSTRUCTIONS</strong></p>
             <p>
               1. This form shall only include the names of those
-              <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
               <span v-else>NEW</span> TES grantees who are NOT INCLUDED in TES
-              <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
               <span v-else>NEW</span> Form 2
@@ -119,7 +119,7 @@
             <p>&nbsp;</p>
             <p>
               2. In the table below, list down the names of
-              <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
               <span v-else>NEW</span> TES grantees per campus in alphabetical
@@ -158,7 +158,7 @@
               <li>
                 <p>
                   6.1 TES
-                  <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+                  <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                     >CONTINUING</span
                   >
                   <span v-else>NEW</span> Form 1
@@ -167,7 +167,7 @@
               <li>
                 <p>
                   6.2 TES
-                  <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+                  <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                     >CONTINUING</span
                   >
                   <span v-else>NEW</span> Form 2
@@ -176,7 +176,7 @@
               <li>
                 <p>
                   6.3 TES
-                  <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+                  <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                     >CONTINUING</span
                   >
                   <span v-else>NEW</span> Form 3
@@ -206,7 +206,7 @@
             <p>
               <strong
                 >TES
-                <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+                <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                   >CONTINUING</span
                 >
                 <span v-else>NEW</span> Grantees Details:</strong

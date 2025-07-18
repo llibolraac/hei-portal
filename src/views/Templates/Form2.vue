@@ -82,7 +82,15 @@
                   {{ this.billing_data.hei.province }}
                 </p>
                 <p style="font-size: 17px; font-weight: bold">
-                  CONSOLIDATED TES BILLING STATEMENT
+                  CONSOLIDATED
+                  <span
+                    v-if="
+                      billing_data.program.program_name ===
+                      'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                    "
+                    >TES-TDP</span
+                  >
+                  <span v-else>TES</span> BILLING STATEMENT
                 </p>
               </div>
 
@@ -125,12 +133,20 @@
             <p><strong>INSTRUCTIONS</strong></p>
             <p>
               1. Generate the list of
-              <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
-              <span v-else>NEW</span> TES grantees from the HEI portal. Include
-              only in this form the names of
-              <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+              <span v-else>NEW</span>
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+                >TES-TDP</span
+              >
+              <span v-else>TES</span> grantees from the HEI portal. Include only
+              in this form the names of
+              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
               <span v-else>NEW</span> grantees WHO ARE CURRENTLY enrolled this
@@ -139,11 +155,18 @@
             <p>&nbsp;</p>
             <p>
               2. In the table below, list down the names of enrolled
-              <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
-              <span v-else>NEW</span> TES grantees per campus in alphabetical
-              order.
+              <span v-else>NEW</span>
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+                >TES-TDP</span
+              >
+              <span v-else>TES</span> grantees per campus in alphabetical order.
             </p>
             <p>
               if applicable. (1) by campus; (2) by college; (3) by progra; and
@@ -166,8 +189,16 @@
               Official Enrollment in the
               {{ this.billing_data.semester.semester }} of Academic Year
               {{ this.billing_data.schoolyear.school_year }} in the order as it
-              appears in the TES
-              <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+              appears in the
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+                >TES-TDP</span
+              >
+              <span v-else>TES</span>
+              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
               <span v-else>NEW</span> Form 2.
@@ -175,9 +206,16 @@
           </td>
           <td colspan="10" style="vertical-align: top" class="border-right">
             <p>
-              6. Submit the Notarized Registrar's Certification of TES Grantees,
-              as an endorsement document, for all the PDF files of the CORs
-              submitted.
+              6. Submit the Notarized Registrar's Certification of
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+                >TES-TDP</span
+              >
+              <span v-else>TES</span> Grantees, as an endorsement document, for
+              all the PDF files of the CORs submitted.
             </p>
             <p>
               7. Submit electronic and hard copies of the following forms to
@@ -186,8 +224,16 @@
             <ul>
               <li>
                 <p>
-                  7.1 TES
-                  <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+                  7.1
+                  <span
+                    v-if="
+                      billing_data.program.program_name ===
+                      'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                    "
+                    >TES-TDP</span
+                  >
+                  <span v-else>TES</span>
+                  <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                     >CONTINUING</span
                   >
                   <span v-else>NEW</span> Form 1
@@ -195,8 +241,16 @@
               </li>
               <li>
                 <p>
-                  7.2 TES
-                  <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+                  7.2
+                  <span
+                    v-if="
+                      billing_data.program.program_name ===
+                      'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                    "
+                    >TES-TDP</span
+                  >
+                  <span v-else>TES</span>
+                  <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                     >CONTINUING</span
                   >
                   <span v-else>NEW</span> Form 2
@@ -204,8 +258,16 @@
               </li>
               <li>
                 <p>
-                  7.3 TES
-                  <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+                  7.3
+                  <span
+                    v-if="
+                      billing_data.program.program_name ===
+                      'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                    "
+                    >TES-TDP</span
+                  >
+                  <span v-else>TES</span>
+                  <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                     >CONTINUING</span
                   >
                   <span v-else>NEW</span> Form 3
@@ -235,7 +297,7 @@
             <p>
               <strong
                 >TES
-                <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+                <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                   >CONTINUING</span
                 >
                 <span v-else>NEW</span> Grantees Details:</strong
@@ -246,14 +308,45 @@
         <tr>
           <td colspan="16">
             <p>
-              <strong
-                >TES will have to be listed and tabulated PER CAMPUS. </strong
-              >The Total Number of TES grantees for all
+              <strong>
+                <span
+                  v-if="
+                    billing_data.program.program_name ===
+                    'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                  "
+                  >TES-TDP</span
+                >
+                <span v-else>TES</span> will have to be listed and tabulated PER
+                CAMPUS. </strong
+              >The Total Number of
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+                >TES-TDP</span
+              >
+              <span v-else>TES</span> grantees for all
             </p>
             <p>
-              campuses should tally with the total number of TES in the Annex
-              2-TES
-              <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+              campuses should tally with the total number of
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+                >TES-TDP</span
+              >
+              <span v-else>TES</span> in the Annex 2-
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+                >TES-TDP</span
+              >
+              <span v-else>TES</span>
+              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
               <span v-else>NEW</span> Form 1
@@ -419,13 +512,37 @@
         </tr>
         <tr>
           <td colspan="16">
-            <p><strong>TOTAL TES BILLING PER CAMPUS</strong></p>
+            <p>
+              <strong
+                >TOTAL
+                <span
+                  v-if="
+                    billing_data.program.program_name ===
+                    'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                  "
+                  >TES-TDP</span
+                >
+                <span v-else>TES</span> BILLING PER CAMPUS</strong
+              >
+            </p>
           </td>
           <td><p>&nbsp;</p></td>
         </tr>
         <tr>
           <td colspan="16">
-            <p><strong>TOTAL TES BILLING ALL CAMPUSES</strong></p>
+            <p>
+              <strong
+                >TOTAL
+                <span
+                  v-if="
+                    billing_data.program.program_name ===
+                    'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                  "
+                  >TES-TDP</span
+                >
+                <span v-else>TES</span> BILLING ALL CAMPUSES</strong
+              >
+            </p>
           </td>
           <td>
             <p>{{ formatDecimalValue(billing_data.total_amount) }}</p>

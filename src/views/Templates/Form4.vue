@@ -144,7 +144,7 @@
       <p style="text-indent: 50px; line-height: 1; margin-top: 30px">
         This further certifies that the student’s information indicated in Annex
         2 - TES
-        <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
+        <span v-if="billing_data.program.batch_type === 'ON-GOING'"
           >CONTINUING</span
         >
         <span v-else>NEW</span> Form 2 is accurate and complete.
