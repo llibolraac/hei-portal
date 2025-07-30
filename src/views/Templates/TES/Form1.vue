@@ -114,7 +114,7 @@
             <p>TDP Billing Statement Reference No.:</p>
           </td>
           <td style="text-align: left" class="border-bottom">
-            <p>CARAGA-BGFC-2024-1-1</p>
+            <p>{{ this.billing_data.tes_ref_no }}</p>
           </td>
         </tr>
         <tr>
@@ -197,7 +197,7 @@
           <td width="30"><p>&nbsp;</p></td>
           <td colspan="2" class="border-left">
             <p>
-              <strong>TES Benefits</strong> for all the TES
+              <strong>TES Benefits</strong> for all the
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
@@ -213,7 +213,7 @@
         <tr>
           <td class="border-top"><p></p></td>
           <td colspan="2" class="border-left border-top">
-            <p v-if="billing_data.program.batch_type === 'NEW'">
+            <p>
               <strong>TES-3a </strong>for all TES
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
@@ -551,6 +551,13 @@ export default {
           this.grantees_count = res.data.grantees_count;
           this.signatories = res.data.signatories;
           this.loading = false;
+
+          setTimeout(() => {
+            // window.print();
+          }, 1000);
+          window.onafterprint = function () {
+            window.close();
+          };
         });
     },
   },

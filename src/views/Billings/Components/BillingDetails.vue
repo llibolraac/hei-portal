@@ -54,7 +54,7 @@
         </span>
       </div>
     </div>
-    <PrintBillingDocuments :billingId="billingId" />
+    <PrintBillingDocuments :programName="program" :billingId="billingId" />
 
     <div class="space-y-4 border-t border-gray-200 pt-4 mt-4">
       <!-- Delivery Method -->
@@ -191,6 +191,7 @@ export default {
       selectedCourier: null,
       trackingNumber: "",
       billing_data: [],
+      program: null,
       submit_billing: {
         delivery_type: null,
         billing_id: null,
@@ -321,6 +322,7 @@ export default {
         })
         .then((res) => {
           this.billing_data = res.data.billing;
+          this.program = res.data.billing.program.program_name;
           this.submit_billing.billing_id = this.billingId;
           this.submit_billing.hei_id = this.billing_data.hei_id;
           this.submit_billing.school_year_id = this.billing_data.school_year_id;

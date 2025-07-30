@@ -105,8 +105,9 @@
           >CONTINUING
         </span>
         <span v-else>NEW</span>
-        <span v-if="billing_data.program.batch_name === 'CHED-TDP'">TDP</span>
-        <span v-else>TES</span>
+
+        <span v-if="billing_data.program.batch_name === 'CHED-TDP'"> TDP</span>
+        <span v-else> TES</span>
 
         grantees by campus as shown below,are qualified to avail of the Tertiary
         Education Subsidy (TES) program under R.A. No. 10931 also known as

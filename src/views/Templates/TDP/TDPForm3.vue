@@ -122,11 +122,19 @@
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
-              <span v-else>NEW</span> TES grantees per campus in alphabetical
-              order, if applicable,
+              <span v-else>NEW</span>
+              <span
+                v-if="
+                  billing_data.program.program_name ===
+                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
+                "
+              >
+                TDP </span
+              ><span v-else>TES</span>
+              grantees per campus in alphabetical order, if applicable,
             </p>
             <p>
-              if applicable. (1) by campus; (2) by college; (3) by progra; and
+              if applicable. (1) by campus; (2) by college; (3) by program; and
               (4) by student name (Last Name, First Name, MI).
             </p>
             <p>&nbsp;</p>
@@ -262,7 +270,9 @@
           <td>
             <p>{{ String(i + 1).padStart(5, "0") }}</p>
           </td>
-          <td><p>Student Number</p></td>
+          <td>
+            <p>{{ grantee.student_number }}</p>
+          </td>
           <td>
             <p>{{ grantee.award_no }}</p>
           </td>

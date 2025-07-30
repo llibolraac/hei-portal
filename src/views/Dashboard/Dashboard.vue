@@ -479,6 +479,30 @@ export default {
         console.error("Failed to load notifications:", error);
       }
     },
+
+    closeMobileSidebar() {
+      // Close the drawer
+      const sidebar = document.getElementById("logo-sidebar");
+      if (sidebar && sidebar.classList.contains("translate-x-0")) {
+        sidebar.classList.remove("translate-x-0");
+        sidebar.classList.add("-translate-x-full");
+      }
+
+      // Remove Flowbite backdrop if it exists
+      const backdrop = document.querySelector("[drawer-backdrop]");
+      if (backdrop) {
+        backdrop.remove();
+      }
+
+      // Remove body overflow lock just in case
+      document.body.classList.remove("overflow-hidden");
+    },
+  },
+
+  watch: {
+    $route() {
+      this.closeMobileSidebar();
+    },
   },
 
   mounted() {
