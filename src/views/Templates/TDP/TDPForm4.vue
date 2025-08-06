@@ -3,53 +3,12 @@
   <div v-else style="padding: 30px">
     <div style="display: flex; justify-content: space-between">
       <h3 style="font-weight: 700; font-size: 10px">
-        TES
         <span v-if="billing_data.program.batch_type === 'ON-GOING'"
           >CONTINUING</span
         >
         <span v-else>NEW</span>
 
-        Form 4 -
-
-        <span
-          v-if="
-            billing_data.program.batch_type === 'ON-GOING' &&
-            billing_data.program.program_name ===
-              'Tertiary Education Subsidy (TES)'
-          "
-        >
-          ANNEX 2
-        </span>
-
-        <span
-          v-if="
-            billing_data.program.batch_type === 'NEW' &&
-            billing_data.program.program_name ===
-              'Tertiary Education Subsidy (TES)'
-          "
-        >
-          ANNEX 5
-        </span>
-
-        <span
-          v-if="
-            billing_data.program.batch_type === 'ON-GOING' &&
-            billing_data.program.program_name ===
-              'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-          "
-        >
-          ANNEX 5
-        </span>
-
-        <span
-          v-if="
-            billing_data.program.batch_type === 'NEW' &&
-            billing_data.program.program_name ===
-              'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-          "
-        >
-          ANNEX 7
-        </span>
+        TDP Form 3 - Annex 7
       </h3>
       <span style="font-size: 12px; font-style: italic"
         >System Generated Billing Document</span
@@ -59,13 +18,7 @@
     <img
       :src="billing_data.hei.logo_url"
       alt="logo"
-      style="
-        width: 100px;
-        height: 100px;
-        position: absolute;
-        left: 15%;
-        top: 7%;
-      "
+      style="width: 80px; height: 80px; position: absolute; left: 15%; top: 7%"
     />
     <div
       style="
@@ -84,7 +37,7 @@
       </div>
     </div>
 
-    <p style="text-align: right">Date: {{ formattedDate }}</p>
+    <p style="text-align: right; font-size: 15px">Date: {{ formattedDate }}</p>
 
     <h2
       style="
@@ -100,18 +53,10 @@
     <div style="margin-top: 50px">
       <strong>TO WHOM IT MAY CONCERN:</strong>
       <p style="text-indent: 50px; line-height: 1">
-        This is to certify that the total number of
-        <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-          >CONTINUING
-        </span>
-        <span v-else>NEW</span>
-
-        <span v-if="billing_data.program.batch_name === 'CHED-TDP'"> TDP</span>
-        <span v-else> TES</span>
-
-        grantees by campus as shown below,are qualified to avail of the Tertiary
-        Education Subsidy (TES) program under R.A. No. 10931 also known as
-        Universal Access to Quality Tertiary Education (UAQTE) for the
+        This is to certify that the total number of TDP grantees grantees by
+        campus as shown below, are qualified to avail of the Tulong Dunong
+        Program (TDP) program under R.A. No. 10931 also known as Universal
+        Access to Quality Tertiary Education (UAQTE) for the
         {{ billing_data.semester.semester }} of Academic Year
         {{ billing_data.schoolyear.school_year }}.
       </p>
@@ -143,12 +88,12 @@
       </div>
 
       <p style="text-indent: 50px; line-height: 1; margin-top: 30px">
-        This further certifies that the student’s information indicated in Annex
-        2 - TES
+        This further certifies that the student’s information indicated in the
+        billing statement of the Masterlist of
         <span v-if="billing_data.program.batch_type === 'ON-GOING'"
           >CONTINUING</span
         >
-        <span v-else>NEW</span> Form 2 is accurate and complete.
+        <span v-else>NEW</span> TDP Grantees (Annex 6) is accurate and complete.
       </p>
 
       <p
@@ -159,9 +104,9 @@
           font-weight: bold;
         "
       >
-        This certification is being issued in accordance with the CHED-UniFAST
-        Memorandum Circular No. 01 Series of 2022, Amended Tertiary Education
-        Subsidy (TES) Guidelines of 2022.
+        This certification is being issued in accordance with the niFAST
+        Memorandum Circular (JMC) No. __ Series of 2022, on the Enhanced
+        Guidelines of the Tulong Dunong Program (TDP).
       </p>
 
       <div class="signature-section">

@@ -13,7 +13,7 @@
         <tr>
           <td class="border-bottom" colspan="13" style="text-align: right">
             <h3 style="font-weight: 700; font-size: 10px">
-              TES
+              TDP
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
@@ -213,7 +213,7 @@
           <td colspan="12">
             <p>
               <strong
-                >TES
+                >TDP
                 <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                   >CONTINUING</span
                 >

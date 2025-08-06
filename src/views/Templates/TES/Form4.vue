@@ -3,7 +3,7 @@
   <div v-else style="padding: 30px">
     <div style="display: flex; justify-content: space-between">
       <h3 style="font-weight: 700; font-size: 10px">
-        TES
+        TDP
         <span v-if="billing_data.program.batch_type === 'ON-GOING'"
           >CONTINUING</span
         >

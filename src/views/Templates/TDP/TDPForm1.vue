@@ -17,7 +17,7 @@
             style="text-align: right; border-bottom: hidden"
           >
             <h3 style="font-weight: 700; font-size: 10px">
-              TES
+              TDP
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >

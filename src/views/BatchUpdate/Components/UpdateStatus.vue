@@ -187,7 +187,7 @@ export default {
         .get(`/batch-profile-status/`, {
           params: {
             school_year_id: this.selectedsy, // Correct: send the ID
-            semester_id: this.selectedsem, // Correct: send the ID
+            semester_id: this.selectedsem, //  Correct: send the ID
             hei_id: this.heiId,
           },
           headers: {

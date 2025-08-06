@@ -202,8 +202,8 @@
                     >TES-TDP</span
                   >
                   <span v-else>TES</span>
-                  <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-                    >CONTINUING</span
+                  <span v-if="billing_data.program.batch_type === 'ON-GOING'">
+                    CONTINUING</span
                   >
                   <span v-else>NEW</span> Form 1
                 </p>
@@ -219,8 +219,8 @@
                     >TES-TDP</span
                   >
                   <span v-else>TES</span>
-                  <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-                    >CONTINUING</span
+                  <span v-if="billing_data.program.batch_type === 'ON-GOING'">
+                    CONTINUING</span
                   >
                   <span v-else>NEW</span> Form 2
                 </p>
@@ -236,8 +236,8 @@
                     >TES-TDP</span
                   >
                   <span v-else>TES</span>
-                  <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-                    >CONTINUING</span
+                  <span v-if="billing_data.program.batch_type === 'ON-GOING'">
+                    CONTINUING</span
                   >
                   <span v-else>NEW</span> Form 3
                 </p>
@@ -435,7 +435,7 @@
         </tr>
         <tr>
           <td colspan="16">
-            <p><strong>TOTAL TERTIARY EDUCATION SUBSIDY</strong></p>
+            <p><strong>TOTAL Tulong Dunong Program</strong></p>
           </td>
           <td>
             <p>{{ formatDecimalValue(billing_data.amount) }}</p>
