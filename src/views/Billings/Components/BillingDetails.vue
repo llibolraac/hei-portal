@@ -56,7 +56,13 @@
     </div>
     <PrintBillingDocuments :programName="program" :billingId="billingId" />
 
-    <div class="space-y-4 border-t border-gray-200 pt-4 mt-4">
+    <div
+      v-if="
+        this.formData.billing_status.id === 1 ||
+        this.formData.billing_status.id === 3
+      "
+      class="space-y-4 border-t border-gray-200 pt-4 mt-4"
+    >
       <!-- Delivery Method -->
       <h3 class="text-md font-semibold text-gray-700 dark:text-gray-300 mb-2">
         Select Delivery Method
@@ -74,40 +80,16 @@
               : 'bg-gray-100 text-gray-800 border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600 focus:ring-gray-400',
           ]"
         >
-          <svg
-            v-if="option === 'hand'"
-            class="w-4 h-4 mr-1.5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M7 16V4m0 0L3 8m4-4l4 4m6 4h2a2 2 0 012 2v2a2 2 0 01-2 2h-2m0-6v6"
-            />
-          </svg>
-          <svg
-            v-else
-            class="w-4 h-4 mr-1.5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2v-7l-9 6-9-6v7a2 2 0 002 2z"
-            />
-          </svg>
           {{ option === "hand" ? "Hand Deliver" : "Courier" }}
         </button>
       </div>
 
-      <!-- Tracking Number -->
-      <div v-if="selectedDelivery === 'courier'" class="mt-3">
+      <!-- Courier Form -->
+      <form
+        v-if="selectedDelivery === 'courier'"
+        @submit.prevent="submitDelivery"
+        class="mt-3"
+      >
         <!-- Courier Dropdown -->
         <div class="mb-3">
           <label
@@ -120,6 +102,7 @@
             id="courier"
             v-model="submit_billing.courier_id"
             class="w-full rounded-md border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+            required
           >
             <option value="" disabled>Select a courier</option>
             <option
@@ -133,32 +116,47 @@
         </div>
 
         <!-- Tracking Number Input -->
-        <label
-          for="tracking_number"
-          class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-300"
-        >
-          Tracking Number
-        </label>
-        <input
-          type="text"
-          id="tracking_number"
-          v-model="trackingNumber"
-          class="w-full rounded-md border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
-          placeholder="Enter tracking number"
-          required
-        />
-      </div>
-    </div>
+        <div class="mb-3">
+          <label
+            for="tracking_number"
+            class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-300"
+          >
+            Tracking Number
+          </label>
+          <input
+            type="text"
+            id="tracking_number"
+            v-model="trackingNumber"
+            class="w-full rounded-md border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+            placeholder="Enter tracking number"
+            required
+          />
+        </div>
 
-    <!-- Submit Button -->
-    <div class="flex justify-end pt-2">
-      <button
-        @click="submitDelivery"
-        :disabled="selectedDelivery === 'courier' && !trackingNumber"
-        class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-lg shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-500"
+        <!-- Submit Button for Courier -->
+        <div class="flex justify-end pt-2">
+          <button
+            type="submit"
+            :disabled="!submit_billing.courier_id || !trackingNumber"
+            class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-lg shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+
+      <!-- Submit Button for Hand Delivery -->
+      <div
+        v-else-if="selectedDelivery === 'hand'"
+        class="flex justify-end pt-2"
       >
-        Submit
-      </button>
+        <button
+          @click="submitDelivery"
+          class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-lg shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+        >
+          Confirm Hand Delivery
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -202,16 +200,6 @@ export default {
         status: 2,
         userId: null,
       },
-      // formData: {
-      //   transaction_no: "TXN-00123",
-      //   school_year: "2024-2025",
-      //   semester: "2nd",
-      //   batch_name: "CHED-TDP",
-      //   batch_no: "Batch-08",
-      //   amount: 15000,
-      //   program_oc: 3000,
-      //   total_amount: 18000,
-      // },
     };
   },
   computed: {
@@ -246,8 +234,6 @@ export default {
     selectDelivery(option) {
       this.selectedDelivery = option;
       this.submit_billing.delivery_type = option === "hand" ? 0 : 1;
-
-      console.log(this.submit_billing);
     },
     async submitDelivery() {
       const isCourier = this.selectedDelivery === "courier";
@@ -255,7 +241,7 @@ export default {
       // Set delivery_type
       this.submit_billing.delivery_type = isCourier ? 1 : 0;
 
-      // Handle fields based on delivery type
+      // For courier delivery, validate required fields
       if (isCourier) {
         if (!this.submit_billing.courier_id) {
           alert("Please select a courier.");
@@ -265,33 +251,49 @@ export default {
           alert("Please enter the tracking number.");
           return;
         }
-      } else {
-        this.submit_billing.courier_id = null; // Null courier if hand-delivered
-        this.trackingNumber = null; // Optional: also clear the tracking number if stored
       }
 
+      // Prepare the data to be sent
+      const submitData = {
+        ...this.submit_billing,
+        // Only include courier_id and tracking_number for courier delivery
+        ...(isCourier && {
+          courier_id: this.submit_billing.courier_id,
+          tracking_number: this.trackingNumber,
+        }),
+        // Always include these fields
+        status: 2, // Assuming 2 means 'submitted' or similar
+        delivery_type: isCourier ? 1 : 0, // 1 for courier, 0 for hand delivery
+      };
+
       // Confirm before proceeding
-      if (!confirm("Are you sure? This action is irreversible.")) return;
+      const confirmationMessage = isCourier
+        ? "Are you sure you want to submit with courier delivery?"
+        : "Are you sure you want to confirm hand delivery?";
+
+      if (!confirm(confirmationMessage)) return;
 
       try {
-        await this.$api.post("/submit-billing", this.submit_billing, {
+        await this.$api.post("/submit-billing", submitData, {
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
           },
         });
 
-        this.$toast.success("Successfully Submitted Billing");
+        this.$toast.success("Billing submitted successfully");
+        // Optionally redirect or reset the form
+        // this.$router.push('/billing');
       } catch (e) {
         if (e.response?.data?.errors) {
           console.error("Validation errors:", e.response.data.errors);
           alert(
-            "Some fields failed validation. Check the console for more info."
+            "Some fields failed validation. Please check the console for more info."
           );
         } else if (e.response?.status === 409) {
           alert(e.response.data.message);
         } else {
-          console.error("Upload failed:", e);
-          alert("Upload failed. Try again.");
+          console.error("Submission failed:", e);
+          alert("Submission failed. Please try again.");
         }
       }
     },

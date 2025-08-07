@@ -243,7 +243,6 @@ export default {
         program_oc: null,
         total_amount: null,
         billing_status: 1,
-        receipt: "",
         transaction_no: null,
       },
     };

@@ -47,10 +47,21 @@
     >
       <h3 class="font-semibold">Validation Errors:</h3>
       <ul class="list-disc pl-5 mt-2">
-        <li v-for="(error, index) in validationErrors" :key="index">
+        <li v-for="(error, index) in visibleErrors" :key="index">
           {{ error }}
         </li>
       </ul>
+      <button
+        v-if="validationErrors.length > 5"
+        @click="showAllErrors = !showAllErrors"
+        class="mt-2 text-sm text-blue-600 hover:text-blue-800 focus:outline-none"
+      >
+        {{
+          showAllErrors
+            ? "Show less"
+            : `Show all ${validationErrors.length} errors`
+        }}
+      </button>
     </div>
 
     <form @submit.prevent="uploadTemplate">
@@ -151,6 +162,7 @@ export default {
       selectedFile: null,
       validationErrors: [],
       isFileValid: false, // Ensure this is initialized
+      showAllErrors: false,
     };
   },
 
@@ -162,6 +174,11 @@ export default {
       "userName",
       "heiId",
     ]),
+    visibleErrors() {
+      return this.showAllErrors
+        ? this.validationErrors
+        : this.validationErrors.slice(0, 5);
+    },
   },
 
   methods: {
@@ -248,7 +265,7 @@ export default {
             const rowNumber = index + 2;
             let currentRowHasErrors = false;
 
-            // ✅ Match "School Year" and "Semester" column names
+            // Match "School Year" and "Semester" column names
             if (!row["School Year"]) {
               tempErrors.push(`Row ${rowNumber}: "School Year" is missing.`);
               currentRowHasErrors = true;
@@ -269,7 +286,7 @@ export default {
               currentRowHasErrors = true;
             }
 
-            // 👇 Other required field validations
+            // Other required field validations
             if (!row.student_number) {
               tempErrors.push(`Row ${rowNumber}: Student number is required.`);
               currentRowHasErrors = true;

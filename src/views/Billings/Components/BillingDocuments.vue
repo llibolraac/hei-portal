@@ -20,140 +20,218 @@
     </div>
   </div>
 
-  <div v-else class="w-full overflow-x-auto">
-    <table
-      class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+  <div v-else class="w-full">
+    <!-- Billing Documents Table -->
+    <div
+      class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden"
     >
-      <thead
-        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+      <!-- Table Header with Academic Period -->
+      <div
+        class="px-4 sm:px-6 py-3 border-b border-gray-100 dark:border-gray-700"
       >
-        <tr>
-          <th scope="col" class="px-6 py-3">No.</th>
-
-          <th scope="col" class="px-6 py-3">Transaction No.</th>
-
-          <th scope="col" class="px-6 py-3">School Year</th>
-          <th scope="col" class="px-6 py-3">Semester</th>
-
-          <th scope="col" class="px-6 py-3">Batch Name</th>
-
-          <th scope="col" class="px-6 py-3">Batch No.</th>
-
-          <th scope="col" class="px-6 py-3">Amount</th>
-
-          <th scope="col" class="px-6 py-3">ASC</th>
-
-          <th scope="col" class="px-6 py-3">Total Amount</th>
-
-          <th scope="col" class="px-6 py-3">Total Grantees</th>
-
-          <th scope="col" class="px-6 py-3">Voucher Status</th>
-
-          <th scope="col" class="px-6 py-3">Billing Status</th>
-
-          <th scope="col" class="px-6 py-3">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(billing, index) in billings.data"
-          :key="billing.id"
-          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
+        <div
+          class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
         >
-          <th
-            scope="row"
-            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+            Billing Documents
+          </h2>
+          <div
+            v-if="billings?.data?.length > 0"
+            class="flex items-center gap-2 text-sm bg-gray-50 dark:bg-gray-700/50 px-3 py-1.5 rounded-lg"
           >
-            {{ calculateIndex(index) }}
-          </th>
-
-          <td class="px-6 py-4">
-            {{ billing.transaction_no }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{ billing.schoolyear.school_year }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{ billing.semester.semester }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{ billing.program.batch_name }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{ billing.program.batch_no }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{ formatDecimalValue(billing.amount) }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{ formatDecimalValue(billing.program_oc) }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{ formatDecimalValue(billing.total_amount) }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{ formatDecimalValue(billing.total_amount) }}
-          </td>
-
-          <td class="px-6 py-4">
-            <span
-              v-if="billing.voucher_id"
-              class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-            >
-              Processed
+            <span class="text-gray-600 dark:text-gray-300">
+              SY {{ billings.data[0].schoolyear?.school_year || "N/A" }}
             </span>
-
-            <span
-              v-else
-              class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
-            >
-              NO DV
+            <span class="text-gray-400">•</span>
+            <span class="text-gray-600 dark:text-gray-300">
+              {{ billings.data[0].semester?.semester || "N/A" }}
             </span>
-          </td>
-
-          <td class="px-6 py-4">
-            <span
-              :class="getStatusClass(billing.billing_status.id)"
-              class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm"
-            >
-              {{ billing.billing_status.status_name }}
-            </span>
-          </td>
-
-          <td class="px-6 py-4">
-            <div class="flex space-x-4">
-              <button
-                class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                @click="handleViewBilling(billing.id)"
+          </div>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <thead class="bg-gray-50 dark:bg-gray-700">
+            <tr>
+              <th
+                scope="col"
+                class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap"
               >
-                View
-              </button>
-
-              <button
-                @click.prevent="handleBillingDelete(billing.id)"
-                :disabled="billing.billing_status.id !== 1"
-                :class="[
-                  'font-medium hover:underline',
-                  billing.billing_status.id === 1
-                    ? 'text-red-600 dark:text-red-600'
-                    : 'text-gray-400 dark:text-gray-500 cursor-not-allowed',
-                ]"
+                #
+              </th>
+              <th
+                scope="col"
+                class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
               >
-                Delete
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                Transaction
+              </th>
+              <th
+                scope="col"
+                class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider hidden sm:table-cell"
+              >
+                Batch
+              </th>
+              <th
+                scope="col"
+                class="px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+              >
+                Amount
+              </th>
+              <th
+                scope="col"
+                class="px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider hidden md:table-cell"
+              >
+                ASC
+              </th>
+              <th
+                scope="col"
+                class="px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+              >
+                Total
+              </th>
+              <th
+                scope="col"
+                class="px-3 sm:px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+              >
+                Grantees
+              </th>
+              <th
+                scope="col"
+                class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+              >
+                Status
+              </th>
+              <th scope="col" class="relative px-6 py-3">
+                <span class="sr-only">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700"
+          >
+            <tr
+              v-for="(billing, index) in billings.data"
+              :key="billing.id"
+              class="hover:bg-gray-50 dark:hover:bg-gray-700/50"
+            >
+              <td
+                class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100"
+              >
+                {{ calculateIndex(index) }}
+              </td>
+              <td class="px-3 sm:px-6 py-4 whitespace-nowrap">
+                <div class="text-sm font-medium text-gray-900 dark:text-white">
+                  {{ billing.transaction_no }}
+                </div>
+                <div class="text-xs text-gray-500 sm:hidden">
+                  {{ billing.program?.batch_name || "N/A" }}
+                </div>
+              </td>
+              <td
+                class="px-3 sm:px-6 py-4 whitespace-nowrap hidden sm:table-cell"
+              >
+                <div class="text-sm text-gray-900 dark:text-white">
+                  {{ billing.program?.batch_name || "N/A" }}
+                </div>
+                <div class="text-xs text-gray-500">
+                  Batch {{ billing.program?.batch_no || "N/A" }}
+                </div>
+              </td>
+              <td
+                class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100 text-right"
+              >
+                {{ formatCurrency(billing.amount) }}
+              </td>
+              <td
+                class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-right hidden md:table-cell"
+              >
+                {{ formatCurrency(billing.program_oc) }}
+              </td>
+              <td
+                class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100 text-right"
+              >
+                {{ formatCurrency(billing.total_amount) }}
+              </td>
+              <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-center">
+                <span
+                  class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-blue-100 text-blue-800 text-xs font-medium dark:bg-blue-900/30 dark:text-blue-200"
+                >
+                  {{ billing.grantee_count || 0 }}
+                </span>
+              </td>
+              <td class="px-3 sm:px-6 py-4 whitespace-nowrap">
+                <span
+                  :class="getStatusClass(billing.billing_status.id)"
+                  class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                >
+                  {{ billing.billing_status.status_name }}
+                </span>
+              </td>
+              <td
+                class="px-3 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
+              >
+                <div class="flex justify-end space-x-2">
+                  <button
+                    @click="handleViewBilling(billing.id)"
+                    class="p-1.5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    title="View details"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    @click="handleBillingDelete(billing.id)"
+                    :disabled="billing.billing_status.id !== 1"
+                    :class="[
+                      'p-1.5 rounded-full transition-colors',
+                      billing.billing_status.id === 1
+                        ? 'text-red-500 hover:text-red-700 hover:bg-red-100 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/50'
+                        : 'text-gray-300 dark:text-gray-600 cursor-not-allowed',
+                    ]"
+                    :title="
+                      billing.billing_status.id === 1
+                        ? 'Delete billing'
+                        : 'Cannot delete processed billing'
+                    "
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
     <!-- Modal component -->
     <Modal

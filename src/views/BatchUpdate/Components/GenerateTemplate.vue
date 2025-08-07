@@ -50,7 +50,7 @@
         <option
           v-for="schoolyear in schoolyears"
           :key="schoolyear.id"
-          :value="schoolyear.id"
+          :value="schoolyear"
         >
           {{ schoolyear.school_year }}
         </option>
@@ -72,7 +72,7 @@
         <option
           v-for="semester in semesters"
           :key="semester.id"
-          :value="semester.id"
+          :value="semester"
         >
           {{ semester.semester }}
         </option>
@@ -85,11 +85,11 @@
       >
       <select
         v-model="selected_program"
-        id="schoolyear"
+        id="program-select"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         @change="fetchGrantees"
       >
-        <option selected>Select a Program</option>
+        <option :value="null" disabled>Select a Program</option>
         <option v-for="program in programs" :key="program.id" :value="program">
           ID: {{ program.id }} Program: {{ program.grant }} || Batch No:
           {{ program.batch_no }} || Batch type: {{ program.batch_type }} ||
@@ -112,8 +112,8 @@ export default {
 
   data() {
     return {
-      selectedsem: 1,
-      selectedsy: 3,
+      selectedsem: null,
+      selectedsy: null,
       selected_program: null,
       semesters: [],
       schoolyears: [],
@@ -136,8 +136,8 @@ export default {
   methods: {
     downloadTemplate() {
       const filters = {
-        sy: this.selectedsy,
-        sem: this.selectedsem,
+        sy: this.selectedsy.id,
+        sem: this.selectedsem.id,
         program_id: this.selected_program["id"], // ensure this is not null/undefined
         hei_id: this.heiId,
       };
@@ -155,7 +155,7 @@ export default {
           });
           const link = document.createElement("a");
           link.href = URL.createObjectURL(blob);
-          link.download = "grantee_update_template.csv";
+          link.download = `${this.selectedsy.school_year} ${this.selectedsem.semester} ${this.selected_program.grant} Batch ${this.selected_program.batch_no} ${this.selected_program.batch_type} ${this.selected_program.amount}.csv`;
           link.click();
         })
         .catch((error) => {
@@ -167,8 +167,8 @@ export default {
       this.$api
         .get(`/get-programs/${this.heiId}?page=${page}`, {
           params: {
-            sy: this.selectedsy,
-            sem: this.selectedsem,
+            sy: this.selectedsy["id"],
+            sem: this.selectedsem["id"],
           },
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
@@ -177,6 +177,8 @@ export default {
 
         .then((res) => {
           this.programs = res.data.programs;
+          // this.file_sy = res.data.sy;
+          // this.file_sem = res.data.sem;
           this.loading = false;
         });
     },
@@ -190,6 +192,9 @@ export default {
         });
         this.semesters = res.data.semesters;
         this.schoolyears = res.data.school_years;
+        this.selectedsy = this.schoolyears[2];
+        this.selectedsem = this.semesters[1];
+
         this.fetchPrograms();
       } catch (error) {
         console.error(error);
