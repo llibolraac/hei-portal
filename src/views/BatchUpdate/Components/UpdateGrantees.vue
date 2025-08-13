@@ -64,7 +64,7 @@
       </button>
     </div>
 
-    <form @submit.prevent="uploadTemplate">
+    <form @submit.prevent="uploadTemplate" class="mt-3">
       <label
         for="schoolYearSelect"
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -126,7 +126,7 @@
         class="mt-1 text-sm text-gray-500 dark:text-gray-300"
         id="file_input_help"
       >
-        CSV files only.
+      Only CSV files are allowed (maximum size: 5 MB).
       </p>
 
       <button
@@ -235,7 +235,8 @@ export default {
       }
 
       // File size check (5MB = 5 * 1024 * 1024 bytes)
-      if (file.size > 5 * 1024 * 1024) {
+      const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+      if (file.size > maxSize) {
         this.validationErrors.push("File size must not exceed 5MB.");
         this.$refs.fileInput.value = "";
         return;
@@ -320,15 +321,29 @@ export default {
               currentRowHasErrors = true;
             }
 
-            // Contact number (max 15 chars, adjust as needed)
+            // Contact number validation
             if (!row.contact_number) {
               tempErrors.push(`Row ${rowNumber}: Contact number is required.`);
               currentRowHasErrors = true;
-            } else if (row.contact_number.length > 15) {
-              tempErrors.push(
-                `Row ${rowNumber}: Contact number must not exceed 15 characters.`
-              );
-              currentRowHasErrors = true;
+            } else {
+              // Remove any non-digit characters for validation
+              const cleanNumber = row.contact_number.replace(/\D/g, '');
+              
+              // Check length (assuming 11 digits for standard PH numbers, adjust if needed)
+              if (cleanNumber.length < 10 || cleanNumber.length > 15) {
+                tempErrors.push(
+                  `Row ${rowNumber}: Contact number must be between 11 and 15 digits.`
+                );
+                currentRowHasErrors = true;
+              }
+              
+              // Check if it's a valid PH mobile number (starts with 09, 9, +639, 639)
+              if (!/^(09|\+?639|639)?\d{9,12}$/.test(cleanNumber)) {
+                tempErrors.push(
+                  `Row ${rowNumber}: Please enter a valid Philippine mobile number (e.g., 09171234567 or +639171234567).`
+                );
+                currentRowHasErrors = true;
+              }
             }
 
             if (!currentRowHasErrors) {
