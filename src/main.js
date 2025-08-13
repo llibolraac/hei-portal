@@ -16,17 +16,17 @@ const api = axios.create({
   // other configurations
 });
 
-// api.interceptors.response.use(
-//   (response) => {
-//     // console.log('API Response Intercepted:', response.data);
-//     return response;
-//   },
-//   (error) => {
-//     if (error.response.data.message) {
-//       store.dispatch("auth/logout");
-//     }
-//   }
-// );
+api.interceptors.response.use(
+  (response) => {
+    // console.log('API Response Intercepted:', response.data);
+    return response;
+  },
+  (error) => {
+    if (error.response.data.message) {
+      store.dispatch("auth/logout");
+    }
+  }
+);
 
 const app = createApp(App);
 app.use(ToastPlugin); // Register the toast plugin

@@ -252,7 +252,7 @@
           </router-link>
         </li>
 
-        <li>
+        <li v-if="userId == 85">
           <router-link
             to="/home/batch_update"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -290,7 +290,7 @@
           </router-link>
         </li>
 
-        <li>
+        <li v-if="userId == 85">
           <button
             @click="handleSemSY"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
