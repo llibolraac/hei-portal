@@ -203,6 +203,7 @@ export default {
         "Selected Semester:",
         this.selectedsem ? this.selectedsem.id : null
       );
+      z;
       // If changing Semester should update programs, call fetchPrograms here
       if (this.selectedsy && this.selectedsem) {
         this.fetchPrograms();
@@ -230,6 +231,13 @@ export default {
 
       if (!file) {
         this.validationErrors.push("No file selected.");
+        return;
+      }
+
+      // File size check (5MB = 5 * 1024 * 1024 bytes)
+      if (file.size > 5 * 1024 * 1024) {
+        this.validationErrors.push("File size must not exceed 5MB.");
+        this.$refs.fileInput.value = "";
         return;
       }
 
@@ -265,7 +273,7 @@ export default {
             const rowNumber = index + 2;
             let currentRowHasErrors = false;
 
-            // Match "School Year" and "Semester" column names
+            // School Year and Semester checks
             if (!row["School Year"]) {
               tempErrors.push(`Row ${rowNumber}: "School Year" is missing.`);
               currentRowHasErrors = true;
@@ -286,12 +294,13 @@ export default {
               currentRowHasErrors = true;
             }
 
-            // Other required field validations
+            // Student number
             if (!row.student_number) {
               tempErrors.push(`Row ${rowNumber}: Student number is required.`);
               currentRowHasErrors = true;
             }
 
+            // ZIP code
             if (!row.zip_code) {
               tempErrors.push(`Row ${rowNumber}: ZIP code is required.`);
               currentRowHasErrors = true;
@@ -302,6 +311,7 @@ export default {
               currentRowHasErrors = true;
             }
 
+            // Email
             if (!row.email_address) {
               tempErrors.push(`Row ${rowNumber}: Email address is required.`);
               currentRowHasErrors = true;
@@ -310,8 +320,14 @@ export default {
               currentRowHasErrors = true;
             }
 
+            // Contact number (max 15 chars, adjust as needed)
             if (!row.contact_number) {
               tempErrors.push(`Row ${rowNumber}: Contact number is required.`);
+              currentRowHasErrors = true;
+            } else if (row.contact_number.length > 15) {
+              tempErrors.push(
+                `Row ${rowNumber}: Contact number must not exceed 15 characters.`
+              );
               currentRowHasErrors = true;
             }
 
