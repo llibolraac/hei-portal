@@ -36,28 +36,88 @@
         </div>
         <div class="flex items-center">
           <!-- notifications -->
-
-          <button
-            id="dropdownNotificationButton"
-            data-dropdown-toggle="dropdownNotification"
-            class="relative inline-flex items-center text-sm font-medium text-center text-gray-500 hover:text-gray-900 focus:outline-none dark:hover:text-white dark:text-gray-400"
-            type="button"
-          >
-            <svg
-              class="w-5 h-5"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 14 20"
+          <div class="relative">
+            <button
+              id="dropdownNotificationButton"
+              class="relative inline-flex items-center text-sm font-medium text-center text-gray-500 hover:text-gray-900 focus:outline-none dark:hover:text-white dark:text-gray-400"
+              type="button"
+              @click="toggleNotifications"
             >
-              <path
-                d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"
-              />
-            </svg>
+              <svg
+                class="w-5 h-5"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 14 20"
+              >
+                <path
+                  d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"
+                />
+              </svg>
 
-            <div
-              class="absolute block w-3 h-3 bg-red-500 border-2 border-white rounded-full -top-0.5 start-2.5 dark:border-gray-900"
-            ></div>
-          </button>
+              <div
+                v-if="unreadCount > 0"
+                class="absolute block w-3 h-3 bg-red-500 border-2 border-white rounded-full -top-0.5 start-2.5 dark:border-gray-900"
+              ></div>
+            </button>
+            
+            <!-- Notification Dropdown -->
+            <div 
+              v-if="isNotificationOpen"
+              class="absolute right-0 z-20 w-80 mt-2 bg-white rounded-lg shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5 notification-dropdown"
+            >
+              <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between items-center">
+                  <h3 class="font-medium text-gray-900 dark:text-white">Notifications</h3>
+                  <button 
+                    v-if="unreadCount > 0"
+                    @click="markAllAsRead"
+                    class="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                  >
+                    Mark all as read
+                  </button>
+                </div>
+              </div>
+              <div class="max-h-96 overflow-y-auto">
+                <div v-if="notifications.length === 0" class="p-4 text-center text-sm text-gray-500">
+                  No new notifications
+                </div>
+                <div v-else>
+                  <a
+                    v-for="notification in notifications"
+                    :key="notification.id"
+                    href="#"
+                    @click.prevent="markAsRead(notification)"
+                    class="block px-4 py-3 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    :class="{ 'bg-gray-50 dark:bg-gray-700/50': !notification.read_at }"
+                  >
+                    <div class="flex items-start">
+                      <div class="flex-shrink-0 pt-0.5">
+                        <img
+                          class="w-8 h-8 rounded-full"
+                          src="/src/assets/unifast.png"
+                          alt="Notification icon"
+                        />
+                      </div>
+                      <div class="ml-3 flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">
+                          {{ notification.data?.title || notification.title || 'New Notification' }}
+                        </p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                          {{ notification.data?.message || notification.message || 'You have a new notification' }}
+                        </p>
+                        <div class="mt-1 text-xs text-gray-400">
+                          {{ formatTimeAgo(notification.created_at) }}
+                        </div>
+                      </div>
+                      <div v-if="!notification.read_at" class="ml-2">
+                        <span class="w-2 h-2 bg-blue-500 rounded-full inline-block"></span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <!-- Dropdown menu -->
           <div
@@ -273,14 +333,7 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M21 13v-2a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L14 4.757V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L4.929 6.343a1 1 0 0 0 0 1.414l.536.536L4.757 10H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535 1.707.707V20a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H20a1 1 0 0 0 1-1Z"
-              />
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                d="M8 17.345v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"
               />
             </svg>
 
@@ -311,7 +364,7 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M8 17.345a4.76 4.76 0 0 0 2.558 1.618c2.274.589 4.512-.446 4.999-2.31.487-1.866-1.273-3.9-3.546-4.49-2.273-.59-4.034-2.623-3.547-4.488.486-1.865 2.724-2.899 4.998-2.31.982.236 1.87.793 2.538 1.592m-3.879 12.171V21m0-18v2.2"
+                d="M8 17.345v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"
               />
             </svg>
 
@@ -401,6 +454,9 @@ export default {
       selectedsem: "",
       notifications: [],
       isDisabled: false,
+      unreadCount: 0,
+      pollingInterval: null,
+      isNotificationOpen: false,
     };
   },
 
@@ -410,6 +466,66 @@ export default {
 
   methods: {
     ...mapActions("auth", ["login"]),
+
+    // Toggle notification dropdown
+    toggleNotifications() {
+      this.isNotificationOpen = !this.isNotificationOpen;
+      if (this.isNotificationOpen) {
+        this.markAllAsRead();
+      }
+    },
+    
+    // Mark all notifications as read
+    async markAllAsRead() {
+      try {
+        await this.$api.post('/notifications/mark-all-read', {}, {
+          headers: { Authorization: `Bearer ${this.accessToken}` }
+        });
+        this.unreadCount = 0;
+        this.notifications = this.notifications.map(n => ({ ...n, read_at: new Date() }));
+      } catch (error) {
+        console.error('Error marking notifications as read:', error);
+      }
+    },
+    
+    // Mark single notification as read
+    async markAsRead(notification) {
+      if (notification.read_at) return;
+      
+      try {
+        await this.$api.post(`/notifications/${notification.id}/mark-as-read`, {}, {
+          headers: { Authorization: `Bearer ${this.accessToken}` }
+        });
+        notification.read_at = new Date();
+        if (this.unreadCount > 0) {
+          this.unreadCount--;
+        }
+      } catch (error) {
+        console.error('Error marking notification as read:', error);
+      }
+    },
+    
+    // Setup polling for notifications
+    setupNotificationPolling() {
+      // Clear any existing interval
+      if (this.pollingInterval) {
+        clearInterval(this.pollingInterval);
+      }
+      
+      // Poll every 30 seconds (adjust as needed)
+      this.pollingInterval = setInterval(() => {
+        if (!this.isNotificationOpen) { // Only poll when dropdown is closed to reduce load
+          this.fetchNotifications();
+        }
+      }, 30000);
+    },
+    
+    // Cleanup polling on component destroy
+    cleanupPolling() {
+      if (this.pollingInterval) {
+        clearInterval(this.pollingInterval);
+      }
+    },
 
     handleSemSY() {
       this.showModal = true;
@@ -473,8 +589,21 @@ export default {
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
           },
+          params: {
+            include_read: this.isNotificationOpen // Only fetch unread when dropdown is closed
+          }
         });
-        this.notifications = res.data;
+        
+        // Update unread count
+        this.unreadCount = res.data.filter(n => !n.read_at).length;
+        
+        // Update notifications, preserving existing read status
+        const existingNotifications = new Map(this.notifications.map(n => [n.id, n]));
+        this.notifications = res.data.map(notification => ({
+          ...notification,
+          // Preserve existing read status if we already have this notification
+          read_at: existingNotifications.get(notification.id)?.read_at || notification.read_at
+        }));
       } catch (error) {
         console.error("Failed to load notifications:", error);
       }
@@ -499,6 +628,216 @@ export default {
     },
   },
 
+  methods: {
+    ...mapActions("auth", ["login"]),
+
+    // Toggle notification dropdown
+    toggleNotifications() {
+      this.isNotificationOpen = !this.isNotificationOpen;
+      if (this.isNotificationOpen) {
+        this.markAllAsRead();
+      }
+    },
+    
+    // Mark all notifications as read
+    async markAllAsRead() {
+      try {
+        await this.$api.post('/notifications/mark-all-read', {}, {
+          headers: { Authorization: `Bearer ${this.accessToken}` }
+        });
+        this.unreadCount = 0;
+        this.notifications = this.notifications.map(n => ({ ...n, read_at: new Date() }));
+      } catch (error) {
+        console.error('Error marking notifications as read:', error);
+      }
+    },
+    
+    // Mark single notification as read
+    async markAsRead(notification) {
+      if (notification.read_at) return;
+      
+      try {
+        await this.$api.post(`/notifications/${notification.id}/mark-as-read`, {}, {
+          headers: { Authorization: `Bearer ${this.accessToken}` }
+        });
+        notification.read_at = new Date();
+        if (this.unreadCount > 0) {
+          this.unreadCount--;
+        }
+      } catch (error) {
+        console.error('Error marking notification as read:', error);
+      }
+    },
+    
+    // Setup polling for notifications
+    setupNotificationPolling() {
+      // Clear any existing interval
+      if (this.pollingInterval) {
+        clearInterval(this.pollingInterval);
+      }
+      
+      // Poll every 30 seconds (adjust as needed)
+      this.pollingInterval = setInterval(() => {
+        if (!this.isNotificationOpen) { // Only poll when dropdown is closed to reduce load
+          this.fetchNotifications();
+        }
+      }, 30000);
+    },
+    
+    // Cleanup polling on component destroy
+    cleanupPolling() {
+      if (this.pollingInterval) {
+        clearInterval(this.pollingInterval);
+      }
+    },
+
+    handleSemSY() {
+      this.showModal = true;
+    },
+
+    async handleLogout() {
+      try {
+        const res = await this.$api.post(
+          `/logout`,
+          {}, // Empty body for the POST request
+          {
+            headers: {
+              Authorization: `Bearer ${this.accessToken}`,
+            },
+          }
+        );
+
+        if (res.data.success) {
+          this.$store
+            .dispatch("auth/logout")
+            .then(() => {
+              this.$router.push("/");
+            })
+
+            .catch((error) => {
+              console.error("Logout error:", error);
+            });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async sysem() {
+      try {
+        const res = await this.$api.get(`/sy-sem`, {
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`,
+          },
+        });
+        this.semesters = res.data.semesters;
+        this.schoolyears = res.data.school_years;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    handleSubmit() {
+      this.$router.push({
+        name: "ManageBillings",
+        query: {
+          schoolYearId: this.selectedsy,
+          semesterId: this.selectedsem,
+        },
+      });
+    },
+
+    async fetchNotifications() {
+      try {
+        const res = await this.$api.get("/notifications", {
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`,
+          },
+          params: {
+            include_read: this.isNotificationOpen // Only fetch unread when dropdown is closed
+          }
+        });
+        
+        // Update unread count
+        this.unreadCount = res.data.filter(n => !n.read_at).length;
+        
+        // Update notifications, preserving existing read status
+        const existingNotifications = new Map(this.notifications.map(n => [n.id, n]));
+        this.notifications = res.data.map(notification => ({
+          ...notification,
+          // Preserve existing read status if we already have this notification
+          read_at: existingNotifications.get(notification.id)?.read_at || notification.read_at
+        }));
+      } catch (error) {
+        console.error("Failed to load notifications:", error);
+      }
+    },
+    
+    closeMobileSidebar() {
+      // Close the drawer
+      const sidebar = document.getElementById("logo-sidebar");
+      if (sidebar && sidebar.classList.contains("translate-x-0")) {
+        sidebar.classList.remove("translate-x-0");
+        sidebar.classList.add("-translate-x-full");
+      }
+
+      // Remove Flowbite backdrop if it exists
+      const backdrop = document.querySelector("[drawer-backdrop]");
+      if (backdrop) {
+        backdrop.remove();
+      }
+
+      // Remove body overflow lock just in case
+      document.body.classList.remove("overflow-hidden");
+    },
+    
+    // Format time as "X time ago"
+    formatTimeAgo(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return '';
+      
+      const now = new Date();
+      const seconds = Math.floor((now - date) / 1000);
+      
+      const intervals = {
+        year: 31536000,
+        month: 2592000,
+        week: 604800,
+        day: 86400,
+        hour: 3600,
+        minute: 60,
+        second: 1
+      };
+      
+      for (const [unit, secondsInUnit] of Object.entries(intervals)) {
+        const interval = Math.floor(seconds / secondsInUnit);
+        if (interval >= 1) {
+          return interval === 1 ? `1 ${unit} ago` : `${interval} ${unit}s ago`;
+        }
+      }
+      
+      return 'Just now';
+    },
+    
+    // Handle click outside notification dropdown
+    handleClickOutside(event) {
+      // Use document to find elements instead of this.$el
+      const dropdown = document.querySelector('.notification-dropdown');
+      const button = document.getElementById('dropdownNotificationButton');
+      
+      // Check if the click is outside both dropdown and button
+      if (this.isNotificationOpen && 
+          dropdown && 
+          button &&
+          event.target !== button && 
+          !button.contains(event.target) &&
+          !dropdown.contains(event.target)) {
+        this.isNotificationOpen = false;
+      }
+    }
+  },
+
   watch: {
     $route() {
       this.closeMobileSidebar();
@@ -508,12 +847,59 @@ export default {
   mounted() {
     this.sysem();
     this.fetchNotifications();
-
-    // Fix dropdowns not working
-    setTimeout(() => {
-      initDropdowns(); // ✅ initialize all dropdowns that use data-dropdown-toggle
-      initDrawers();
-    }, 0);
+    this.setupNotificationPolling();
+    initDrawers();
+    initDropdowns();
+    
+    // Add click outside listener
+    document.addEventListener('click', this.handleClickOutside);
+  },
+  
+  beforeUnmount() {
+    this.cleanupPolling();
+    // Remove click outside listener
+    document.removeEventListener('click', this.handleClickOutside);
+  },
+  
+  // Format time as "X time ago"
+  formatTimeAgo(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '';
+    
+    const now = new Date();
+    const seconds = Math.floor((now - date) / 1000);
+    
+    const intervals = {
+      year: 31536000,
+      month: 2592000,
+      week: 604800,
+      day: 86400,
+      hour: 3600,
+      minute: 60,
+      second: 1
+    };
+    
+    for (const [unit, secondsInUnit] of Object.entries(intervals)) {
+      const interval = Math.floor(seconds / secondsInUnit);
+      if (interval >= 1) {
+        return interval === 1 ? `1 ${unit} ago` : `${interval} ${unit}s ago`;
+      }
+    }
+    
+    return 'Just now';
+  },
+  
+  // Handle click outside notification dropdown
+  handleClickOutside(event) {
+    const dropdown = this.$el.querySelector('.notification-dropdown');
+    const button = this.$el.querySelector('#dropdownNotificationButton');
+    
+    if (this.isNotificationOpen && 
+        !dropdown.contains(event.target) && 
+        !button.contains(event.target)) {
+      this.isNotificationOpen = false;
+    }
   },
 };
 </script>

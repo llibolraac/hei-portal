@@ -279,11 +279,11 @@ export default {
             Authorization: `Bearer ${this.accessToken}`,
           },
         });
-
+        window.location.reload();
         this.$toast.success("Billing submitted successfully");
         // Optionally redirect or reset the form
         // this.$router.push('/billing');
-      } catch (e) {
+    } catch (e) {
         if (e.response?.data?.errors) {
           console.error("Validation errors:", e.response.data.errors);
           alert(

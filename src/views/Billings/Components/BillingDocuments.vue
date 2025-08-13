@@ -109,7 +109,19 @@
           <tbody
             class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700"
           >
+            <tr v-if="billings?.data?.length === 0">
+              <td colspan="9" class="px-6 py-12 text-center">
+                <div class="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
+                  <svg class="w-16 h-16 mb-4 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                  </svg>
+                  <h3 class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-1">No billings available</h3>
+                  <p class="text-sm">There are no billing records to display.</p>
+                </div>
+              </td>
+            </tr>
             <tr
+              v-else
               v-for="(billing, index) in billings.data"
               :key="billing.id"
               class="hover:bg-gray-50 dark:hover:bg-gray-700/50"
