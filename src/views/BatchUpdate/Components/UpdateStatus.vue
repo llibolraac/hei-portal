@@ -184,7 +184,7 @@ export default {
 
     async fetchBatchProfileStatus() {
       this.$api
-        .get(`/batch-profile-status/`, {
+        .get(`/batch-profile-status`, {
           params: {
             school_year_id: this.selectedsy, // Correct: send the ID
             semester_id: this.selectedsem, //  Correct: send the ID
