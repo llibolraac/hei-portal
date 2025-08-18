@@ -259,6 +259,13 @@ export default {
           this.grantees_count = res.data.grantees_count;
           this.signatories = res.data.signatories;
           this.loading = false;
+
+          setTimeout(() => {
+            window.print();
+          }, 1000);
+          window.onafterprint = function () {
+            window.close();
+          };
         });
     },
   },
