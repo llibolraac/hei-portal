@@ -554,7 +554,7 @@
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p style="font-size: 11px; font-weight: bold">
-              {{ this.userName }}
+              {{ this.signatories.tes_focal }}
             </p>
             <p>TES Focal Person</p>
           </td>
