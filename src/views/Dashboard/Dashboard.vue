@@ -371,6 +371,28 @@
             <span class="flex-1 ms-3 whitespace-nowrap">Manage Billings</span>
           </button>
         </li>
+
+        <li>
+            <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+              <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.5 12A2.5 2.5 0 0 1 21 9.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2.5a2.5 2.5 0 0 1 0 5V17a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-2.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+</svg>
+
+                  <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Support</span>
+                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                  </svg>
+            </button>
+            <ul id="dropdown-example" class="hidden py-2 space-y-2">
+                  <li>
+                     <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Ticket</a>
+                  </li>
+                  <li>
+                     <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Contact Us</a>
+                  </li>
+               
+            </ul>
+         </li>
       </ul>
     </div>
   </aside>
@@ -434,9 +456,8 @@
 </template>
 
 <script>
-import { Dropdown, initDropdowns, initDrawers } from "flowbite";
-import { mapActions } from "vuex";
-import { mapGetters } from "vuex";
+import { Dropdown, initDropdowns, initDrawers, initCollapses  } from "flowbite";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Login",
@@ -467,64 +488,47 @@ export default {
   methods: {
     ...mapActions("auth", ["login"]),
 
-    // Toggle notification dropdown
     toggleNotifications() {
       this.isNotificationOpen = !this.isNotificationOpen;
       if (this.isNotificationOpen) {
         this.markAllAsRead();
       }
     },
-    
-    // Mark all notifications as read
+
     async markAllAsRead() {
       try {
-        await this.$api.post('/notifications/mark-all-read', {}, {
-          headers: { Authorization: `Bearer ${this.accessToken}` }
+        await this.$api.post("/notifications/mark-all-read", {}, {
+          headers: { Authorization: `Bearer ${this.accessToken}` },
         });
         this.unreadCount = 0;
         this.notifications = this.notifications.map(n => ({ ...n, read_at: new Date() }));
       } catch (error) {
-        console.error('Error marking notifications as read:', error);
+        console.error("Error marking notifications as read:", error);
       }
     },
-    
-    // Mark single notification as read
+
     async markAsRead(notification) {
       if (notification.read_at) return;
-      
       try {
         await this.$api.post(`/notifications/${notification.id}/mark-as-read`, {}, {
-          headers: { Authorization: `Bearer ${this.accessToken}` }
+          headers: { Authorization: `Bearer ${this.accessToken}` },
         });
         notification.read_at = new Date();
-        if (this.unreadCount > 0) {
-          this.unreadCount--;
-        }
+        if (this.unreadCount > 0) this.unreadCount--;
       } catch (error) {
-        console.error('Error marking notification as read:', error);
+        console.error("Error marking notification as read:", error);
       }
     },
-    
-    // Setup polling for notifications
+
     setupNotificationPolling() {
-      // Clear any existing interval
-      if (this.pollingInterval) {
-        clearInterval(this.pollingInterval);
-      }
-      
-      // Poll every 30 seconds (adjust as needed)
+      if (this.pollingInterval) clearInterval(this.pollingInterval);
       this.pollingInterval = setInterval(() => {
-        if (!this.isNotificationOpen) { // Only poll when dropdown is closed to reduce load
-          this.fetchNotifications();
-        }
+        if (!this.isNotificationOpen) this.fetchNotifications();
       }, 30000);
     },
-    
-    // Cleanup polling on component destroy
+
     cleanupPolling() {
-      if (this.pollingInterval) {
-        clearInterval(this.pollingInterval);
-      }
+      if (this.pollingInterval) clearInterval(this.pollingInterval);
     },
 
     handleSemSY() {
@@ -533,26 +537,14 @@ export default {
 
     async handleLogout() {
       try {
-        const res = await this.$api.post(
-          `/logout`,
-          {}, // Empty body for the POST request
-          {
-            headers: {
-              Authorization: `Bearer ${this.accessToken}`,
-            },
-          }
-        );
+        const res = await this.$api.post("/logout", {}, {
+          headers: { Authorization: `Bearer ${this.accessToken}` },
+        });
 
         if (res.data.success) {
-          this.$store
-            .dispatch("auth/logout")
-            .then(() => {
-              this.$router.push("/");
-            })
-
-            .catch((error) => {
-              console.error("Logout error:", error);
-            });
+          this.$store.dispatch("auth/logout").then(() => {
+            this.$router.push("/");
+          }).catch(err => console.error("Logout error:", err));
         }
       } catch (error) {
         console.error(error);
@@ -562,9 +554,7 @@ export default {
     async sysem() {
       try {
         const res = await this.$api.get(`/sy-sem`, {
-          headers: {
-            Authorization: `Bearer ${this.accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${this.accessToken}` },
         });
         this.semesters = res.data.semesters;
         this.schoolyears = res.data.school_years;
@@ -586,23 +576,16 @@ export default {
     async fetchNotifications() {
       try {
         const res = await this.$api.get("/notifications", {
-          headers: {
-            Authorization: `Bearer ${this.accessToken}`,
-          },
-          params: {
-            include_read: this.isNotificationOpen // Only fetch unread when dropdown is closed
-          }
+          headers: { Authorization: `Bearer ${this.accessToken}` },
+          params: { include_read: this.isNotificationOpen },
         });
-        
-        // Update unread count
+
         this.unreadCount = res.data.filter(n => !n.read_at).length;
-        
-        // Update notifications, preserving existing read status
-        const existingNotifications = new Map(this.notifications.map(n => [n.id, n]));
-        this.notifications = res.data.map(notification => ({
-          ...notification,
-          // Preserve existing read status if we already have this notification
-          read_at: existingNotifications.get(notification.id)?.read_at || notification.read_at
+
+        const existing = new Map(this.notifications.map(n => [n.id, n]));
+        this.notifications = res.data.map(n => ({
+          ...n,
+          read_at: existing.get(n.id)?.read_at || n.read_at,
         }));
       } catch (error) {
         console.error("Failed to load notifications:", error);
@@ -610,196 +593,23 @@ export default {
     },
 
     closeMobileSidebar() {
-      // Close the drawer
       const sidebar = document.getElementById("logo-sidebar");
-      if (sidebar && sidebar.classList.contains("translate-x-0")) {
+      if (sidebar?.classList.contains("translate-x-0")) {
         sidebar.classList.remove("translate-x-0");
         sidebar.classList.add("-translate-x-full");
       }
-
-      // Remove Flowbite backdrop if it exists
-      const backdrop = document.querySelector("[drawer-backdrop]");
-      if (backdrop) {
-        backdrop.remove();
-      }
-
-      // Remove body overflow lock just in case
+      document.querySelector("[drawer-backdrop]")?.remove();
       document.body.classList.remove("overflow-hidden");
     },
-  },
 
-  methods: {
-    ...mapActions("auth", ["login"]),
-
-    // Toggle notification dropdown
-    toggleNotifications() {
-      this.isNotificationOpen = !this.isNotificationOpen;
-      if (this.isNotificationOpen) {
-        this.markAllAsRead();
-      }
-    },
-    
-    // Mark all notifications as read
-    async markAllAsRead() {
-      try {
-        await this.$api.post('/notifications/mark-all-read', {}, {
-          headers: { Authorization: `Bearer ${this.accessToken}` }
-        });
-        this.unreadCount = 0;
-        this.notifications = this.notifications.map(n => ({ ...n, read_at: new Date() }));
-      } catch (error) {
-        console.error('Error marking notifications as read:', error);
-      }
-    },
-    
-    // Mark single notification as read
-    async markAsRead(notification) {
-      if (notification.read_at) return;
-      
-      try {
-        await this.$api.post(`/notifications/${notification.id}/mark-as-read`, {}, {
-          headers: { Authorization: `Bearer ${this.accessToken}` }
-        });
-        notification.read_at = new Date();
-        if (this.unreadCount > 0) {
-          this.unreadCount--;
-        }
-      } catch (error) {
-        console.error('Error marking notification as read:', error);
-      }
-    },
-    
-    // Setup polling for notifications
-    setupNotificationPolling() {
-      // Clear any existing interval
-      if (this.pollingInterval) {
-        clearInterval(this.pollingInterval);
-      }
-      
-      // Poll every 30 seconds (adjust as needed)
-      this.pollingInterval = setInterval(() => {
-        if (!this.isNotificationOpen) { // Only poll when dropdown is closed to reduce load
-          this.fetchNotifications();
-        }
-      }, 30000);
-    },
-    
-    // Cleanup polling on component destroy
-    cleanupPolling() {
-      if (this.pollingInterval) {
-        clearInterval(this.pollingInterval);
-      }
-    },
-
-    handleSemSY() {
-      this.showModal = true;
-    },
-
-    async handleLogout() {
-      try {
-        const res = await this.$api.post(
-          `/logout`,
-          {}, // Empty body for the POST request
-          {
-            headers: {
-              Authorization: `Bearer ${this.accessToken}`,
-            },
-          }
-        );
-
-        if (res.data.success) {
-          this.$store
-            .dispatch("auth/logout")
-            .then(() => {
-              this.$router.push("/");
-            })
-
-            .catch((error) => {
-              console.error("Logout error:", error);
-            });
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    async sysem() {
-      try {
-        const res = await this.$api.get(`/sy-sem`, {
-          headers: {
-            Authorization: `Bearer ${this.accessToken}`,
-          },
-        });
-        this.semesters = res.data.semesters;
-        this.schoolyears = res.data.school_years;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    handleSubmit() {
-      this.$router.push({
-        name: "ManageBillings",
-        query: {
-          schoolYearId: this.selectedsy,
-          semesterId: this.selectedsem,
-        },
-      });
-    },
-
-    async fetchNotifications() {
-      try {
-        const res = await this.$api.get("/notifications", {
-          headers: {
-            Authorization: `Bearer ${this.accessToken}`,
-          },
-          params: {
-            include_read: this.isNotificationOpen // Only fetch unread when dropdown is closed
-          }
-        });
-        
-        // Update unread count
-        this.unreadCount = res.data.filter(n => !n.read_at).length;
-        
-        // Update notifications, preserving existing read status
-        const existingNotifications = new Map(this.notifications.map(n => [n.id, n]));
-        this.notifications = res.data.map(notification => ({
-          ...notification,
-          // Preserve existing read status if we already have this notification
-          read_at: existingNotifications.get(notification.id)?.read_at || notification.read_at
-        }));
-      } catch (error) {
-        console.error("Failed to load notifications:", error);
-      }
-    },
-    
-    closeMobileSidebar() {
-      // Close the drawer
-      const sidebar = document.getElementById("logo-sidebar");
-      if (sidebar && sidebar.classList.contains("translate-x-0")) {
-        sidebar.classList.remove("translate-x-0");
-        sidebar.classList.add("-translate-x-full");
-      }
-
-      // Remove Flowbite backdrop if it exists
-      const backdrop = document.querySelector("[drawer-backdrop]");
-      if (backdrop) {
-        backdrop.remove();
-      }
-
-      // Remove body overflow lock just in case
-      document.body.classList.remove("overflow-hidden");
-    },
-    
-    // Format time as "X time ago"
     formatTimeAgo(dateString) {
-      if (!dateString) return '';
+      if (!dateString) return "";
       const date = new Date(dateString);
-      if (isNaN(date.getTime())) return '';
-      
+      if (isNaN(date.getTime())) return "";
+
       const now = new Date();
       const seconds = Math.floor((now - date) / 1000);
-      
+
       const intervals = {
         year: 31536000,
         month: 2592000,
@@ -807,99 +617,44 @@ export default {
         day: 86400,
         hour: 3600,
         minute: 60,
-        second: 1
+        second: 1,
       };
-      
+
       for (const [unit, secondsInUnit] of Object.entries(intervals)) {
         const interval = Math.floor(seconds / secondsInUnit);
         if (interval >= 1) {
           return interval === 1 ? `1 ${unit} ago` : `${interval} ${unit}s ago`;
         }
       }
-      
-      return 'Just now';
-    },
-    
-    // Handle click outside notification dropdown
-    handleClickOutside(event) {
-      // Use document to find elements instead of this.$el
-      const dropdown = document.querySelector('.notification-dropdown');
-      const button = document.getElementById('dropdownNotificationButton');
-      
-      // Check if the click is outside both dropdown and button
-      if (this.isNotificationOpen && 
-          dropdown && 
-          button &&
-          event.target !== button && 
-          !button.contains(event.target) &&
-          !dropdown.contains(event.target)) {
-        this.isNotificationOpen = false;
-      }
-    }
-  },
 
-  watch: {
-    $route() {
-      this.closeMobileSidebar();
+      return "Just now";
     },
   },
 
   mounted() {
+
+      // init support dropdown
+  const $triggerEl = document.getElementById("dropdownSupportButton");
+  const $dropdownEl = document.getElementById("dropdownSupport");
+
+  if ($triggerEl && $dropdownEl) {
+    new Dropdown($dropdownEl, $triggerEl);
+  }
+
+
+  
     this.sysem();
     this.fetchNotifications();
     this.setupNotificationPolling();
-    initDrawers();
     initDropdowns();
-    
-    // Add click outside listener
-    document.addEventListener('click', this.handleClickOutside);
+    initDrawers();
+    initCollapses(); // ✅ needed for sidebar nested toggle
+
   },
-  
+
   beforeUnmount() {
     this.cleanupPolling();
-    // Remove click outside listener
-    document.removeEventListener('click', this.handleClickOutside);
-  },
-  
-  // Format time as "X time ago"
-  formatTimeAgo(dateString) {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) return '';
-    
-    const now = new Date();
-    const seconds = Math.floor((now - date) / 1000);
-    
-    const intervals = {
-      year: 31536000,
-      month: 2592000,
-      week: 604800,
-      day: 86400,
-      hour: 3600,
-      minute: 60,
-      second: 1
-    };
-    
-    for (const [unit, secondsInUnit] of Object.entries(intervals)) {
-      const interval = Math.floor(seconds / secondsInUnit);
-      if (interval >= 1) {
-        return interval === 1 ? `1 ${unit} ago` : `${interval} ${unit}s ago`;
-      }
-    }
-    
-    return 'Just now';
-  },
-  
-  // Handle click outside notification dropdown
-  handleClickOutside(event) {
-    const dropdown = this.$el.querySelector('.notification-dropdown');
-    const button = this.$el.querySelector('#dropdownNotificationButton');
-    
-    if (this.isNotificationOpen && 
-        !dropdown.contains(event.target) && 
-        !button.contains(event.target)) {
-      this.isNotificationOpen = false;
-    }
   },
 };
 </script>
+
