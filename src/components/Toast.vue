@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-if="visible" class="flex items-center w-full max-w-xs p-4 mb-4 rounded-lg shadow-sm fixed bottom-4 right-4" :class="toastBaseClasses" role="alert" aria-live="polite">
+    <div v-if="visible" class="flex items-center w-full max-w-xs p-4 mb-4 rounded-lg shadow-sm fixed bottom-4 right-4 z-[9999]" :class="toastBaseClasses" role="alert" aria-live="polite">
       <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 rounded-lg" :class="iconContainerClasses">
         <slot name="icon">
           <svg v-if="type === 'success'" class="w-5 h-5"xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">

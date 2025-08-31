@@ -95,9 +95,20 @@ export default {
     closeModal() {
       this.$emit('update:isVisible', false); // Emit the updated visibility state
     },
-    submitAction() {
-      this.$emit('submit'); // Emit the submit event
-      this.closeModal();
+    async submitAction() {
+      try {
+        // Emit the submit event and wait for any promise to resolve
+        const result = await new Promise((resolve) => {
+          this.$emit('submit', resolve);
+        });
+        
+        // Only close the modal if the result is not false
+        if (result !== false) {
+          this.closeModal();
+        }
+      } catch (error) {
+        console.error('Error in submit action:', error);
+      }
     },
   },
 };
