@@ -22,6 +22,7 @@ import TDPForm4 from "../views/Templates/TDP/TDPForm4.vue"; // Assuming this is 
 
 // Importing other components
 import Home from "../views/Home/Home.vue";
+import Support from "../views/Support/Support.vue";
 
 // Create the router instance
 const router = createRouter({
@@ -136,6 +137,12 @@ const router = createRouter({
           name: "BatchUpdate",
           component: BatchUpdate,
         },
+
+        {
+          path: "support",
+          name: "Support",
+          component: Support,
+        }
       ],
       meta: {
         requiresAuth: true, // Example of a meta field for routes
