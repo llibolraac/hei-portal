@@ -54,107 +54,121 @@
         </span>
       </div>
     </div>
-    <PrintBillingDocuments :programName="program" :billingId="billingId" />
+    <!-- <PrintBillingDocuments :programName="program" :billingId="billingId" /> -->
 
-    <div
-      v-if="
-        this.formData.billing_status.id === 1 ||
-        this.formData.billing_status.id === 3
-      "
-      class="space-y-4 border-t border-gray-200 pt-4 mt-4"
-    >
-      <!-- Delivery Method -->
-      <h3 class="text-md font-semibold text-gray-700 dark:text-gray-300 mb-2">
-        Select Delivery Method
-      </h3>
-      <div class="flex gap-2">
-        <button
-          v-for="option in ['hand', 'courier']"
-          :key="option"
-          @click="selectDelivery(option)"
-          type="button"
-          class="inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-medium transition border shadow-sm focus:ring-2 focus:outline-none"
-          :class="[
-            selectedDelivery === option
-              ? 'bg-blue-600 text-white border-transparent focus:ring-blue-300'
-              : 'bg-gray-100 text-gray-800 border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600 focus:ring-gray-400',
-          ]"
-        >
-          {{ option === "hand" ? "Hand Deliver" : "Courier" }}
-        </button>
-      </div>
-
-      <!-- Courier Form -->
-      <form
-        v-if="selectedDelivery === 'courier'"
-        @submit.prevent="submitDelivery"
-        class="mt-3"
+    <div v-if="formData.hei_type === 0">
+      <div
+        v-if="
+          this.formData.billing_status.id === 1 ||
+          this.formData.billing_status.id === 3
+        "
+        class="space-y-4 border-t border-gray-200 pt-4 mt-4"
       >
-        <!-- Courier Dropdown -->
-        <div class="mb-3">
-          <label
-            for="courier"
-            class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-300"
-          >
-            Select Courier
-          </label>
-          <select
-            id="courier"
-            v-model="submit_billing.courier_id"
-            class="w-full rounded-md border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
-            required
-          >
-            <option value="" disabled>Select a courier</option>
-            <option
-              v-for="courier in couriers"
-              :key="courier.id"
-              :value="courier.id"
-            >
-              {{ courier.courier_name }}
-            </option>
-          </select>
-        </div>
-
-        <!-- Tracking Number Input -->
-        <div class="mb-3">
-          <label
-            for="tracking_number"
-            class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-300"
-          >
-            Tracking Number
-          </label>
-          <input
-            type="text"
-            id="tracking_number"
-            v-model="trackingNumber"
-            class="w-full rounded-md border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
-            placeholder="Enter tracking number"
-            required
-          />
-        </div>
-
-        <!-- Submit Button for Courier -->
-        <div class="flex justify-end pt-2">
+        <!-- Delivery Method -->
+        <h3 class="text-md font-semibold text-gray-700 dark:text-gray-300 mb-2">
+          Select Delivery Method
+        </h3>
+        <div class="flex gap-2">
           <button
-            type="submit"
-            :disabled="!submit_billing.courier_id || !trackingNumber"
-            class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-lg shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-500"
+            v-for="option in ['hand', 'courier']"
+            :key="option"
+            @click="selectDelivery(option)"
+            type="button"
+            class="inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-medium transition border shadow-sm focus:ring-2 focus:outline-none"
+            :class="[
+              selectedDelivery === option
+                ? 'bg-blue-600 text-white border-transparent focus:ring-blue-300'
+                : 'bg-gray-100 text-gray-800 border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600 focus:ring-gray-400',
+            ]"
           >
-            Submit
+            {{ option === "hand" ? "Hand Deliver" : "Courier" }}
           </button>
         </div>
-      </form>
 
-      <!-- Submit Button for Hand Delivery -->
-      <div
-        v-else-if="selectedDelivery === 'hand'"
-        class="flex justify-end pt-2"
-      >
-        <button
-          @click="submitDelivery"
-          class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-lg shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+        <!-- Courier Form -->
+        <form
+          v-if="selectedDelivery === 'courier'"
+          @submit.prevent="submitDelivery"
+          class="mt-3"
         >
-          Confirm Hand Delivery
+          <!-- Courier Dropdown -->
+          <div class="mb-3">
+            <label
+              for="courier"
+              class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-300"
+            >
+              Select Courier
+            </label>
+            <select
+              id="courier"
+              v-model="submit_billing.courier_id"
+              class="w-full rounded-md border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              required
+            >
+              <option value="" disabled>Select a courier</option>
+              <option
+                v-for="courier in couriers"
+                :key="courier.id"
+                :value="courier.id"
+              >
+                {{ courier.courier_name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Tracking Number Input -->
+          <div class="mb-3">
+            <label
+              for="tracking_number"
+              class="block mb-1 text-xs font-medium text-gray-700 dark:text-gray-300"
+            >
+              Tracking Number
+            </label>
+            <input
+              type="text"
+              id="tracking_number"
+              v-model="trackingNumber"
+              class="w-full rounded-md border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              placeholder="Enter tracking number"
+              required
+            />
+          </div>
+
+          <!-- Submit Button for Courier -->
+          <div class="flex justify-end pt-2">
+            <button
+              type="submit"
+              :disabled="!submit_billing.courier_id || !trackingNumber"
+              class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-lg shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+
+        <!-- Submit Button for Hand Delivery -->
+        <div
+          v-else-if="selectedDelivery === 'hand'"
+          class="flex justify-end pt-2"
+        >
+          <button
+            @click="submitDelivery"
+            class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-lg shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            Confirm Hand Delivery
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div v-else>
+      <div class="flex justify-end pt-2">
+        <button
+          @click="submitToMainCampus"
+          type="submit"
+          class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-lg shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-500"
+        >
+          Submit to Main Campus
         </button>
       </div>
     </div>
@@ -219,6 +233,32 @@ export default {
     },
   },
   methods: {
+    async submitToMainCampus() {
+      try {
+        const response = await this.$api.put(
+          `/suc/update-voucher/${this.billingId}`,
+          {}, // Add your request body here if needed
+          {
+            headers: {
+              Authorization: `Bearer ${this.accessToken}`,
+              "Content-Type": "application/json", // Good practice to include content type
+            },
+          }
+        );
+        console.log("Success:", response.data);
+        // Consider adding user feedback here, e.g., a success message
+        this.$toast.success("Successfully submitted to main campus");
+        return response.data;
+      } catch (error) {
+        console.error("Error submitting to main campus:", error);
+        // Add error handling with user feedback
+        this.$toast.error(
+          error.response?.data?.message || "Failed to submit to main campus"
+        );
+        throw error; // Re-throw if you want to handle the error in the calling function
+      }
+    },
+
     formatCurrency(value) {
       return new Intl.NumberFormat("en-PH", {
         style: "currency",
@@ -283,7 +323,7 @@ export default {
         this.$toast.success("Billing submitted successfully");
         // Optionally redirect or reset the form
         // this.$router.push('/billing');
-    } catch (e) {
+      } catch (e) {
         if (e.response?.data?.errors) {
           console.error("Validation errors:", e.response.data.errors);
           alert(
@@ -338,6 +378,7 @@ export default {
   mounted() {
     this.fetchCouriers();
     this.fetchBillingDetails();
+    console.log(this.formData);
   },
 };
 </script>

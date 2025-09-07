@@ -632,12 +632,13 @@ export default {
     },
 
     handleSubmit() {
+      this.showModal = false;
       this.$router.push({
         name: "ManageBillings",
         query: {
           schoolYearId: this.selectedsy,
           semesterId: this.selectedsem,
-        },
+        }
       });
     },
 

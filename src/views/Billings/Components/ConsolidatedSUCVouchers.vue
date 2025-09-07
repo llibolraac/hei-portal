@@ -33,7 +33,7 @@
           class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
         >
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-            Billing Documents
+            Consolidated Billing Documents
           </h2>
           <div
             v-if="billings?.data?.length > 0"
@@ -395,7 +395,6 @@ export default {
         total_amount: null,
         billing_status: null,
         voucher_id: null,
-        hei_type: null,
       },
     };
   },
@@ -493,7 +492,6 @@ export default {
         total_amount: selectedBilling.total_amount,
         billing_status: selectedBilling.billing_status,
         voucher_id: selectedBilling.voucher_id,
-        hei_type: selectedBilling.hei.hei_type,
       };
     },
 
@@ -506,7 +504,7 @@ export default {
     fetchBillingDocuments(page = 1) {
       this.loading = true;
       this.$api
-        .get(`/tes-billings/${this.heiId}?page=${page}`, {
+        .get(`/suc/suc-billings?page=${page}`, {
           params: {
             sy: this.schoolYearId,
             sem: this.semesterId,

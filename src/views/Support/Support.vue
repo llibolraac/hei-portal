@@ -1,6 +1,6 @@
 <template>
-  <div class="dark:bg-gray-900 p-4 sm:p-6">
-    <div class="max-w-7xl mx-auto">
+  <div class="dark:bg-gray-900 sm:p-6">
+    <div class="mx-auto">
       <nav class="mb-6" aria-label="Breadcrumb">
         <ol
           class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"
@@ -433,7 +433,6 @@ export default {
           },
         });
         this.tickets = response.data;
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching tickets:", error);
         this.error =
