@@ -5,6 +5,7 @@
       <h3 style="font-weight: 700; font-size: 10px">
         <span v-if="billing_data.program.batch_name === 'CHED-TDP'">TDP </span>
         <span v-else>TES </span>
+
         <span v-if="billing_data.program.batch_type === 'ON-GOING'"
           >CONTINUING</span
         >
@@ -129,21 +130,27 @@
                 </span>
                 <span v-else>TES </span> Grantees
               </th>
-              <th width="195">Number of TES Grantees with TES3-a</th>
+              <th width="195">
+                Number of
+                <span v-if="billing_data.program.batch_name === 'CHED-TDP'"
+                  >TDP
+                </span>
+                <span v-else>TES </span> Grantees with TES3-a
+              </th>
               <th width="127">Total</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>{{ billing_data.hei.abbr }}</td>
-              <td>{{ this.grantees_count }}</td>
+            <tr v-for="heiData in grantees" :key="heiData.id">
+              <td>{{ heiData.hei.abbr }}</td>
+              <td>{{ heiData.grantees_count }}</td>
               <td>0</td>
-              <td>{{ this.grantees_count }}</td>
+              <td>{{ heiData.grantees_count }}</td>
             </tr>
 
             <tr>
               <td colspan="3">Total</td>
-              <td>{{ this.grantees_count }}</td>
+              <td>{{ totalGrantees }}</td>
             </tr>
           </tbody>
         </table>
@@ -201,7 +208,7 @@ export default {
     return {
       billingId: null,
       billing_data: [],
-      grantees_count: null,
+      grantees: [],
       signatories: [],
       loading: true,
     };
@@ -210,23 +217,6 @@ export default {
   computed: {
     ...mapGetters("auth", ["accessToken", "heiId"]),
 
-    TESBenefits() {
-      return this.grantees_count * (this.billing_data?.program?.amount || 0);
-    },
-
-    ProgramASC() {
-      const amount =
-        this.grantees_count * (this.billing_data?.program?.amount || 0);
-      return amount * (this.billing_data?.program?.asc || 0);
-    },
-
-    TotalTESAmount() {
-      const amount =
-        this.grantees_count * (this.billing_data?.program?.amount || 0);
-      const program_oc = amount * (this.billing_data?.program?.asc || 0);
-      return amount + program_oc;
-    },
-
     formattedDate() {
       const date = new Date(this.billing_data.created_at);
       return date.toLocaleDateString("en-US", {
@@ -234,6 +224,10 @@ export default {
         month: "long",
         day: "numeric",
       });
+    },
+
+    totalGrantees() {
+      return this.grantees.reduce((sum, hei) => sum + hei.grantees_count, 0);
     },
   },
 
@@ -252,7 +246,7 @@ export default {
     fetchBillingDetails(page = 1) {
       this.loading = true;
       this.$api
-        .get(`/fetch-billing-details/${this.billingId}?page=${page}`, {
+        .get(`/fetch-suc-billing-details/${this.billingId}?page=${page}`, {
           params: {
             hei_id: this.heiId,
           },
@@ -263,7 +257,7 @@ export default {
         })
         .then((res) => {
           this.billing_data = res.data.billing;
-          this.grantees_count = res.data.grantees_count;
+          this.grantees = res.data.grouped_grantees;
           this.signatories = res.data.signatories;
           this.loading = false;
 

@@ -3,14 +3,13 @@
   <div v-else style="padding: 30px">
     <div style="display: flex; justify-content: space-between">
       <h3 style="font-weight: 700; font-size: 10px">
-        <span v-if="billing_data.program.batch_name === 'CHED-TDP'">TDP </span>
-        <span v-else>TES </span>
+        TES
         <span v-if="billing_data.program.batch_type === 'ON-GOING'"
           >CONTINUING</span
         >
         <span v-else>NEW</span>
 
-        Form 4 -
+        Form 2 -
 
         <span
           v-if="
@@ -106,9 +105,8 @@
           >CONTINUING
         </span>
         <span v-else>NEW</span>
-
-        <span v-if="billing_data.program.batch_name === 'CHED-TDP'"> TDP</span>
-        <span v-else> TES</span>
+        <span v-if="billing_data.program.batch_name === 'CHED-TDP'">TDP</span>
+        <span v-else>TES</span>
 
         grantees by campus as shown below,are qualified to avail of the Tertiary
         Education Subsidy (TES) program under R.A. No. 10931 also known as
@@ -122,13 +120,7 @@
           <thead>
             <tr>
               <th width="130">Name of Campus</th>
-              <th width="187">
-                Number of
-                <span v-if="billing_data.program.batch_name === 'CHED-TDP'"
-                  >TDP
-                </span>
-                <span v-else>TES </span> Grantees
-              </th>
+              <th width="187">Number of TES Grantees</th>
               <th width="195">Number of TES Grantees with TES3-a</th>
               <th width="127">Total</th>
             </tr>
@@ -152,7 +144,7 @@
       <p style="text-indent: 50px; line-height: 1; margin-top: 30px">
         This further certifies that the student’s information indicated in Annex
         2 - TES
-        <span v-if="billing_data.program.batch_type === 'ON-GOING'"
+        <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
           >CONTINUING</span
         >
         <span v-else>NEW</span> Form 2 is accurate and complete.
@@ -266,13 +258,6 @@ export default {
           this.grantees_count = res.data.grantees_count;
           this.signatories = res.data.signatories;
           this.loading = false;
-
-          setTimeout(() => {
-            window.print();
-          }, 1000);
-          window.onafterprint = function () {
-            window.close();
-          };
         });
     },
   },

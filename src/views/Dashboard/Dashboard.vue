@@ -632,6 +632,7 @@ export default {
     },
 
     handleSubmit() {
+      this.showModal = false;
       this.$router.push({
         name: "ManageBillings",
         query: {

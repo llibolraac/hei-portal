@@ -33,7 +33,7 @@
           class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
         >
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-            Billing Documents
+            Consolidated Billing Documents
           </h2>
           <div
             v-if="billings?.data?.length > 0"
@@ -228,6 +228,11 @@
                     </svg>
                   </button>
                   <button
+                    v-if="
+                      this.heiId === 188 ||
+                      this.heiId === 182 ||
+                      this.heiId === 150
+                    "
                     @click="handleBillingDelete(billing.id)"
                     :disabled="billing.billing_status.id !== 1"
                     :class="[
@@ -395,8 +400,6 @@ export default {
         total_amount: null,
         billing_status: null,
         voucher_id: null,
-        hei_type: null,
-        is_consolidated: null,
       },
     };
   },
@@ -494,7 +497,6 @@ export default {
         total_amount: selectedBilling.total_amount,
         billing_status: selectedBilling.billing_status,
         voucher_id: selectedBilling.voucher_id,
-        hei_type: selectedBilling.hei.hei_type,
         is_consolidated: selectedBilling.is_consolidated,
       };
     },
@@ -508,7 +510,7 @@ export default {
     fetchBillingDocuments(page = 1) {
       this.loading = true;
       this.$api
-        .get(`/tes-billings/${this.heiId}?page=${page}`, {
+        .get(`/suc/suc-billings?page=${page}`, {
           params: {
             sy: this.schoolYearId,
             sem: this.semesterId,
