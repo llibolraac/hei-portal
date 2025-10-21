@@ -20,6 +20,18 @@ import TDPForm2 from "../views/Templates/TDP/TDPForm2.vue"; // Assuming this is 
 import TDPForm3 from "../views/Templates/TDP/TDPForm3.vue"; // Assuming this is the correct
 import TDPForm4 from "../views/Templates/TDP/TDPForm4.vue"; // Assuming this is the correct
 
+//SUC Forms
+import SUCForm1 from "../views/Templates/SUC/Form1.vue";
+import SUCForm2 from "../views/Templates/SUC/Form2.vue";
+import SUCForm3 from "../views/Templates/SUC/Form3.vue";
+import SUCForm4 from "../views/Templates/SUC/Form4.vue";
+
+//SUC TDP Forms
+import SUCTDPForm1 from "../views/Templates/SUC/TDPForm1.vue";
+import SUCTDPForm2 from "../views/Templates/SUC/TDPForm2.vue";
+import SUCTDPForm3 from "../views/Templates/SUC/TDPForm3.vue";
+import SUCTDPForm4 from "../views/Templates/SUC/TDPForm4.vue";
+
 // Importing other components
 import Home from "../views/Home/Home.vue";
 import Support from "../views/Support/Support.vue";
@@ -109,6 +121,73 @@ const router = createRouter({
       },
     },
 
+    //PHEIs Emplate Ends Here
+
+    //SUC Starts here
+
+    {
+      path: "/print_suc-form_2",
+      name: "PrintSUCForm2",
+      component: SUCForm2,
+      meta: {
+        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
+      },
+    },
+
+    {
+      path: "/print_suc-form_3",
+      name: "PrintSUCForm3",
+      component: SUCForm3,
+      meta: {
+        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
+      },
+    },
+
+    {
+      path: "/print_suc-form_4",
+      name: "PrintSUCForm4",
+      component: SUCForm4,
+      meta: {
+        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
+      },
+    },
+
+    {
+      path: "/print_suc-tdp_form_1",
+      name: "PrintSUCTDPForm1",
+      component: SUCTDPForm1,
+      meta: {
+        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
+      },
+    },
+
+    {
+      path: "/print_suc-tdp_form_2",
+      name: "PrintSUCTDPForm2",
+      component: SUCTDPForm2,
+      meta: {
+        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
+      },
+    },
+
+    {
+      path: "/print_suc-tdp_form_3",
+      name: "PrintSUCTDPForm3",
+      component: SUCTDPForm3,
+      meta: {
+        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
+      },
+    },
+
+    {
+      path: "/print_suc-tdp_form_4",
+      name: "PrintSUCTDPForm4",
+      component: SUCTDPForm4,
+      meta: {
+        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
+      },
+    },
+
     {
       path: "/home", // Home route
       name: "Dashboard",
@@ -142,7 +221,7 @@ const router = createRouter({
           path: "support",
           name: "Support",
           component: Support,
-        }
+        },
       ],
       meta: {
         requiresAuth: true, // Example of a meta field for routes

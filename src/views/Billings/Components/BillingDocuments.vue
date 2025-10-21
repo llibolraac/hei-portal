@@ -396,6 +396,7 @@ export default {
         billing_status: null,
         voucher_id: null,
         hei_type: null,
+        is_consolidated: null,
       },
     };
   },
@@ -494,6 +495,7 @@ export default {
         billing_status: selectedBilling.billing_status,
         voucher_id: selectedBilling.voucher_id,
         hei_type: selectedBilling.hei.hei_type,
+        is_consolidated: selectedBilling.is_consolidated,
       };
     },
 

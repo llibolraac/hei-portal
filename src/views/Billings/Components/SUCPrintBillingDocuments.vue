@@ -1,5 +1,5 @@
 <template>
-  <!-- Private HEI Templates -->
+  <!-- SUC Templates -->
   <div>
     <div
       v-if="programName === 'Tertiary Education Subsidy (TES)'"
@@ -9,7 +9,7 @@
         @click="toggleDropdown"
         class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center"
       >
-        Print TES Documents
+        Print SUC-TES Documents
         <svg
           class="w-4 h-4 ml-2"
           fill="none"
@@ -160,7 +160,6 @@
       </div>
     </div>
   </div>
-
   <!-- Ends Here -->
 </template>
 
@@ -210,7 +209,7 @@ export default {
     async printForm1() {
       this.showDropdown = false;
       const childRouteURL = this.$router.resolve({
-        name: "PrintForm1",
+        name: "SUCPrintForm1",
         query: {
           billingId: this.billingId,
         },
@@ -242,7 +241,7 @@ export default {
     async printForm2() {
       this.showDropdown = false;
       const childRouteURL = this.$router.resolve({
-        name: "PrintForm2",
+        name: "PrintSUCForm2",
         query: {
           billingId: this.billingId,
         },
@@ -271,7 +270,7 @@ export default {
     async printForm3() {
       this.showDropdown = false;
       const childRouteURL = this.$router.resolve({
-        name: "PrintForm3",
+        name: "PrintSUCForm3",
         query: {
           billingId: this.billingId,
         },
@@ -304,7 +303,7 @@ export default {
     async printForm4() {
       this.showDropdown = false;
       const childRouteURL = this.$router.resolve({
-        name: "PrintForm4",
+        name: "PrintSUCForm4",
         query: {
           billingId: this.billingId,
         },
@@ -335,7 +334,7 @@ export default {
     async printTDPForm1() {
       this.showDropdown = false;
       const childRouteURL = this.$router.resolve({
-        name: "PrintTDPForm1",
+        name: "PrintSUCTDPForm1",
         query: {
           billingId: this.billingId,
         },
@@ -367,7 +366,7 @@ export default {
     async printTDPForm2() {
       this.showDropdown = false;
       const childRouteURL = this.$router.resolve({
-        name: "PrintTDPForm2",
+        name: "PrintSUCTDPForm2",
         query: {
           billingId: this.billingId,
         },
@@ -396,7 +395,7 @@ export default {
     async printTDPForm3() {
       this.showDropdown = false;
       const childRouteURL = this.$router.resolve({
-        name: "PrintTDPForm3",
+        name: "PrintSUCTDPForm3",
         query: {
           billingId: this.billingId,
         },
@@ -429,7 +428,7 @@ export default {
     async printTDPForm4() {
       this.showDropdown = false;
       const childRouteURL = this.$router.resolve({
-        name: "PrintTDPForm4",
+        name: "PrintSUCTDPForm4",
         query: {
           billingId: this.billingId,
         },

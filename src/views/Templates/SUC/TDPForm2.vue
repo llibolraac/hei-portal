@@ -12,7 +12,7 @@
         <tr>
           <td class="border-bottom" colspan="17" style="text-align: right">
             <h3 style="font-weight: 700; font-size: 10px">
-              TES
+              TDP
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
@@ -110,7 +110,7 @@
             class="border-top border-right"
             style="text-align: right"
           >
-            <p>TES Billing Details Reference Number:</p>
+            <p>TDP Billing Details Reference Number:</p>
           </td>
           <td colspan="2" class="border-top">
             <p>{{ this.billing_data.tes_ref_no }}</p>
@@ -132,33 +132,21 @@
           <td colspan="5">
             <p><strong>INSTRUCTIONS</strong></p>
             <p>
-              1. Generate the list of
+              1. In the table below, list down the names of enrolled
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-                >CONTINUING</span
-              >
-              <span v-else>NEW</span>
-              <span
-                v-if="
-                  billing_data.program.program_name ===
-                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                "
-                >TES-TDP</span
-              >
-              <span v-else>TES</span> grantees from the HEI portal. Include only
-              in this form the names of
-              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-                >CONTINUING</span
-              >
-              <span v-else>NEW</span> grantees WHO ARE CURRENTLY enrolled this
-              semester.
+                >CONTINUING
+              </span>
+              <span v-else>NEW </span>
+              TDP grantees per campus in alphabetical order, if applicable, (1)
+              by campus; (2) by college; (3) by program; and (4) by student name
             </p>
             <p>&nbsp;</p>
             <p>
               2. In the table below, list down the names of enrolled
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-                >CONTINUING</span
-              >
-              <span v-else>NEW</span>
+                >CONTINUING
+              </span>
+              <span v-else>NEW </span>
               <span
                 v-if="
                   billing_data.program.program_name ===
@@ -184,25 +172,6 @@
               students listed according to the instruction no. 2.
             </p>
             <p>&nbsp;</p>
-            <p>
-              5.Submit pdf files of the Certificate of Registration (COR) of
-              Official Enrollment in the
-              {{ this.billing_data.semester.semester }} of Academic Year
-              {{ this.billing_data.schoolyear.school_year }} in the order as it
-              appears in the
-              <span
-                v-if="
-                  billing_data.program.program_name ===
-                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                "
-                >TES-TDP</span
-              >
-              <span v-else>TES</span>
-              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-                >CONTINUING</span
-              >
-              <span v-else>NEW</span> Form 2.
-            </p>
           </td>
           <td colspan="10" style="vertical-align: top" class="border-right">
             <p>
@@ -233,8 +202,8 @@
                     >TES-TDP</span
                   >
                   <span v-else>TES</span>
-                  <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-                    >CONTINUING</span
+                  <span v-if="billing_data.program.batch_type === 'ON-GOING'">
+                    CONTINUING</span
                   >
                   <span v-else>NEW</span> Form 1
                 </p>
@@ -250,8 +219,8 @@
                     >TES-TDP</span
                   >
                   <span v-else>TES</span>
-                  <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-                    >CONTINUING</span
+                  <span v-if="billing_data.program.batch_type === 'ON-GOING'">
+                    CONTINUING</span
                   >
                   <span v-else>NEW</span> Form 2
                 </p>
@@ -267,8 +236,8 @@
                     >TES-TDP</span
                   >
                   <span v-else>TES</span>
-                  <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-                    >CONTINUING</span
+                  <span v-if="billing_data.program.batch_type === 'ON-GOING'">
+                    CONTINUING</span
                   >
                   <span v-else>NEW</span> Form 3
                 </p>
@@ -296,7 +265,7 @@
           <td colspan="16">
             <p>
               <strong
-                >TES
+                >TDP
                 <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                   >CONTINUING</span
                 >
@@ -318,38 +287,11 @@
                 >
                 <span v-else>TES</span> will have to be listed and tabulated PER
                 CAMPUS. </strong
-              >The Total Number of
-              <span
-                v-if="
-                  billing_data.program.program_name ===
-                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                "
-                >TES-TDP</span
-              >
-              <span v-else>TES</span> grantees for all
+              >The Total Amount of the TDP for all
             </p>
             <p>
-              campuses should tally with the total number of
-              <span
-                v-if="
-                  billing_data.program.program_name ===
-                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                "
-                >TES-TDP</span
-              >
-              <span v-else>TES</span> in the Annex 2-
-              <span
-                v-if="
-                  billing_data.program.program_name ===
-                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                "
-                >TES-TDP</span
-              >
-              <span v-else>TES</span>
-              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-                >CONTINUING</span
-              >
-              <span v-else>NEW</span> Form 1
+              campuses should tally with the total amount of TDP in the Billing
+              Statement
             </p>
             <p>Note: Please insert additional line as needed</p>
           </td>
@@ -357,10 +299,7 @@
         <tr>
           <td colspan="16">
             <p>
-              <strong
-                >Tertiary Education Subsidy: Based on Section 23 of Rule IV of
-                IRR of R.A. No. 10931</strong
-              >
+              <strong>Tulong Dunong Program : Based on R.A. No. 10931</strong>
             </p>
           </td>
         </tr>
@@ -377,19 +316,15 @@
           <td colspan="3">
             <p><strong>Contact Information</strong></p>
           </td>
-          <td width="5%">
+          <td colspan="2" width="5%" style="text-align: center">
             <p><strong>TES Benefits</strong></p>
-          </td>
-          <td width="3%">
-            <p><strong>TES-3a</strong></p>
           </td>
           <td width="6%"><p>&nbsp;</p></td>
         </tr>
-
         <tr>
           <td><p>5-digit Control Number</p></td>
           <td><p>Student Number</p></td>
-          <td><p>TES Award Number</p></td>
+          <td><p>TDP Award Number</p></td>
           <td width="11%"><p>Last Name</p></td>
           <td width="9%"><p>Given Name</p></td>
           <td width="9%"><p>Middle Initial</p></td>
@@ -403,8 +338,8 @@
           <td width="3%"><p>ZIP code</p></td>
           <td width="4%"><p>Email Address</p></td>
           <td width="5%"><p>Phone Number</p></td>
-          <td><p>Amount</p></td>
-          <td><p>Person with Disability</p></td>
+          <td><p>1st Semester</p></td>
+          <td><p>2nd Semester</p></td>
           <td>
             <p><strong>TOTAL AMOUNT</strong></p>
           </td>
@@ -476,9 +411,15 @@
             <p>{{ grantee.grantees.contact_number }}</p>
           </td>
           <td>
-            <p>{{ formatDecimalValue(billing_data.program.amount) }}</p>
+            <p v-if="billing_data.semester.id === 1">
+              {{ formatDecimalValue(billing_data.program.amount) }}
+            </p>
           </td>
-          <td><p>&nbsp;</p></td>
+          <td>
+            <p v-if="billing_data.semester.id === 2">
+              {{ formatDecimalValue(billing_data.program.amount) }}
+            </p>
+          </td>
           <td>
             <p>{{ formatDecimalValue(billing_data.program.amount) }}</p>
           </td>
@@ -494,7 +435,7 @@
         </tr>
         <tr>
           <td colspan="16">
-            <p><strong>TOTAL TERTIARY EDUCATION SUBSIDY</strong></p>
+            <p><strong>TOTAL Tulong Dunong Program</strong></p>
           </td>
           <td>
             <p>{{ formatDecimalValue(billing_data.amount) }}</p>
@@ -503,8 +444,18 @@
         <tr>
           <td colspan="16">
             <p>
-              Add 1 percent (1%) Administrative Support for Partner
-              Instsitutions
+              Add: .5 percent (.005%)
+              <span
+                v-if="
+                  [1, 2].includes(billing_data.schoolyear.id) &&
+                  [1, 2].includes(billing_data.semester.id)
+                "
+              >
+                Administrative Support Cost (ASC)
+              </span>
+              <span v-else>Management Fee</span>
+
+              for partner HEI
             </p>
           </td>
           <td>
@@ -681,9 +632,9 @@ export default {
           this.grantees = res.data.billing_grantees;
           this.loading = false;
 
-          // setTimeout(() => {
-          //   window.print();
-          // }, 1000);
+          setTimeout(() => {
+            window.print();
+          }, 1000);
           window.onafterprint = function () {
             window.close();
           };

@@ -144,6 +144,7 @@
 
       <li>
         <button
+          v-if="heiId === 188 || heiId === 182 || heiId === 150"
           id="unbilled-grantees-tab"
           data-tabs-target="#unbilled-grantees"
           type="button"
@@ -164,6 +165,21 @@
 
       <li class="me-2">
         <button
+          v-if="
+            heiId === 187 ||
+            heiId === 188 ||
+            heiId === 189 ||
+            heiId === 190 ||
+            heiId === 178 ||
+            heiId === 179 ||
+            heiId === 180 ||
+            heiId === 181 ||
+            heiId === 182 ||
+            heiId === 183 ||
+            heiId === 184 ||
+            heiId === 149 ||
+            heiId === 150
+          "
           id="consolidated-suc-tab"
           data-tabs-target="#consolidated-suc"
           type="button"
@@ -267,7 +283,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import BillingDocuments from "./Components/BillingDocuments.vue";
 import GenerateBilling from "./Components/GenerateBilling.vue";
 import ConsolidatedSUCVouchers from "./Components/ConsolidatedSUCVouchers.vue";
@@ -301,6 +317,10 @@ export default {
     },
   },
 
+  computed: {
+    ...mapGetters("auth", ["heiId"]),
+  },
+
   methods: {
     updateQueryParams() {
       this.schoolYearId = this.$route.query.schoolYearId || "";
@@ -329,6 +349,7 @@ export default {
 
   mounted() {
     this.updateQueryParams();
+    console.log(this.heiId);
   },
 };
 </script>

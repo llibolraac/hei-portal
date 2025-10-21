@@ -1,24 +1,25 @@
 <template>
   <div v-if="loading">Loading...</div>
 
-  <div id="form2-wrapper" v-else>
+  <div v-else>
     <div style="text-align: right">
       <span style="text-align: right; font-size: 12px; font-style: italic"
         >System Generated Billing Document</span
       >
     </div>
+
     <table width="200">
       <tbody>
         <tr>
-          <td class="border-bottom" colspan="17" style="text-align: right">
+          <td class="border-bottom" colspan="13" style="text-align: right">
             <h3 style="font-weight: 700; font-size: 10px">
-              TES
+              TDP
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
               <span v-else>NEW</span>
 
-              Form 2 -
+              Form 3 -
 
               <span
                 v-if="
@@ -63,7 +64,7 @@
           </td>
         </tr>
         <tr>
-          <td colspan="17" class="text-center border-top">
+          <td colspan="13" class="text-center border-top">
             <div class="flex-container">
               <div class="flex-item">
                 <img
@@ -74,23 +75,10 @@
               </div>
               <div class="flex-item" style="text-align: center">
                 <p>Republic of the Philippines</p>
-                <p>
-                  <strong>{{ this.billing_data.hei.hei_name }}</strong>
-                </p>
-                <p>
-                  {{ this.billing_data.hei.municipality }},
-                  {{ this.billing_data.hei.province }}
-                </p>
+                <p><strong>Name of Higher Education Institution</strong></p>
+                <p>Address of Higher Education Institution</p>
                 <p style="font-size: 17px; font-weight: bold">
-                  CONSOLIDATED
-                  <span
-                    v-if="
-                      billing_data.program.program_name ===
-                      'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                    "
-                    >TES-TDP</span
-                  >
-                  <span v-else>TES</span> BILLING STATEMENT
+                  CONSOLIDATED TES BILLING STATEMENT
                 </p>
               </div>
 
@@ -106,55 +94,31 @@
         </tr>
         <tr>
           <td
-            colspan="15"
-            class="border-top border-right"
-            style="text-align: right"
-          >
-            <p>TES Billing Details Reference Number:</p>
-          </td>
-          <td colspan="2" class="border-top">
-            <p>{{ this.billing_data.tes_ref_no }}</p>
-          </td>
-        </tr>
-        <tr>
-          <td
-            colspan="15"
+            colspan="11"
             class="border-top border-right"
             style="text-align: right"
           >
             <p>Date:</p>
           </td>
-          <td colspan="2" class="border-top">
-            <p>{{ formattedDate }}</p>
-          </td>
+          <td colspan="2" class="border-top">{{ formattedDate }}</td>
         </tr>
         <tr>
           <td colspan="5">
             <p><strong>INSTRUCTIONS</strong></p>
             <p>
-              1. Generate the list of
+              1. This form shall only include the names of those
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
-              <span v-else>NEW</span>
-              <span
-                v-if="
-                  billing_data.program.program_name ===
-                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                "
-                >TES-TDP</span
-              >
-              <span v-else>TES</span> grantees from the HEI portal. Include only
-              in this form the names of
+              <span v-else>NEW</span> TES grantees who are NOT INCLUDED in TES
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
-              <span v-else>NEW</span> grantees WHO ARE CURRENTLY enrolled this
-              semester.
+              <span v-else>NEW</span> Form 2
             </p>
             <p>&nbsp;</p>
             <p>
-              2. In the table below, list down the names of enrolled
+              2. In the table below, list down the names of
               <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                 >CONTINUING</span
               >
@@ -164,12 +128,13 @@
                   billing_data.program.program_name ===
                   'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
                 "
-                >TES-TDP</span
               >
-              <span v-else>TES</span> grantees per campus in alphabetical order.
+                TDP </span
+              ><span v-else>TES</span>
+              grantees per campus in alphabetical order, if applicable,
             </p>
             <p>
-              if applicable. (1) by campus; (2) by college; (3) by progra; and
+              if applicable. (1) by campus; (2) by college; (3) by program; and
               (4) by student name (Last Name, First Name, MI).
             </p>
             <p>&nbsp;</p>
@@ -185,54 +150,22 @@
             </p>
             <p>&nbsp;</p>
             <p>
-              5.Submit pdf files of the Certificate of Registration (COR) of
-              Official Enrollment in the
-              {{ this.billing_data.semester.semester }} of Academic Year
-              {{ this.billing_data.schoolyear.school_year }} in the order as it
-              appears in the
-              <span
-                v-if="
-                  billing_data.program.program_name ===
-                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                "
-                >TES-TDP</span
-              >
-              <span v-else>TES</span>
-              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-                >CONTINUING</span
-              >
-              <span v-else>NEW</span> Form 2.
+              5.Indicate the current status of each student by selecting one of
+              the following options under the column provided in the table: not
+              enrolled, dropped, waived, on LOA, transferee, or graduated. Add
+              remarks if necessary.
             </p>
           </td>
-          <td colspan="10" style="vertical-align: top" class="border-right">
+          <td colspan="6" style="vertical-align: top" class="border-right">
+            <p></p>
             <p>
-              6. Submit the Notarized Registrar's Certification of
-              <span
-                v-if="
-                  billing_data.program.program_name ===
-                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                "
-                >TES-TDP</span
-              >
-              <span v-else>TES</span> Grantees, as an endorsement document, for
-              all the PDF files of the CORs submitted.
-            </p>
-            <p>
-              7. Submit electronic and hard copies of the following forms to
+              6. Submit electronic and hard copies of the following forms to
               CHEDRO as supporting documents:
             </p>
             <ul>
               <li>
                 <p>
-                  7.1
-                  <span
-                    v-if="
-                      billing_data.program.program_name ===
-                      'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                    "
-                    >TES-TDP</span
-                  >
-                  <span v-else>TES</span>
+                  6.1 TES
                   <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                     >CONTINUING</span
                   >
@@ -241,15 +174,7 @@
               </li>
               <li>
                 <p>
-                  7.2
-                  <span
-                    v-if="
-                      billing_data.program.program_name ===
-                      'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                    "
-                    >TES-TDP</span
-                  >
-                  <span v-else>TES</span>
+                  6.2 TES
                   <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                     >CONTINUING</span
                   >
@@ -258,15 +183,7 @@
               </li>
               <li>
                 <p>
-                  7.3
-                  <span
-                    v-if="
-                      billing_data.program.program_name ===
-                      'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                    "
-                    >TES-TDP</span
-                  >
-                  <span v-else>TES</span>
+                  6.3 TES
                   <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                     >CONTINUING</span
                   >
@@ -274,7 +191,7 @@
                 </p>
               </li>
               <li>
-                <p>7.4 Notarized Registrar's Certifiication</p>
+                <p>6.4 Notarized Registrar's Certifiication</p>
               </li>
             </ul>
             <p></p>
@@ -282,21 +199,21 @@
           <td colspan="2"><p>&nbsp;</p></td>
         </tr>
         <tr>
-          <td colspan="17">
-            <p>TO: <strong>CHED - Regional Office CARAGA</strong></p>
+          <td colspan="13">
+            <p>TO: <strong>CHED - Regional Office ___________</strong></p>
           </td>
         </tr>
         <tr>
-          <td colspan="17">
+          <td colspan="13">
             <p>Address: <strong>Address of CHED Regional Office</strong></p>
           </td>
         </tr>
         <tr>
           <td width="4%" rowspan="3"><p>&nbsp;</p></td>
-          <td colspan="16">
+          <td colspan="12">
             <p>
               <strong
-                >TES
+                >TDP
                 <span v-if="billing_data.program.batch_type === 'ON-GOING'"
                   >CONTINUING</span
                 >
@@ -306,56 +223,12 @@
           </td>
         </tr>
         <tr>
-          <td colspan="16">
-            <p>
-              <strong>
-                <span
-                  v-if="
-                    billing_data.program.program_name ===
-                    'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                  "
-                  >TES-TDP</span
-                >
-                <span v-else>TES</span> will have to be listed and tabulated PER
-                CAMPUS. </strong
-              >The Total Number of
-              <span
-                v-if="
-                  billing_data.program.program_name ===
-                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                "
-                >TES-TDP</span
-              >
-              <span v-else>TES</span> grantees for all
-            </p>
-            <p>
-              campuses should tally with the total number of
-              <span
-                v-if="
-                  billing_data.program.program_name ===
-                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                "
-                >TES-TDP</span
-              >
-              <span v-else>TES</span> in the Annex 2-
-              <span
-                v-if="
-                  billing_data.program.program_name ===
-                  'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                "
-                >TES-TDP</span
-              >
-              <span v-else>TES</span>
-              <span v-if="billing_data.program.batch_type === 'ON-GOING'"
-                >CONTINUING</span
-              >
-              <span v-else>NEW</span> Form 1
-            </p>
+          <td colspan="12">
             <p>Note: Please insert additional line as needed</p>
           </td>
         </tr>
         <tr>
-          <td colspan="16">
+          <td colspan="12">
             <p>
               <strong
                 >Tertiary Education Subsidy: Based on Section 23 of Rule IV of
@@ -369,23 +242,16 @@
           <td width="5%"><p>&nbsp;</p></td>
           <td width="9%"><p>&nbsp;</p></td>
           <td colspan="3">
-            <p><strong>Student's Name</strong></p>
+            <p style="text-align: center"><strong>Student's Name</strong></p>
           </td>
           <td colspan="5">
-            <p><strong>Student Profile</strong></p>
+            <p style="text-align: center"><strong>Student Profile</strong></p>
           </td>
-          <td colspan="3">
-            <p><strong>Contact Information</strong></p>
+          <td colspan="2">
+            <p><strong></strong></p>
+            <p>&nbsp;</p>
           </td>
-          <td width="5%">
-            <p><strong>TES Benefits</strong></p>
-          </td>
-          <td width="3%">
-            <p><strong>TES-3a</strong></p>
-          </td>
-          <td width="6%"><p>&nbsp;</p></td>
         </tr>
-
         <tr>
           <td><p>5-digit Control Number</p></td>
           <td><p>Student Number</p></td>
@@ -397,27 +263,18 @@
           <td width="3%"><p>Birthdate</p></td>
           <td width="15%"><p>Degree Program</p></td>
           <td width="3%"><p>Year Level</p></td>
-          <td width="6%">
-            <p>Academic Units Enrolled (Credit and non-credit courses)</p>
-          </td>
-          <td width="3%"><p>ZIP code</p></td>
-          <td width="4%"><p>Email Address</p></td>
-          <td width="5%"><p>Phone Number</p></td>
-          <td><p>Amount</p></td>
-          <td><p>Person with Disability</p></td>
-          <td>
-            <p><strong>TOTAL AMOUNT</strong></p>
-          </td>
+          <td width="6%"><p>Status</p></td>
+          <td width="5%" colspan="2"><p>Remarks</p></td>
         </tr>
         <tr v-for="(grantee, i) in grantees" :key="grantee.id">
           <td>
             <p>{{ String(i + 1).padStart(5, "0") }}</p>
           </td>
           <td>
-            <p>{{ grantee.grantees.student_number }}</p>
+            <p>{{ grantee.student_number }}</p>
           </td>
           <td>
-            <p>{{ grantee.grantees.award_no }}</p>
+            <p>{{ grantee.award_no }}</p>
           </td>
           <td>
             <p
@@ -428,7 +285,7 @@
                 white-space: nowrap;
               "
             >
-              {{ grantee.grantees.lastname }}
+              {{ grantee.lastname }}
             </p>
           </td>
           <td>
@@ -440,7 +297,7 @@
                 white-space: nowrap;
               "
             >
-              {{ grantee.grantees.firstname }}
+              {{ grantee.firstname }}
             </p>
           </td>
           <td>
@@ -452,106 +309,36 @@
                 white-space: nowrap;
               "
             >
-              {{ grantee.grantees.middlename }}
+              {{ grantee.middlename }}
             </p>
           </td>
           <td>
-            <p>{{ grantee.grantees.sex }}</p>
+            <p>{{ grantee.sex }}</p>
           </td>
           <td><p></p></td>
           <td>
-            <p>{{ grantee.grantees.course_program }}</p>
+            <p>{{ grantee.course_program }}</p>
           </td>
           <td>
-            <p>{{ grantee.grantees.year_level }}</p>
-          </td>
-          <td><p></p></td>
-          <td>
-            <p>{{ grantee.grantees.zip_code }}</p>
+            <p>{{ grantee.year_level }}</p>
           </td>
           <td>
-            <p>{{ grantee.grantees.email_address }}</p>
+            <p>{{ grantee.remarks }}</p>
           </td>
-          <td>
-            <p>{{ grantee.grantees.contact_number }}</p>
-          </td>
-          <td>
-            <p>{{ formatDecimalValue(billing_data.program.amount) }}</p>
-          </td>
-          <td><p>&nbsp;</p></td>
-          <td>
-            <p>{{ formatDecimalValue(billing_data.program.amount) }}</p>
-          </td>
+          <td colspan="2"><p>&nbsp;</p></td>
         </tr>
 
         <tr>
-          <td colspan="16"><p>Page Total</p></td>
+          <td colspan="12"><p>Page Total</p></td>
+          <td width="6%"><p>&nbsp;</p></td>
+        </tr>
+        <tr>
+          <td colspan="12"><p>Page Accumulated Total</p></td>
           <td><p>&nbsp;</p></td>
         </tr>
         <tr>
-          <td colspan="16"><p>Page Accumulated Total</p></td>
-          <td><p>&nbsp;</p></td>
-        </tr>
-        <tr>
-          <td colspan="16">
-            <p><strong>TOTAL TERTIARY EDUCATION SUBSIDY</strong></p>
-          </td>
-          <td>
-            <p>{{ formatDecimalValue(billing_data.amount) }}</p>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="16">
-            <p>
-              Add 1 percent (1%) Administrative Support for Partner
-              Instsitutions
-            </p>
-          </td>
-          <td>
-            <p>{{ formatDecimalValue(billing_data.program_oc) }}</p>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="16">
-            <p>
-              <strong
-                >TOTAL
-                <span
-                  v-if="
-                    billing_data.program.program_name ===
-                    'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                  "
-                  >TES-TDP</span
-                >
-                <span v-else>TES</span> BILLING PER CAMPUS</strong
-              >
-            </p>
-          </td>
-          <td><p>&nbsp;</p></td>
-        </tr>
-        <tr>
-          <td colspan="16">
-            <p>
-              <strong
-                >TOTAL
-                <span
-                  v-if="
-                    billing_data.program.program_name ===
-                    'Tertiary Education Subsidy - Tulong Dunong Program (TES-TDP)'
-                  "
-                  >TES-TDP</span
-                >
-                <span v-else>TES</span> BILLING ALL CAMPUSES</strong
-              >
-            </p>
-          </td>
-          <td>
-            <p>{{ formatDecimalValue(billing_data.total_amount) }}</p>
-          </td>
-        </tr>
-        <tr style="margin-top: 15px">
           <td class="border-left border-bottom" colspan="3">
-            <p>Prepared By:</p>
+            <p style="margin-top: 20px">Prepared By:</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p style="font-size: 11px; font-weight: bold">
@@ -560,7 +347,9 @@
             <p>TES Focal Person</p>
           </td>
           <td class="border-left border-bottom" colspan="2">
-            <p>Certified by (As to correctness of enrollment data):</p>
+            <p style="margin-top: 20px">
+              Certified by (As to correctness of enrollment data):
+            </p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p style="font-size: 11px; font-weight: bold">
@@ -569,7 +358,9 @@
             <p>Registrar</p>
           </td>
           <td class="border-left border-bottom" colspan="3">
-            <p>Certified by (as to correctness of financial data):</p>
+            <p style="margin-top: 20px">
+              Certified by (as to correctness of financial data):
+            </p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p style="font-size: 11px; font-weight: bold">
@@ -577,8 +368,8 @@
             </p>
             <p>Accountant</p>
           </td>
-          <td class="border-left border-bottom border-right" colspan="3">
-            <p>Approved by:</p>
+          <td class="border-left border-bottom" colspan="3">
+            <p style="margin-top: 20px">Approved by:</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p style="font-size: 11px; font-weight: bold">
@@ -586,15 +377,9 @@
             </p>
             <p>{{ this.signatories.president_position }}</p>
           </td>
-
-          <td class="border-left border-bottom border-right"></td>
-
-          <td class="border-left border-bottom border-right"></td>
-
-          <td class="border-left border-bottom border-right"></td>
-          <td class="border-left border-bottom border-right"></td>
-          <td class="border-left border-bottom border-right"></td>
-          <td class="border-left border-bottom border-right"></td>
+          <td class="border-left border-bottom border-right" colspan="2">
+            <p>&nbsp;</p>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -604,12 +389,6 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  // props: {
-  //     billingId: {
-  //         required: true,
-  //     },
-  // },
-
   data() {
     return {
       billingId: null,
@@ -665,7 +444,7 @@ export default {
 
     fetchBillingDetails(page = 1) {
       this.$api
-        .get(`/fetch-billing-grantees/${this.billingId}?page=${page}`, {
+        .get(`/fetch-delisted-grantees/${this.billingId}?page=${page}`, {
           params: {
             hei_id: this.heiId,
           },
@@ -678,15 +457,14 @@ export default {
           this.billing_data = res.data.billing;
           // this.grantees_count = res.data.grantees_count;
           this.signatories = res.data.signatories;
-          this.grantees = res.data.billing_grantees;
+          this.grantees = res.data.delisted_grantees;
           this.loading = false;
 
-          // setTimeout(() => {
-          //   window.print();
-          // }, 1000);
-          window.onafterprint = function () {
-            window.close();
-          };
+          setTimeout(() => {
+            window.print();
+          }, 1000);
+
+          console.log(this.grantees);
         });
     },
   },
@@ -703,11 +481,9 @@ export default {
 </script>
 
 <style scoped>
-@media print {
-  @page {
-    size: A4 landscape;
-    margin: 15mm;
-  }
+@page {
+  size: A4 landscape;
+  margin: 10mm;
 }
 
 body {
@@ -718,7 +494,7 @@ body {
 }
 
 table {
-  width: 98%;
+  width: 97%;
   border: 1px solid black;
   border-collapse: collapse;
   overflow: hidden;

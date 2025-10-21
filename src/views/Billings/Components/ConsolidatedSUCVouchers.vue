@@ -228,6 +228,11 @@
                     </svg>
                   </button>
                   <button
+                    v-if="
+                      this.heiId === 188 ||
+                      this.heiId === 182 ||
+                      this.heiId === 150
+                    "
                     @click="handleBillingDelete(billing.id)"
                     :disabled="billing.billing_status.id !== 1"
                     :class="[
@@ -492,6 +497,7 @@ export default {
         total_amount: selectedBilling.total_amount,
         billing_status: selectedBilling.billing_status,
         voucher_id: selectedBilling.voucher_id,
+        is_consolidated: selectedBilling.is_consolidated,
       };
     },
 

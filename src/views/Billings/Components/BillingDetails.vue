@@ -54,13 +54,25 @@
         </span>
       </div>
     </div>
-    <!-- <PrintBillingDocuments :programName="program" :billingId="billingId" /> -->
+    <SUCPrintBillingDocuments
+      v-if="(heiId === 188 || heiId === 150) && formData.is_consolidated === 1"
+      :programName="program"
+      :billingId="billingId"
+    />
 
-    <div v-if="formData.hei_type === 0">
+    <PrintBillingDocuments
+      v-else
+      :programName="program"
+      :billingId="billingId"
+    />
+
+    <div>
       <div
         v-if="
-          this.formData.billing_status.id === 1 ||
-          this.formData.billing_status.id === 3
+          (this.formData.billing_status.id === 1 ||
+            this.formData.billing_status.id === 3) &&
+          this.submit_billing.is_consolidated === 0 &&
+          this.billing_data.hei.hei_type === 0
         "
         class="space-y-4 border-t border-gray-200 pt-4 mt-4"
       >
@@ -161,11 +173,16 @@
       </div>
     </div>
 
-    <div v-else>
+    <div>
       <div class="flex justify-end pt-2">
         <button
+          v-if="
+            this.submit_billing.is_consolidated === 0 &&
+            this.billing_data.hei.hei_type === 1
+          "
           @click="submitToMainCampus"
           type="submit"
+          :disabled="formData.billing_status.id === 3"
           class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-lg shadow hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-500"
         >
           Submit to Main Campus
@@ -178,6 +195,7 @@
 <script>
 import { mapGetters } from "vuex";
 import PrintBillingDocuments from "./PrintBillingDocuments.vue";
+import SUCPrintBillingDocuments from "./SUCPrintBillingDocuments.vue";
 export default {
   props: {
     formData: {
@@ -193,6 +211,7 @@ export default {
 
   components: {
     PrintBillingDocuments,
+    SUCPrintBillingDocuments,
   },
 
   data() {
@@ -213,6 +232,7 @@ export default {
         courier_id: null,
         status: 2,
         userId: null,
+        is_consolidated: null,
       },
     };
   },
@@ -245,9 +265,10 @@ export default {
             },
           }
         );
-        console.log("Success:", response.data);
+        window.location.reload();
         // Consider adding user feedback here, e.g., a success message
         this.$toast.success("Successfully submitted to main campus");
+
         return response.data;
       } catch (error) {
         console.error("Error submitting to main campus:", error);
@@ -371,6 +392,9 @@ export default {
           this.submit_billing.semester_id = this.billing_data.semester_id;
           this.submit_billing.status = 2;
           this.submit_billing.userId = this.userId;
+          this.submit_billing.is_consolidated =
+            this.billing_data.is_consolidated;
+          console.log(this.billing_data);
           this.loading = false;
         });
     },
@@ -378,7 +402,6 @@ export default {
   mounted() {
     this.fetchCouriers();
     this.fetchBillingDetails();
-    console.log(this.formData);
   },
 };
 </script>

@@ -638,7 +638,7 @@ export default {
         query: {
           schoolYearId: this.selectedsy,
           semesterId: this.selectedsem,
-        }
+        },
       });
     },
 

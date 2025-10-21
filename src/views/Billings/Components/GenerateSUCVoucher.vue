@@ -31,9 +31,8 @@
           :key="program.id"
           :value="program.id"
         >
-          {{ program.grant }} | Batch {{ program.batch_no }} ({{
-            program.batch_type
-          }})
+          ID: {{ program.id }} {{ program.grant }} | Batch
+          {{ program.batch_no }} ({{ program.batch_type }})
         </option>
       </select>
     </div>
@@ -200,7 +199,7 @@ export default {
     },
 
     async generateVoucher(billing) {
-      if (!confirm(`Generate voucher for ${billing.hei_name}?`)) return;
+      if (!confirm(`Generate Consolidated Voucher?`)) return;
 
       this.isGenerating = true;
       try {
@@ -219,7 +218,7 @@ export default {
         );
 
         this.$toast.success("Voucher generated successfully!");
-        this.fetchBillings(); // Refresh the list
+        window.location.reload();
       } catch (error) {
         console.error("Error generating voucher:", error);
         this.$toast.error("Failed to generate voucher. Please try again.");
