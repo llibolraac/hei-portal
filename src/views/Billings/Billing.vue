@@ -349,7 +349,6 @@ export default {
 
   mounted() {
     this.updateQueryParams();
-    console.log(this.heiId);
   },
 };
 </script>

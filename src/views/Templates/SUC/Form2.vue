@@ -818,9 +818,9 @@ export default {
           console.log(this.grantees);
           this.loading = false;
 
-          setTimeout(() => {
-            window.print();
-          }, 1000);
+          // setTimeout(() => {
+          //   window.print();
+          // }, 1000);
           window.onafterprint = function () {
             window.close();
           };

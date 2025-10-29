@@ -203,6 +203,7 @@
               >
                 <div class="flex justify-end space-x-2">
                   <button
+                    v-if="billing.hei.hei_type === 0"
                     @click="handleViewBilling(billing.id)"
                     class="p-1.5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                     title="View details"
@@ -226,6 +227,34 @@
                         d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                       />
                     </svg>
+                    PHEI
+                  </button>
+                  <button
+                    v-if="billing.hei.hei_type === 1"
+                    @click="handleViewBilling(billing.id)"
+                    class="p-1.5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    title="View details"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
+                    </svg>
+                    SUC
                   </button>
                   <button
                     @click="handleBillingDelete(billing.id)"
@@ -326,10 +355,17 @@
             <!-- Billing Details -->
 
             <BillingDetails
-              v-if="currentTab === 'billing_details'"
+              v-if="currentTab === 'billing_details' && formData.hei_type === 0"
               :formData="formData"
               :billingId="billingId"
             />
+
+            <SUCBillingDetails
+              v-if="currentTab === 'billing_details' && formData.hei_type === 1"
+              :formData="formData"
+              :billingId="billingId"
+            />
+
             <!-- Ends Here -->
           </div>
           <div v-show="currentTab === 'grantee_details'" class="p-4">
@@ -358,6 +394,7 @@ import { mapGetters } from "vuex";
 import BillingLog from "../../BillingLog/BillingLog.vue";
 import GranteesDetails from "./GranteesDetails.vue";
 import BillingDetails from "../Components/BillingDetails.vue";
+import SUCBillingDetails from "./SUCBillingDetails.vue";
 
 export default {
   props: {
@@ -375,6 +412,7 @@ export default {
     GranteesDetails,
     BillingLog,
     BillingDetails,
+    SUCBillingDetails,
   },
 
   data() {
@@ -477,12 +515,12 @@ export default {
     },
 
     handleViewBilling(billingId) {
-      this.showModal = true;
       this.billingId = billingId;
 
       const selectedBilling = this.billings.data.find(
         (billing) => billing.id === billingId
       );
+
       this.formData = {
         transaction_no: selectedBilling.transaction_no,
         school_year: selectedBilling.schoolyear.school_year,
@@ -497,6 +535,7 @@ export default {
         hei_type: selectedBilling.hei.hei_type,
         is_consolidated: selectedBilling.is_consolidated,
       };
+      this.showModal = true;
     },
 
     calculateIndex(index) {
@@ -519,6 +558,7 @@ export default {
         })
         .then((res) => {
           this.billings = res.data.billings;
+
           this.loading = false;
         });
     },

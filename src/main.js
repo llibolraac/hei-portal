@@ -12,7 +12,7 @@ import Modal from "./views/Modal/Modal.vue";
 import { TailwindPagination } from "laravel-vue-pagination";
 
 const api = axios.create({
-  baseURL: "http://192.168.1.6:8000/api/", // Adjust as needed
+  baseURL: "http://127.0.0.1:8000/api/", // Adjust as needed
   // other configurations
 });
 

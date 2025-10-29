@@ -330,7 +330,7 @@
           <div v-show="currentTab === 'billing_details'" class="p-4 bg-white">
             <!-- Billing Details -->
 
-            <BillingDetails
+            <SUCBillingDetails
               v-if="currentTab === 'billing_details'"
               :formData="formData"
               :billingId="billingId"
@@ -362,7 +362,7 @@ import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
 import BillingLog from "../../BillingLog/BillingLog.vue";
 import GranteesDetails from "./GranteesDetails.vue";
-import BillingDetails from "../Components/BillingDetails.vue";
+import SUCBillingDetails from "../Components/SUCBillingDetails.vue";
 
 export default {
   props: {
@@ -379,7 +379,7 @@ export default {
   components: {
     GranteesDetails,
     BillingLog,
-    BillingDetails,
+    SUCBillingDetails,
   },
 
   data() {
