@@ -71,7 +71,8 @@
             </p>
             <p class="text-xs text-blue-700 mt-1">
               All statistics and charts displayed below reflect data from the
-              current academic period.
+              current uploaded grantees, based on School Year 2024–2025, 1st
+              Semester.
             </p>
           </div>
         </div>

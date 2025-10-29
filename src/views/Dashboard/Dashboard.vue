@@ -6,9 +6,7 @@
       <div class="flex items-center justify-between">
         <div class="flex items-center justify-start rtl:justify-end">
           <button
-            data-drawer-target="logo-sidebar"
-            data-drawer-toggle="logo-sidebar"
-            aria-controls="logo-sidebar"
+            @click="toggleMobileSidebar"
             type="button"
             class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           >
@@ -281,165 +279,219 @@
     </div>
   </nav>
 
+  <!-- Modern Sidebar -->
   <aside
     id="logo-sidebar"
-    class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+    class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full sm:translate-x-0 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700"
     aria-label="Sidebar"
   >
-    <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-      <ul class="space-y-2 font-medium">
+    <div class="h-full px-3 py-4 overflow-y-auto">
+      <!-- Navigation Header -->
+      <div class="px-4 py-3 mb-2">
+        <h2
+          class="text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-gray-400"
+        >
+          Main Menu
+        </h2>
+      </div>
+
+      <ul class="space-y-1">
         <li>
+          <!-- Dashboard Link -->
           <router-link
             to="/home/dashboard"
-            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            class="flex items-center p-3 text-gray-700 rounded-xl transition-all duration-200 group hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800"
+            active-class="bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
           >
-            <svg
-              class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 22 21"
+            <div
+              class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 group-hover:bg-blue-100 dark:group-hover:bg-blue-800/50 transition-colors"
             >
-              <path
-                d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"
-              />
-              <path
-                d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"
-              />
-            </svg>
-            <span class="ms-3">Dashboard</span>
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                ></path>
+              </svg>
+            </div>
+            <span class="ml-3 font-medium">Dashboard</span>
           </router-link>
         </li>
         <li>
+          <!-- Manage Grantees Link -->
           <router-link
             to="/home/manage_grantees"
-            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            class="flex items-center p-3 text-gray-700 rounded-xl transition-all duration-200 group hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800"
+            :class="{
+              'bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400':
+                $route.path.includes('manage_grantees'),
+            }"
           >
-            <svg
-              class="w-6 h-6 text-gray-800 dark:text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              viewBox="0 0 24 24"
+            <div
+              class="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 group-hover:bg-purple-100 dark:group-hover:bg-purple-800/50 transition-colors"
             >
-              <path
-                fill-rule="evenodd"
-                d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z"
-                clip-rule="evenodd"
-              />
-            </svg>
-
-            <span class="flex-1 ms-3 whitespace-nowrap">Manage Grantees</span>
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0m-6 9l2 2 4-4"
+                />
+              </svg>
+            </div>
+            <span class="ml-3 font-medium">Manage Grantees</span>
+            <span
+              v-if="pendingGrantees > 0"
+              class="ml-auto inline-flex items-center justify-center h-5 px-2 text-xs font-medium text-white bg-red-500 rounded-full"
+            >
+              {{ pendingGrantees > 9 ? "9+" : pendingGrantees }}
+            </span>
           </router-link>
         </li>
 
         <li>
+          <!-- Update Grantees Profile Link -->
           <router-link
             to="/home/batch_update"
-            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            class="flex items-center p-3 text-gray-700 rounded-xl transition-all duration-200 group hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800"
             :class="{
+              'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400':
+                $route.path.includes('batch_update') && !isDisabled,
               'pointer-events-none opacity-50 cursor-not-allowed': isDisabled,
             }"
           >
-            <svg
-              class="w-6 h-6 text-gray-800 dark:text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
+            <div
+              class="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-800/50 transition-colors"
             >
-              <path
+              <svg
+                class="w-5 h-5"
+                fill="none"
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 17.345v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"
-              />
-            </svg>
-
-            <span class="flex-1 ms-3 whitespace-nowrap"
-              >Update Grantees Profile</span
-            >
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+            </div>
+            <span class="ml-3 font-medium">Update Grantees Profile</span>
           </router-link>
         </li>
 
         <li>
+          <!-- Manage Billings Button -->
           <button
             @click="handleSemSY"
-            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-            :class="{
-              'pointer-events-none opacity-50 cursor-not-allowed': isDisabled,
-            }"
+            class="flex items-center w-full p-3 text-gray-700 rounded-xl transition-all duration-200 group hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800"
           >
-            <svg
-              class="w-6 h-6 text-gray-800 dark:text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
+            <div
+              class="flex items-center justify-center w-8 h-8 rounded-lg text-amber-600 dark:text-amber-400 transition-colors"
             >
-              <path
+              <svg
+                class="w-5 h-5"
+                fill="none"
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 17.345v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"
-              />
-            </svg>
-
-            <span class="flex-1 ms-3 whitespace-nowrap">Manage Billings</span>
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                />
+              </svg>
+            </div>
+            <span class="ml-3 font-medium">Manage Billings</span>
           </button>
         </li>
 
         <li>
+          <!-- Support Dropdown -->
           <button
             type="button"
-            class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            aria-controls="dropdown-example"
-            data-collapse-toggle="dropdown-example"
+            class="flex items-center w-full p-3 text-gray-700 rounded-xl transition-all duration-200 group hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800"
+            :class="{
+              'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400':
+                $route.path.includes('support'),
+            }"
+            @click="isSupportOpen = !isSupportOpen"
+            aria-expanded="false"
           >
-            <svg
-              class="w-6 h-6 text-gray-800 dark:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              viewBox="0 0 24 24"
+            <div
+              class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 group-hover:bg-blue-100 dark:group-hover:bg-blue-800/50 transition-colors"
             >
-              <path
-                d="m7.4 3.736 3.43 3.429A5.046 5.046 0 0 1 12.133 7c.356.01.71.06 1.056.147l3.41-3.412a2.32 2.32 0 0 1 .451-.344A9.89 9.89 0 0 0 12.268 2a10.022 10.022 0 0 0-5.322 1.392c.165.095.318.211.454.344Zm11.451 1.54-.127-.127a.5.5 0 0 0-.706 0l-2.932 2.932c.03.023.05.054.078.077.237.194.454.41.651.645.033.038.077.067.11.107l2.926-2.927a.5.5 0 0 0 0-.707Zm-2.931 9.81c-.025.03-.058.052-.082.082a4.97 4.97 0 0 1-.633.639c-.04.036-.072.083-.115.117l2.927 2.927a.5.5 0 0 0 .707 0l.127-.127a.5.5 0 0 0 0-.707l-2.932-2.931Zm-1.443-4.763a3.037 3.037 0 0 0-1.383-1.1l-.012-.007a2.956 2.956 0 0 0-1-.213H12a2.964 2.964 0 0 0-2.122.893c-.285.29-.509.634-.657 1.013l-.009.016a2.96 2.96 0 0 0-.21 1 2.99 2.99 0 0 0 .488 1.716l.032.04a3.04 3.04 0 0 0 1.384 1.1l.012.007c.319.129.657.2 1 .213.393.015.784-.05 1.15-.192.012-.005.021-.013.033-.018a3.01 3.01 0 0 0 1.676-1.7v-.007a2.89 2.89 0 0 0 0-2.207 2.868 2.868 0 0 0-.27-.515c-.007-.012-.02-.025-.03-.039Zm6.137-3.373a2.53 2.53 0 0 1-.349.447l-3.426 3.426c.112.428.166.869.161 1.311a4.954 4.954 0 0 1-.148 1.054l3.413 3.412c.133.134.249.283.347.444A9.88 9.88 0 0 0 22 12.269a9.913 9.913 0 0 0-1.386-5.319ZM16.6 20.264l-3.42-3.421c-.386.1-.782.152-1.18.157h-.135c-.356-.01-.71-.06-1.056-.147L7.4 20.265a2.503 2.503 0 0 1-.444.347A9.884 9.884 0 0 0 11.732 22H12a9.9 9.9 0 0 0 5.044-1.388 2.515 2.515 0 0 1-.444-.348ZM3.735 16.6l3.426-3.426a4.608 4.608 0 0 1-.013-2.367L3.735 7.4a2.508 2.508 0 0 1-.349-.447 9.889 9.889 0 0 0 0 10.1 2.48 2.48 0 0 1 .35-.453Zm5.101-.758a4.959 4.959 0 0 1-.65-.645c-.034-.038-.078-.067-.11-.107L5.15 18.017a.5.5 0 0 0 0 .707l.127.127a.5.5 0 0 0 .706 0l2.932-2.933c-.029-.018-.049-.053-.078-.076Zm-.755-6.928c.03-.037.07-.063.1-.1.183-.22.383-.423.6-.609.046-.04.081-.092.128-.13L5.983 5.149a.5.5 0 0 0-.707 0l-.127.127a.5.5 0 0 0 0 .707l2.932 2.931Z"
-              />
-            </svg>
-
-            <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap"
-              >Support</span
-            >
-            <svg
-              class="w-3 h-3"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
+              <svg
+                class="w-5 h-5"
+                fill="none"
                 stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zM13.5 12a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"
+                />
+              </svg>
+            </div>
+            <span class="ml-3 font-medium">Support</span>
+            <svg
+              class="w-3 h-3 ml-auto transition-transform duration-200"
+              :class="{ 'rotate-180': isSupportOpen }"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="m1 1 4 4 4-4"
+                d="M19 9l-7 7-7-7"
               />
             </svg>
           </button>
-          <ul id="dropdown-example" class="hidden py-2 space-y-2">
+          <!-- Dropdown Menu -->
+          <ul v-show="isSupportOpen" class="py-2 pl-4 space-y-1">
+            <!-- Tickets -->
             <li>
               <router-link
-                to="/home/support"
-                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                >Tickets</router-link
+                to="/home/support/tickets"
+                class="flex items-center p-2.5 pl-4 text-sm text-gray-700 rounded-lg transition-colors group hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700/50"
+                :class="{
+                  'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400':
+                    $route.path === '/home/support/tickets',
+                }"
               >
+                <span
+                  class="w-1.5 h-1.5 rounded-full bg-gray-400 mr-3 group-hover:bg-blue-500 dark:group-hover:bg-blue-400 transition-colors"
+                ></span>
+                Tickets
+                <span
+                  class="ml-auto px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 rounded-full dark:bg-blue-900/30 dark:text-blue-300"
+                >
+                  New
+                </span>
+              </router-link>
             </li>
           </ul>
         </li>
@@ -447,8 +499,11 @@
     </div>
   </aside>
 
-  <div class="sm:ml-64 mt-20">
-    <router-view></router-view>
+  <!-- Main Content -->
+  <div class="sm:ml-64 mt-14 sm:mt-16 px-4 py-2 sm:px-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 sm:p-6">
+      <router-view></router-view>
+    </div>
   </div>
 
   <Modal
@@ -526,8 +581,13 @@ export default {
       notifications: [],
       isDisabled: false,
       unreadCount: 0,
-      pollingInterval: null,
+      unreadGrantees: 5, // Example count - replace with actual data
+      pendingBillings: 3, // Example count - replace with actual data
+      notificationInterval: null,
       isNotificationOpen: false,
+      isUserMenuOpen: false,
+      isSidebarOpen: true,
+      isSupportOpen: false,
     };
   },
 
@@ -663,12 +723,28 @@ export default {
 
     closeMobileSidebar() {
       const sidebar = document.getElementById("logo-sidebar");
-      if (sidebar?.classList.contains("translate-x-0")) {
-        sidebar.classList.remove("translate-x-0");
+      if (window.innerWidth < 640) {
+        sidebar.classList.add("-translate-x-full");
+        document.body.classList.remove("overflow-hidden");
+      }
+    },
+
+    toggleMobileSidebar() {
+      const sidebar = document.getElementById("logo-sidebar");
+      sidebar.classList.toggle("-translate-x-full");
+      if (window.innerWidth < 640) {
+        document.body.classList.toggle("overflow-hidden");
+      }
+    },
+
+    handleResize() {
+      const sidebar = document.getElementById("logo-sidebar");
+      if (window.innerWidth >= 640) {
+        sidebar.classList.remove("-translate-x-full");
+        document.body.classList.remove("overflow-hidden");
+      } else if (!sidebar.classList.contains("-translate-x-full")) {
         sidebar.classList.add("-translate-x-full");
       }
-      document.querySelector("[drawer-backdrop]")?.remove();
-      document.body.classList.remove("overflow-hidden");
     },
 
     formatTimeAgo(dateString) {
@@ -701,20 +777,21 @@ export default {
   },
 
   mounted() {
-    // init support dropdown
-    const $triggerEl = document.getElementById("dropdownSupportButton");
-    const $dropdownEl = document.getElementById("dropdownSupport");
-
-    if ($triggerEl && $dropdownEl) {
-      new Dropdown($dropdownEl, $triggerEl);
-    }
-
+    initDrawers();
+    initDropdowns();
+    initCollapses();
     this.sysem();
     this.fetchNotifications();
     this.setupNotificationPolling();
-    initDropdowns();
-    initDrawers();
-    initCollapses(); // ✅ needed for sidebar nested toggle
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+    document.addEventListener("click", this.handleClickOutside);
+    this.$watch(
+      () => this.$route,
+      () => {
+        this.closeMobileSidebar();
+      }
+    );
   },
 
   beforeUnmount() {
