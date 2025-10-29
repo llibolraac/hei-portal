@@ -475,11 +475,11 @@
             <!-- Tickets -->
             <li>
               <router-link
-                to="/home/support/tickets"
+                to="/home/support"
                 class="flex items-center p-2.5 pl-4 text-sm text-gray-700 rounded-lg transition-colors group hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700/50"
                 :class="{
                   'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400':
-                    $route.path === '/home/support/tickets',
+                    $route.path === '/home/support',
                 }"
               >
                 <span
