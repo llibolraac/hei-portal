@@ -2,7 +2,7 @@
   <div class="bg-white rounded-lg shadow">
     <div class="p-6">
       <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-medium text-gray-900">Upcoming Deadlines</h3>
+        <h3 class="text-lg font-bold text-gray-900">Upcoming Deadlines</h3>
         <button class="text-sm text-blue-600 hover:text-blue-800">
           View All
         </button>
@@ -93,6 +93,10 @@
 
           <p class="text-sm text-gray-600 italic">
             {{ selectedDeadline ? formatDate(selectedDeadline.deadline) : "" }}
+          </p>
+
+          <p class="text-sm text-gray-600 italic">
+            {{ selectedDeadline?.description }}
           </p>
 
           <span

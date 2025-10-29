@@ -26,7 +26,7 @@
   >
     <!-- Title -->
     <h2 class="text-2xl font-bold text-gray-800 dark:text-white">
-      Billing Summary
+      SUC Billing Summary
     </h2>
 
     <!-- Billing Details (smaller version) -->
@@ -55,28 +55,20 @@
       </div>
     </div>
     <SUCPrintBillingDocuments
-      v-if="
-        (heiId === 188 || heiId === 150 || heiId === 151) &&
-        formData.is_consolidated === 1
-      "
+      v-if="(heiId === 188 || heiId === 150) && formData.is_consolidated === 1"
       :programName="program"
       :billingId="billingId"
-      :heiId="heiId"
     />
 
     <PrintBillingDocuments
       v-else
       :programName="program"
       :billingId="billingId"
-      :heiId="heiId"
     />
 
     <div>
       <div
-        v-if="
-          this.formData.billing_status.id === 1 ||
-          (this.billing_data && this.billing_data.is_consolidated === 1)
-        "
+        v-if="formData.is_consolidated === 1 || formData.status.id === 2"
         class="space-y-4 border-t border-gray-200 pt-4 mt-4"
       >
         <!-- Delivery Method -->
@@ -179,13 +171,7 @@
     <div>
       <div class="flex justify-end pt-2">
         <button
-          v-if="
-            this.billing_data &&
-            this.billing_data.hei &&
-            this.billing_data.hei.hei_type === 1 &&
-            this.formData.billing_status.id === 1 &&
-            this.billing_data.campus_sub_status === 0
-          "
+          v-if="this.formData.is_consolidated === 0"
           @click="submitToMainCampus"
           type="submit"
           :disabled="formData.billing_status.id === 3"
@@ -201,7 +187,7 @@
 <script>
 import { mapGetters } from "vuex";
 import PrintBillingDocuments from "./PrintBillingDocuments.vue";
-import SUCPrintBillingDocuments from "./SUCPrintBillingDocuments.vue";
+
 export default {
   props: {
     formData: {
@@ -217,7 +203,6 @@ export default {
 
   components: {
     PrintBillingDocuments,
-    SUCPrintBillingDocuments,
   },
 
   data() {
@@ -227,7 +212,7 @@ export default {
       couriers: [],
       selectedCourier: null,
       trackingNumber: "",
-      billing_data: null,
+      billing_data: [],
       program: null,
       submit_billing: {
         delivery_type: null,
@@ -240,7 +225,6 @@ export default {
         userId: null,
         is_consolidated: null,
         is_main: null,
-        campus_sub_status: null,
       },
     };
   },
@@ -402,11 +386,8 @@ export default {
           this.submit_billing.userId = this.userId;
           this.submit_billing.is_consolidated =
             this.billing_data.is_consolidated;
-
           this.submit_billing.is_main = this.billing_data.hei.is_main;
-          this.submit_billing.campus_sub_status =
-            this.billing_data.campus_sub_status;
-          console.log(this.submit_billing.campus_sub_status);
+          console.log(this.billing_data);
           this.loading = false;
         });
     },

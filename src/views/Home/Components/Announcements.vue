@@ -2,7 +2,7 @@
   <div class="lg:col-span-2 bg-white rounded-lg shadow">
     <div class="p-6">
       <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-medium text-gray-900">Announcements</h3>
+        <h3 class="text-lg font-bold text-gray-900">Announcements</h3>
         <button class="text-sm text-blue-600 hover:text-blue-800">
           View All
         </button>
