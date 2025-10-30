@@ -55,20 +55,16 @@
       </div>
     </div>
     <SUCPrintBillingDocuments
-      v-if="(heiId === 188 || heiId === 150) && formData.is_consolidated === 1"
       :programName="program"
       :billingId="billingId"
-    />
-
-    <PrintBillingDocuments
-      v-else
-      :programName="program"
-      :billingId="billingId"
+      :heiId="this.heiId"
     />
 
     <div>
       <div
-        v-if="formData.is_consolidated === 1 || formData.status.id === 2"
+        v-if="
+          formData.is_consolidated === 1 || formData.billing_status.id === 2
+        "
         class="space-y-4 border-t border-gray-200 pt-4 mt-4"
       >
         <!-- Delivery Method -->
@@ -186,7 +182,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import PrintBillingDocuments from "./PrintBillingDocuments.vue";
+import SUCPrintBillingDocuments from "./SUCPrintBillingDocuments.vue";
 
 export default {
   props: {
@@ -202,7 +198,7 @@ export default {
   },
 
   components: {
-    PrintBillingDocuments,
+    SUCPrintBillingDocuments,
   },
 
   data() {
@@ -387,7 +383,7 @@ export default {
           this.submit_billing.is_consolidated =
             this.billing_data.is_consolidated;
           this.submit_billing.is_main = this.billing_data.hei.is_main;
-          console.log(this.billing_data);
+
           this.loading = false;
         });
     },
@@ -395,6 +391,7 @@ export default {
   mounted() {
     this.fetchCouriers();
     this.fetchBillingDetails();
+    console.log(this.formData);
   },
 };
 </script>

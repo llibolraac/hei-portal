@@ -353,12 +353,6 @@
               </svg>
             </div>
             <span class="ml-3 font-medium">Manage Grantees</span>
-            <span
-              v-if="pendingGrantees > 0"
-              class="ml-auto inline-flex items-center justify-center h-5 px-2 text-xs font-medium text-white bg-red-500 rounded-full"
-            >
-              {{ pendingGrantees > 9 ? "9+" : pendingGrantees }}
-            </span>
           </router-link>
         </li>
 

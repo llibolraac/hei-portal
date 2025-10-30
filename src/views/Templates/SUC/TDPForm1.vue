@@ -169,11 +169,11 @@
               Education (UAQTE) under General Appropriation Act (GAA) for Fiscal
               Year 2025, as per attached supporting documents ……..
 
-              <p>
+              <div style="margin-top: 10px; margin-bottom: 10px;">
                 a) Certificate of Registration (COR) (PDF File only) <br />
-b) Photocopy of ID with signature (PDF FIle only)  <br />
-c) Certified true copy of grades 
-              </p>
+                b) Photocopy of ID with signature (PDF File only) <br />
+                c) Certified true copy of grades 
+              </div>
             </p>
           </td>
           <td><p>&nbsp;</p></td>

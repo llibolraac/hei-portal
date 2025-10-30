@@ -406,7 +406,7 @@ export default {
           this.submit_billing.is_main = this.billing_data.hei.is_main;
           this.submit_billing.campus_sub_status =
             this.billing_data.campus_sub_status;
-          console.log(this.submit_billing.campus_sub_status);
+
           this.loading = false;
         });
     },
