@@ -126,6 +126,15 @@ const router = createRouter({
     //SUC Starts here
 
     {
+      path: "/print_suc-form_1",
+      name: "PrintSUCForm1",
+      component: SUCForm1,
+      meta: {
+        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
+      },
+    },
+
+    {
       path: "/print_suc-form_2",
       name: "PrintSUCForm2",
       component: SUCForm2,

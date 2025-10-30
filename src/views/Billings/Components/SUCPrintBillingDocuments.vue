@@ -209,7 +209,7 @@ export default {
     async printForm1() {
       this.showDropdown = false;
       const childRouteURL = this.$router.resolve({
-        name: "SUCPrintForm1",
+        name: "PrintSUCForm1",
         query: {
           billingId: this.billingId,
         },
