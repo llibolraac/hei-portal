@@ -214,17 +214,17 @@ const router = createRouter({
           component: Home,
         },
 
-        {
-          path: "manage_billings",
-          name: "ManageBillings",
-          component: ManageBilling,
-        },
+        // {
+        //   path: "manage_billings",
+        //   name: "ManageBillings",
+        //   component: ManageBilling,
+        // },
 
-        {
-          path: "batch_update",
-          name: "BatchUpdate",
-          component: BatchUpdate,
-        },
+        // {
+        //   path: "batch_update",
+        //   name: "BatchUpdate",
+        //   component: BatchUpdate,
+        // },
 
         {
           path: "support",

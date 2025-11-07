@@ -336,8 +336,6 @@ export default {
         this.billingForm.amount * selectedProgram.asc;
       this.billingForm.total_amount =
         this.billingForm.amount + this.billingForm.program_oc;
-
-      console.log(this.billingForm);
     },
 
     fetchGrantees(page = 1) {
