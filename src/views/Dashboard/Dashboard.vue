@@ -394,6 +394,11 @@
           <button
             @click="handleSemSY"
             class="flex items-center w-full p-3 text-gray-700 rounded-xl transition-all duration-200 group hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800"
+            :class="{
+              'bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400':
+                $route.path.includes('manage_billings') && !isDisabled,
+              'pointer-events-none opacity-50 cursor-not-allowed': isDisabled,
+            }"
           >
             <div
               class="flex items-center justify-center w-8 h-8 rounded-lg text-amber-600 dark:text-amber-400 transition-colors"
@@ -573,7 +578,7 @@ export default {
       selectedsy: "",
       selectedsem: "",
       notifications: [],
-      isDisabled: false,
+      isDisabled: true,
       unreadCount: 0,
       unreadGrantees: 5, // Example count - replace with actual data
       pendingBillings: 3, // Example count - replace with actual data
