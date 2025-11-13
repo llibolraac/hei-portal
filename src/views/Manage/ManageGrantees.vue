@@ -138,7 +138,8 @@
               :key="program.id"
               :value="program.id"
             >
-              {{ program.batch_name }} || Batch {{ program.batch_no }}
+              {{ program.batch_name }} || Batch {{ program.batch_no }} || Amount
+              {{ formatDecimalValue(program.amount) }}
             </option>
           </select>
         </div>
