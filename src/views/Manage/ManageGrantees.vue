@@ -139,7 +139,7 @@
               :value="program.id"
             >
               {{ program.batch_name }} || Batch {{ program.batch_no }} || Amount
-              {{ formatDecimalValue(program.amount) }}
+              {{ program.amount }}
             </option>
           </select>
         </div>
