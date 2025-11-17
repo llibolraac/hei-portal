@@ -137,8 +137,9 @@
               v-for="program in programs"
               :key="program.id"
               :value="program.id"
-            >ID: {{ program.id }} || 
-              {{ program.batch_name }} || Batch {{ program.batch_no }} || Amount
+            >
+              ID: {{ program.id }} || {{ program.batch_name }} || Batch
+              {{ program.batch_no }} || Amount
               {{ program.amount }}
             </option>
           </select>
@@ -186,11 +187,12 @@
           <th class="px-6 py-3">Middle Name</th>
           <th class="px-6 py-3">Grant</th>
           <th class="px-6 py-3">Batch</th>
-          <th class="px-6 py-3">Course</th>
+
           <th class="px-6 py-3">Year Level</th>
           <th class="px-6 py-3">Semester</th>
           <th class="px-6 py-3">School Year</th>
           <th class="px-6 py-3">Status</th>
+          <th class="px-6 py-3">Remarks</th>
           <th class="px-6 py-3">Action</th>
         </tr>
       </thead>
@@ -212,7 +214,7 @@
           </td>
           <td class="px-6 py-4">{{ grantee.grant }}</td>
           <td class="px-6 py-4">{{ grantee.batch_no }}</td>
-          <td class="px-6 py-4">{{ grantee.course_program }}</td>
+
           <td class="px-6 py-4">{{ grantee.year_level }}</td>
           <td class="px-6 py-4">{{ grantee.semester.semester }}</td>
           <td class="px-6 py-4">{{ grantee.schoolyear.school_year }}</td>
@@ -227,6 +229,10 @@
               class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded"
               >Delisted</span
             >
+          </td>
+
+          <td class="px-6 py-4">
+            {{ grantee.remarks }}
           </td>
           <td class="px-6 py-4">
             <a
