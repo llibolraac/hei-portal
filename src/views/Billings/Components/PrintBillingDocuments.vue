@@ -56,15 +56,15 @@
               Form 3 (Delisted Grantees)
             </button>
           </li>
-          <!-- <li>
+          <li>
             <button
               @click="printForm4()"
               class="block w-full text-left px-4 py-2 hover:bg-gray-100"
             >
-              `Certificat`ion of Enrolled Grantees
+              Certification of Enrolled Grantees
             </button>
-          </li> -->
-          <li>
+          </li>
+          <!-- <li>
             <button
               @click="
                 printForm5();
@@ -74,7 +74,7 @@
             >
               Certification of Graduated Grantees
             </button>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
