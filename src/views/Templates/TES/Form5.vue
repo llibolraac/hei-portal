@@ -94,7 +94,7 @@
         margin-top: 40px;
       "
     >
-      CERTIFICATION OF ENROLLED GRANTEES
+      CERTIFICATION OF GRADUATED GRANTEES
     </h2>
 
     <div style="margin-top: 50px">
@@ -104,13 +104,9 @@
         <span v-if="billing_data.program.batch_type === 'ON-GOING'"
           >CONTINUING
         </span>
-        <span v-else>NEW</span>
         <span v-if="billing_data.program.batch_name === 'CHED-TDP'">TDP</span>
         <span v-else>TES</span>
-
-        grantees by campus as shown below,are qualified to avail of the Tertiary
-        Education Subsidy (TES) program under R.A. No. 10931 also known as
-        Universal Access to Quality Tertiary Education (UAQTE) for the
+        grantees by campus as shown below graduated in
         {{ billing_data.semester.semester }} of Academic Year
         {{ billing_data.schoolyear.school_year }}.
       </p>
@@ -120,8 +116,7 @@
           <thead>
             <tr>
               <th width="130">Name of Campus</th>
-              <th width="187">Number of TES Grantees</th>
-              <th width="195">Number of TES Grantees with TES3-a</th>
+              <th width="187">Number of TES Grantees who Graduated</th>
               <th width="127">Total</th>
             </tr>
           </thead>
@@ -129,12 +124,12 @@
             <tr>
               <td>{{ billing_data.hei.abbr }}</td>
               <td>{{ this.grantees_count }}</td>
-              <td>0</td>
+
               <td>{{ this.grantees_count }}</td>
             </tr>
 
             <tr>
-              <td colspan="3">Total</td>
+              <td colspan="2">Total</td>
               <td>{{ this.grantees_count }}</td>
             </tr>
           </tbody>
@@ -147,7 +142,7 @@
         <span v-if="(billing_data.program.batch_type = 'ON-GOING')"
           >CONTINUING</span
         >
-        <span v-else>NEW</span> Form 2 is accurate and complete.
+        <span v-else>NEW</span> Form 3 is accurate and complete.
       </p>
 
       <p

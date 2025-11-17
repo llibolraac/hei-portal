@@ -48,7 +48,7 @@
       >
         <option value="">Select School Year</option>
         <option
-          v-for="schoolyear in schoolyears"
+          v-for="schoolyear in schoolyears.filter((sy) => sy.id !== 4)"
           :key="schoolyear.id"
           :value="schoolyear"
         >

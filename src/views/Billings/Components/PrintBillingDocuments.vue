@@ -56,25 +56,25 @@
               Form 3 (Delisted Grantees)
             </button>
           </li>
-          <li>
+          <!-- <li>
             <button
               @click="printForm4()"
               class="block w-full text-left px-4 py-2 hover:bg-gray-100"
             >
-              Certification of Enrolled Grantees
+              `Certificat`ion of Enrolled Grantees
+            </button>
+          </li> -->
+          <li>
+            <button
+              @click="
+                printForm5();
+                showDropdown = false;
+              "
+              class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+            >
+              Certification of Graduated Grantees
             </button>
           </li>
-          <!-- <li>
-          <button
-            @click="
-              printForm5;
-              showDropdown = false;
-            "
-            class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-          >
-            Certification of Graduated Grantees
-          </button>
-        </li> -->
         </ul>
       </div>
     </div>
@@ -326,6 +326,35 @@ export default {
                   margin: 15mm;
                 }
 
+              }
+            `;
+        childWindow.document.head.appendChild(style);
+      };
+    },
+
+    async printForm5() {
+      this.showDropdown = false;
+      const childRouteURL = this.$router.resolve({
+        name: "PrintForm5",
+        query: {
+          billingId: this.billingId,
+        },
+      }).href;
+      // Open the new window to the child component's route URL
+      const childWindow = window.open(
+        childRouteURL,
+        "_blank",
+        "width=800,height=600"
+      );
+      // Wait for the child window to load before injecting styles
+      childWindow.onload = () => {
+        const style = childWindow.document.createElement("style");
+        style.textContent = `
+              @media print {
+                @page {
+                  size: A4 portrait;
+                  margin: 15mm;
+                }
               }
             `;
         childWindow.document.head.appendChild(style);

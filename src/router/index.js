@@ -13,6 +13,7 @@ import Form1 from "../views/Templates/TES/Form1.vue";
 import Form2 from "../views/Templates/TES/Form2.vue";
 import Form3 from "../views/Templates/TES/Form3.vue";
 import Form4 from "../views/Templates/TES/Form4.vue";
+import Form5 from "../views/Templates/TES/Form5.vue";
 
 //TDP Forms
 import TDPForm1 from "../views/Templates/TDP/TDPForm1.vue"; // Assuming this is the correct
@@ -80,6 +81,15 @@ const router = createRouter({
       path: "/print_form_4",
       name: "PrintForm4",
       component: Form4,
+      meta: {
+        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
+      },
+    },
+
+    {
+      path: "/print_form_5",
+      name: "PrintForm5",
+      component: Form5,
       meta: {
         requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
       },
@@ -214,17 +224,17 @@ const router = createRouter({
           component: Home,
         },
 
-        // {
-        //   path: "manage_billings",
-        //   name: "ManageBillings",
-        //   component: ManageBilling,
-        // },
+        {
+          path: "manage_billings",
+          name: "ManageBillings",
+          component: ManageBilling,
+        },
 
-        // {
-        //   path: "batch_update",
-        //   name: "BatchUpdate",
-        //   component: BatchUpdate,
-        // },
+        {
+          path: "batch_update",
+          name: "BatchUpdate",
+          component: BatchUpdate,
+        },
 
         {
           path: "support",

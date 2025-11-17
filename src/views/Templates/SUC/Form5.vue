@@ -94,7 +94,7 @@
         margin-top: 40px;
       "
     >
-      CERTIFICATION OF ENROLLED GRANTEES
+      CERTIFICATION OF GRADUATED GRANTEES
     </h2>
 
     <div style="margin-top: 50px">

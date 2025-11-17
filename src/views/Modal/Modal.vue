@@ -9,7 +9,9 @@
       class="relative p-4 w-full max-w-md max-h-full"
     >
       <!-- Modal content -->
-      <div class="relative bg-white rounded-lg shadow-lg dark:bg-gray-700">
+      <div
+        class="relative bg-white rounded-lg shadow-lg dark:bg-gray-700 overflow-hidden flex flex-col max-h-[calc(100vh-8rem)]"
+      >
         <!-- Modal header -->
         <div
           class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200"
@@ -41,13 +43,16 @@
         </div>
 
         <!-- Modal body -->
-        <div class="p-4">
+        <div class="p-4 overflow-y-auto flex-1">
           <slot></slot>
           <!-- Content passed from parent component -->
         </div>
 
         <!-- Modal footer -->
-        <div v-if="isSubmit" class="p-4 flex justify-end">
+        <div
+          v-if="isSubmit"
+          class="p-4 flex justify-end border-t border-gray-200 dark:border-gray-600"
+        >
           <button
             type="button"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

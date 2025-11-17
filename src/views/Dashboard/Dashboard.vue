@@ -578,7 +578,7 @@ export default {
       selectedsy: "",
       selectedsem: "",
       notifications: [],
-      isDisabled: true,
+      isDisabled: false,
       unreadCount: 0,
       unreadGrantees: 5, // Example count - replace with actual data
       pendingBillings: 3, // Example count - replace with actual data

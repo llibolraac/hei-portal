@@ -79,7 +79,7 @@
       >
         <option :value="null">Select School Year</option>
         <option
-          v-for="schoolyear in schoolyears"
+          v-for="schoolyear in schoolyears.filter((sy) => sy.id !== 4)"
           :key="schoolyear.id"
           :value="schoolyear"
         >
@@ -126,7 +126,7 @@
         class="mt-1 text-sm text-gray-500 dark:text-gray-300"
         id="file_input_help"
       >
-      Only CSV files are allowed (maximum size: 5 MB).
+        Only CSV files are allowed (maximum size: 5 MB).
       </p>
 
       <button
@@ -327,8 +327,8 @@ export default {
               currentRowHasErrors = true;
             } else {
               // Remove any non-digit characters for validation
-              const cleanNumber = row.contact_number.replace(/\D/g, '');
-              
+              const cleanNumber = row.contact_number.replace(/\D/g, "");
+
               // Check length (assuming 11 digits for standard PH numbers, adjust if needed)
               if (cleanNumber.length < 10 || cleanNumber.length > 15) {
                 tempErrors.push(
@@ -336,7 +336,7 @@ export default {
                 );
                 currentRowHasErrors = true;
               }
-              
+
               // Check if it's a valid PH mobile number (starts with 09, 9, +639, 639)
               if (!/^(09|\+?639|639)?\d{9,12}$/.test(cleanNumber)) {
                 tempErrors.push(
