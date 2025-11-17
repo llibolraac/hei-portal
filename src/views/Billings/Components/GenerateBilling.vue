@@ -319,6 +319,7 @@ export default {
         .then((res) => {
           this.programs = res.data.programs;
           this.loading = false;
+
         });
     },
 
@@ -333,12 +334,15 @@ export default {
       this.billingForm.program_id = this.programId;
       this.billingForm.amount = this.granteeIds.length * selectedProgram.amount;
       this.billingForm.program_oc =
-        this.billingForm.amount * selectedProgram.asc;
+      this.billingForm.amount * selectedProgram.asc;
       this.billingForm.total_amount =
-        this.billingForm.amount + this.billingForm.program_oc;
+      this.billingForm.amount + this.billingForm.program_oc;
+
+      console.log(this.billingForm)
     },
 
     fetchGrantees(page = 1) {
+
       this.$api
         .get(`/get-grantees/${this.heiId}?page=${page}`, {
           params: {
@@ -357,6 +361,9 @@ export default {
           this.selectedGrantees = this.granteeIds;
 
           this.updateBillingForm();
+
+          console.log(this.billingForm)
+
         });
     },
 

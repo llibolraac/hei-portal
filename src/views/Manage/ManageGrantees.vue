@@ -137,7 +137,7 @@
               v-for="program in programs"
               :key="program.id"
               :value="program.id"
-            >
+            >ID: {{ program.id }} || 
               {{ program.batch_name }} || Batch {{ program.batch_no }} || Amount
               {{ program.amount }}
             </option>
