@@ -75,8 +75,13 @@
               </div>
               <div class="flex-item" style="text-align: center">
                 <p>Republic of the Philippines</p>
-                <p><strong>Name of Higher Education Institution</strong></p>
-                <p>Address of Higher Education Institution</p>
+                            <p>
+                  <strong>{{ this.billing_data.hei.hei_name }}</strong>
+                </p>
+                <p>
+                  {{ this.billing_data.hei.municipality }},
+                  {{ this.billing_data.hei.province }}
+                </p>
                 <p style="font-size: 17px; font-weight: bold">
                   CONSOLIDATED TES BILLING STATEMENT
                 </p>
