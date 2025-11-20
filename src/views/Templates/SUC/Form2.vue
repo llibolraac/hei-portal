@@ -511,7 +511,9 @@
                 text-align: right;
               "
             >
-              Add 1 percent (1%) Administrative Support for Partner
+              Add 1 percent (1%) 
+              <span v-if="this.billing_data.schoolyear.id >= 3">Management Fee</span>
+              <span v-else>Administrative Support </span> for Partner
               Instsitutions:
               {{
                 formatDecimalValue(
@@ -632,7 +634,9 @@
         <tr>
           <td colspan="16">
             <p>
-              Add 1 percent (1%) Administrative Support for Partner
+              Add 1 percent (1%) 
+              <span v-if="this.billing_data.schoolyear.id >= 3">Management Fee</span>
+              <span v-else>Administrative Support </span> for Partner
               Instsitutions
             </p>
           </td>

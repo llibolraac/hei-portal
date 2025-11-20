@@ -9,6 +9,34 @@
     facilitate a smooth process.
   </div>
 
+<!-- Missing Submission Alert -->
+<div
+  v-if="no_submission.length > 0"
+  class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+  role="alert"
+>
+  <span class="font-medium">Some submissions are missing:</span>
+
+  <div
+    v-for="(batch, index) in no_submission"
+    :key="index"
+    class="mt-3"
+  >
+
+
+    <ul class="mt-2 list-disc list-inside">
+      <li
+        v-for="(hei, i) in batch.missing_heis"
+        :key="i"
+      >
+        {{ hei }}
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+
   <div class="w-full">
     <!-- Program Selection -->
     <div class="w-full">
@@ -137,6 +165,7 @@ export default {
       billings: [],
       isLoading: false,
       isGenerating: false,
+      no_submission: [],
     };
   },
 
@@ -203,7 +232,7 @@ export default {
 
       this.isGenerating = true;
       try {
-        await this.$api.post(
+        const res =await this.$api.post(
           "/suc/gen-voucher",
           {
             program_id: this.programId,
@@ -216,9 +245,15 @@ export default {
             },
           }
         );
-
+        if(res.data.success) {
         this.$toast.success("Voucher generated successfully!");
         window.location.reload();
+        }else{
+        this.no_submission = res.data.missing_submissions
+
+        }
+        
+        
       } catch (error) {
         console.error("Error generating voucher:", error);
         this.$toast.error("Failed to generate voucher. Please try again.");
