@@ -271,6 +271,17 @@ export default {
           )
           .then((res) => {
             if (res.data.success) {
+              this.billingForm = {
+                hei_id: null,
+                semester_id: null,
+                school_year_id: null,
+                program_id: null,
+                amount: null,
+                program_oc: null,
+                total_amount: null,
+                billing_status: 1,
+                transaction_no: null,
+              };
               window.location.reload();
             } else {
               this.$toast.error(

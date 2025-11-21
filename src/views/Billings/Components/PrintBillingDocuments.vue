@@ -32,14 +32,25 @@
         class="absolute z-10 mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200"
       >
         <ul class="text-sm text-gray-700">
-          <li>
-            <button
-              @click="printForm1()"
-              class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-            >
-              Form 1 (Billing Statement)
-            </button>
-          </li>
+
+        <li v-if="heiId === 154">
+          <button
+            @click="fsuuForm1()"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+          >
+            Form 1 (Billing Statement)
+          </button>
+        </li>
+
+        <li v-else>
+          <button
+            @click="printForm1()"
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+          >
+            Form 1 (Billing Statement)
+          </button>
+        </li>
+
           <li>
             <button
               @click="printForm2()"
@@ -211,6 +222,38 @@ export default {
       this.showDropdown = false;
       const childRouteURL = this.$router.resolve({
         name: "PrintForm1",
+        query: {
+          billingId: this.billingId,
+        },
+      }).href;
+      // Open the new window to the child component's route URL
+      const childWindow = window.open(
+        childRouteURL,
+        "_blank",
+        "width=800,height=600"
+      );
+
+      // Wait for the child window to load before injecting styles
+      childWindow.onload = () => {
+        const style = childWindow.document.createElement("style");
+        style.textContent = `
+      @media print {
+        @page {
+          size: A4 portrait;
+        }
+        body {
+          zoom: 95%; /* Adjust scale as needed */
+        }
+      }
+        `;
+        childWindow.document.head.appendChild(style);
+      };
+    },
+
+        async fsuuForm1() {
+      this.showDropdown = false;
+      const childRouteURL = this.$router.resolve({
+        name: "PrintForm1FSUU",
         query: {
           billingId: this.billingId,
         },

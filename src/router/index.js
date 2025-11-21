@@ -10,6 +10,7 @@ import BatchUpdate from "../views/BatchUpdate/BatchUpdate.vue";
 
 //TES Forms
 import Form1 from "../views/Templates/TES/Form1.vue";
+import Form1FSUU from "../views/Templates/TES/SpecialComponent/Form1FSUU.vue";
 import Form2 from "../views/Templates/TES/Form2.vue";
 import Form3 from "../views/Templates/TES/Form3.vue";
 import Form4 from "../views/Templates/TES/Form4.vue";
@@ -50,6 +51,14 @@ const router = createRouter({
       },
     },
 
+    {
+      path: "/print_form_1_fsuu",
+      name: "PrintForm1FSUU",
+      component: Form1FSUU,
+      meta: {
+        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
+      },
+    },
     {
       path: "/print_form_1",
       name: "PrintForm1",
