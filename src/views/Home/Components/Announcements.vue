@@ -86,6 +86,7 @@
       :isVisible="showModal"
       @update:isVisible="showModal = $event"
       :title="'Announcements'"
+      :size="'large'"
     >
       <div class="p-6">
         <h3 class="text-lg font-medium text-gray-900 mb-4">

@@ -7,6 +7,7 @@
         class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
       >
         <tr>
+          <th scope="col" class="px-4 py-3 whitespace-nowrap">#</th>
           <th scope="col" class="px-4 py-3 whitespace-nowrap">Lastname</th>
           <th scope="col" class="px-4 py-3 whitespace-nowrap">Firstname</th>
           <th scope="col" class="px-4 py-3 whitespace-nowrap">Middle Name</th>
@@ -18,6 +19,9 @@
           :key="grantee.id"
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
         >
+          <td class="px-4 py-3 whitespace-nowrap">
+            {{ calculateIndex + i + 1 }}
+          </td>
           <td class="px-4 py-3 max-w-[120px] truncate">
             {{ grantee.grantees.lastname }}
           </td>
@@ -67,6 +71,10 @@ export default {
 
   computed: {
     ...mapGetters("auth", ["accessToken"]),
+
+    calculateIndex() {
+      return (this.grantees.current_page - 1) * this.grantees.per_page;
+    },
   },
 
   methods: {

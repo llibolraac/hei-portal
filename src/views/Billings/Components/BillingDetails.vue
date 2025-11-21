@@ -22,7 +22,7 @@
 
   <div
     v-else
-    class="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-2xl space-y-6"
+    class="w-100 mx-auto bg-white dark:bg-gray-800 rounded-2xl space-y-6"
   >
     <!-- Title -->
     <h2 class="text-2xl font-bold text-gray-800 dark:text-white">

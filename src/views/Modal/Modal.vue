@@ -4,10 +4,12 @@
     tabindex="-1"
     class="fixed inset-0 z-50 flex items-center justify-center w-full h-full backdrop-blur"
   >
-    <div
-      :class="modalSizeClass"
-      class="relative p-4 w-full max-w-md max-h-full"
-    >
+<div
+  :class="[
+    'relative p-4 w-full max-h-full',
+    modalSizeClass
+  ]"
+>
       <!-- Modal content -->
       <div
         class="relative bg-white rounded-lg shadow-lg dark:bg-gray-700 overflow-hidden flex flex-col max-h-[calc(100vh-8rem)]"
