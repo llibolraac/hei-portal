@@ -75,7 +75,7 @@
               </div>
               <div class="flex-item" style="text-align: center">
                 <p>Republic of the Philippines</p>
-               <p>
+                <p>
                   <strong>{{ this.billing_data.hei.hei_name }}</strong>
                 </p>
                 <p>
@@ -466,7 +466,7 @@ export default {
           this.loading = false;
 
           setTimeout(() => {
-            window.print();
+            // window.print();
           }, 1000);
 
           console.log(this.grantees);

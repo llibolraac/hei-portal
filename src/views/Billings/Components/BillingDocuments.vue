@@ -95,6 +95,7 @@
               >
                 Grantees
               </th>
+
               <th
                 scope="col"
                 class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
@@ -190,6 +191,7 @@
                   {{ billing.grantee_count || 0 }}
                 </span>
               </td>
+
               <td class="px-3 sm:px-6 py-4 whitespace-nowrap">
                 <span
                   :class="getStatusClass(billing.billing_status.id)"
