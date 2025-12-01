@@ -506,7 +506,7 @@
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p style="font-size: 11px; font-weight: bold">
-              {{ this.signatories.tes_focal }}
+              {{ this.signatories.form2_tes_focal }}
             </p>
             <p>TES Focal Person</p>
           </td>
@@ -515,27 +515,27 @@
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p style="font-size: 11px; font-weight: bold">
-              {{ this.signatories.registrar }}
+              {{ this.signatories.form2_registrar }}
             </p>
-            <p>Registrar</p>
+            <p>{{this.signatories.form2_registrar_position}}</p>
           </td>
           <td class="border-left border-bottom" colspan="3">
             <p>Certified by (as to correctness of financial data):</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p style="font-size: 11px; font-weight: bold">
-              {{ this.signatories.finance_head }}
+              {{ this.signatories.form2_accountant }}
             </p>
-            <p>Accountant</p>
+            <p>{{ this.signatories.form2_accountant_position }}</p>
           </td>
           <td class="border-left border-bottom border-right" colspan="3">
             <p>Approved by:</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p style="font-size: 11px; font-weight: bold">
-              {{ this.signatories.president }}
+              {{ this.signatories.form2_president }}
             </p>
-            <p>{{ this.signatories.president_position }}</p>
+            <p>{{ this.signatories.form2_president }}</p>
           </td>
 
           <td class="border-left border-bottom border-right"></td>

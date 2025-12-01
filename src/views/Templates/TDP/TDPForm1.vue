@@ -297,7 +297,7 @@ c) Certified true copy of grades
         <tr>
           <td colspan="2"><p>Printed Name</p></td>
           <td style="text-align: center">
-            <p style="font-weight: bold">{{ this.signatories.finance_head }}</p>
+            <p style="font-weight: bold">{{ this.signatories.form1_finHead }}</p>
           </td>
           <td><p>Printed Name</p></td>
           <td colspan="2" style="text-align: center">
@@ -306,7 +306,7 @@ c) Certified true copy of grades
         </tr>
         <tr>
           <td colspan="2" rowspan="2" height="10"><p>Position</p></td>
-          <td style="text-align: center">Finance Head</td>
+          <td style="text-align: center">{{ this.signatories.finHead_position }}</td>
           <td rowspan="2" height="10"><p>Position</p></td>
           <td colspan="2" style="text-align: center">
             {{ this.signatories.president_position }}

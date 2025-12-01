@@ -342,33 +342,33 @@
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p style="font-size: 11px; font-weight: bold">
-              {{ this.signatories.tes_focal }}
+              {{ this.signatories.form3_tes_focal }}
             </p>
             <p>TES Focal Person</p>
           </td>
-          <td class="border-left border-bottom" colspan="2">
+          <td class="border-left border-bottom" colspan="3">
             <p style="margin-top: 20px">
               Certified by (As to correctness of enrollment data):
             </p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p style="font-size: 11px; font-weight: bold">
-              {{ this.signatories.registrar }}
+              {{ this.signatories.form3_registrar }}
             </p>
-            <p>Registrar</p>
+            <p>{{ this.signatories.form3_registrar_position }}</p>
           </td>
-          <td class="border-left border-bottom" colspan="3">
+          <td class="border-left border-bottom" colspan="4">
             <p style="margin-top: 20px">
               Certified by (as to correctness of financial data):
             </p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p style="font-size: 11px; font-weight: bold">
-              {{ this.signatories.finance_head }}
+              {{ this.signatories.form3_accountant }}
             </p>
-            <p>Accountant</p>
+            <p>{{ this.signatories.form3_accountant_position }}</p>
           </td>
-          <td class="border-left border-bottom" colspan="3">
+          <td class="border-left border-bottom" colspan="5">
             <p style="margin-top: 20px">Approved by:</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
