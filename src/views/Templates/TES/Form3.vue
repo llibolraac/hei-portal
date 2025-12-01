@@ -466,7 +466,7 @@ export default {
           this.loading = false;
 
           setTimeout(() => {
-            // window.print();
+            window.print();
           }, 1000);
 
           console.log(this.grantees);
