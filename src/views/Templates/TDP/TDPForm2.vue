@@ -528,7 +528,7 @@
             </p>
             <p>{{ this.signatories.form2_accountant_position }}</p>
           </td>
-          <td class="border-left border-bottom border-right" colspan="3">
+          <td class="border-left border-bottom border-right" colspan="5">
             <p>Approved by:</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
