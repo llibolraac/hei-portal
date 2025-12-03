@@ -535,7 +535,7 @@
             <p style="font-size: 11px; font-weight: bold">
               {{ this.signatories.form2_president }}
             </p>
-            <p>{{ this.signatories.form2_president }}</p>
+            <p>{{ this.signatories.form2_president_position }}</p>
           </td>
 
           <td class="border-left border-bottom border-right"></td>
