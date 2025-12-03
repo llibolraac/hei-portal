@@ -690,7 +690,7 @@
             <p style="font-size: 11px; font-weight: bold">
               {{ this.signatories.form2_tes_focal }}
             </p>
-            <p>TES Focal Person</p>
+            <p>{{ this.signatories.form2_tes_focal_position }}</p>
           </td>
           <td class="border-left border-bottom" colspan="2">
             <p>Certified by (As to correctness of enrollment data):</p>
