@@ -528,7 +528,7 @@ export default {
           this.loading = false;
 
           setTimeout(() => {
-            // window.print();
+            window.print();
           }, 1000);
           window.onafterprint = function () {
             window.close();
