@@ -306,7 +306,7 @@ c) Certified true copy of grades
         </tr>
         <tr>
           <td colspan="2" rowspan="2" height="10"><p>Position</p></td>
-          <td style="text-align: center">{{ this.signatories.finHead_position }}</td>
+          <td style="text-align: center">{{ this.signatories.form1_finHead_position }}</td>
           <td rowspan="2" height="10"><p>Position</p></td>
           <td colspan="2" style="text-align: center">
             {{ this.signatories.president_position }}
@@ -528,7 +528,7 @@ export default {
           this.loading = false;
 
           setTimeout(() => {
-            window.print();
+            // window.print();
           }, 1000);
           window.onafterprint = function () {
             window.close();

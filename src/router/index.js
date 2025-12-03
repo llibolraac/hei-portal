@@ -51,14 +51,7 @@ const router = createRouter({
       },
     },
 
-    {
-      path: "/print_form_1_fsuu",
-      name: "PrintForm1FSUU",
-      component: Form1FSUU,
-      meta: {
-        requiresAuth: true, // Set the requiresAuth meta field to true for protected routes
-      },
-    },
+
     {
       path: "/print_form_1",
       name: "PrintForm1",
