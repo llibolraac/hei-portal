@@ -380,7 +380,7 @@ export default {
   },
   methods: {
     async fetchPrograms() {
-      const res = await this.$api.get(`/get-programs/${this.heiId}`, {
+      const res = await this.$api.get(`/get-hei-programs/${this.heiId}`, {
         params: {
           sy: this.searchForm.school_year_id,
           sem: this.searchForm.semester_id,
