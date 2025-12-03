@@ -33,16 +33,7 @@
       >
         <ul class="text-sm text-gray-700">
 
-        <li v-if="heiId === 154">
-          <button
-            @click="fsuuForm1()"
-            class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-          >
-            Form 1 (Billing Statement)
-          </button>
-        </li>
-
-        <li v-else>
+        <li>
           <button
             @click="printForm1()"
             class="block w-full text-left px-4 py-2 hover:bg-gray-100"
