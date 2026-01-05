@@ -344,86 +344,131 @@
             <p><strong>TOTAL AMOUNT</strong></p>
           </td>
         </tr>
-        <tr v-for="(grantee, i) in grantees" :key="grantee.id">
-          <td>
-            <p>{{ String(i + 1).padStart(5, "0") }}</p>
-          </td>
-          <td>
-            <p>{{ grantee.grantees.student_number }}</p>
-          </td>
-          <td>
-            <p>{{ grantee.grantees.award_no }}</p>
-          </td>
-          <td>
-            <p
+        <template v-for="heiData in grantees" :key="heiData.hei.id">
+          <!-- HEI NAME ROW -->
+          <tr>
+            <td
+              colspan="17"
+              style="font-weight: bold; background-color: #f3f4f6"
+            >
+              {{ heiData.hei.hei_name }}
+            </td>
+          </tr>
+
+          <!-- GRANTEES ROWS -->
+          <tr v-for="(grantee, i) in heiData.grantees" :key="grantee.id">
+            <td>
+              <p>{{ String(i + 1).padStart(5, "0") }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.student_number }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.award_no }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.lastname }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.firstname }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.middlename }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.sex }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.birthdate }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.course_program }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.year_level }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.academic_units }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.zip_code }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.email_address }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.contact_number }}</p>
+            </td>
+            <td>
+              <p>{{ formatDecimalValue(billing_data.program.amount) }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.grantees.is_pwd ? "Yes" : "No" }}</p>
+            </td>
+            <td>
+              <p>{{ formatDecimalValue(billing_data.program.amount) }}</p>
+            </td>
+          </tr>
+
+          <tr>
+            <td
+              colspan="17"
               style="
-                max-width: 100px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                font-weight: bold;
+                background-color: #f3f4f6;
+                text-align: right;
               "
             >
-              {{ grantee.grantees.lastname }}
-            </p>
-          </td>
-          <td>
-            <p
+              <!-- const amount = this.billing_data.program.amount * heiData.grantees.length;
+      const program_oc = amount * this.billing_data.program.asc; -->
+              Total Tertiary Education Subsidy:
+              {{
+                formatDecimalValue(
+                  this.billing_data.program.amount * heiData.grantees.length
+                )
+              }}
+            </td>
+          </tr>
+
+          <tr>
+            <td
+              colspan="17"
               style="
-                max-width: 100px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                font-weight: bold;
+                background-color: #f3f4f6;
+                text-align: right;
               "
             >
-              {{ grantee.grantees.firstname }}
-            </p>
-          </td>
-          <td>
-            <p
+              Add 1 percent (1%)
+              <span v-if="this.billing_data.schoolyear.id >= 3"
+                >Management Fee</span
+              >
+              <span v-else>Administrative Support </span> for Partner
+              Instsitutions:
+              {{
+                formatDecimalValue(
+                  this.billing_data.program.amount *
+                    heiData.grantees.length *
+                    this.billing_data.program.asc
+                )
+              }}
+            </td>
+          </tr>
+
+          <tr>
+            <td
+              colspan="17"
               style="
-                max-width: 100px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                font-weight: bold;
+                background-color: #f3f4f6;
+                text-align: right;
               "
             >
-              {{ grantee.grantees.middlename }}
-            </p>
-          </td>
-          <td>
-            <p>{{ grantee.grantees.sex }}</p>
-          </td>
-          <td><p></p></td>
-          <td>
-            <p>{{ grantee.grantees.course_program }}</p>
-          </td>
-          <td>
-            <p>{{ grantee.grantees.year_level }}</p>
-          </td>
-          <td><p></p></td>
-          <td>
-            <p>{{ grantee.grantees.zip_code }}</p>
-          </td>
-          <td>
-            <p>{{ grantee.grantees.email_address }}</p>
-          </td>
-          <td>
-            <p>{{ grantee.grantees.contact_number }}</p>
-          </td>
-          <td>
-            <p v-if="billing_data.semester.id === 1">
-              {{ formatDecimalValue(billing_data.program.amount) }}
-            </p>
-          </td>
-          <td>
-            <p v-if="billing_data.semester.id === 2">
-              {{ formatDecimalValue(billing_data.program.amount) }}
-            </p>
-          </td>
-          <td>
-            <p>{{ formatDecimalValue(billing_data.program.amount) }}</p>
-          </td>
-        </tr>
+              Total Amount:
+              {{ subTotalAmount(heiData) }}
+            </td>
+          </tr>
+        </template>
 
         <tr>
           <td colspan="16"><p>Page Total</p></td>
@@ -603,6 +648,12 @@ export default {
   },
 
   methods: {
+    subTotalAmount(heiData) {
+      const amount = this.billing_data.program.amount * heiData.grantees.length;
+      const program_oc = amount * this.billing_data.program.asc;
+
+      return this.formatDecimalValue(amount + program_oc);
+    },
     fetchBillingId() {
       this.billingId = this.$route.query.billingId;
     },
@@ -616,7 +667,7 @@ export default {
 
     fetchBillingDetails(page = 1) {
       this.$api
-        .get(`/fetch-billing-grantees/${this.billingId}?page=${page}`, {
+        .get(`/fetch-suc-billing-grantees/${this.billingId}?page=${page}`, {
           params: {
             hei_id: this.heiId,
           },
@@ -629,7 +680,9 @@ export default {
           this.billing_data = res.data.billing;
           // this.grantees_count = res.data.grantees_count;
           this.signatories = res.data.signatories;
-          this.grantees = res.data.billing_grantees;
+          this.grantees = res.data.grouped_grantees;
+
+          console.log(res);
           this.loading = false;
 
           setTimeout(() => {

@@ -266,67 +266,83 @@
           <td width="6%"><p>Status</p></td>
           <td width="5%" colspan="2"><p>Remarks</p></td>
         </tr>
-        <tr v-for="(grantee, i) in grantees" :key="grantee.id">
-          <td>
-            <p>{{ String(i + 1).padStart(5, "0") }}</p>
-          </td>
-          <td>
-            <p>{{ grantee.student_number }}</p>
-          </td>
-          <td>
-            <p>{{ grantee.award_no }}</p>
-          </td>
-          <td>
-            <p
-              style="
-                max-width: 100px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-              "
+        <template
+          v-for="heiData in grantees"
+          :key="heiData.hei?.id || 'unknown'"
+        >
+          <!-- HEI NAME ROW -->
+          <tr>
+            <td
+              colspan="17"
+              style="font-weight: bold; background-color: #f3f4f6"
             >
-              {{ grantee.lastname }}
-            </p>
-          </td>
-          <td>
-            <p
-              style="
-                max-width: 100px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-              "
-            >
-              {{ grantee.firstname }}
-            </p>
-          </td>
-          <td>
-            <p
-              style="
-                max-width: 100px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-              "
-            >
-              {{ grantee.middlename }}
-            </p>
-          </td>
-          <td>
-            <p>{{ grantee.sex }}</p>
-          </td>
-          <td><p></p></td>
-          <td>
-            <p>{{ grantee.course_program }}</p>
-          </td>
-          <td>
-            <p>{{ grantee.year_level }}</p>
-          </td>
-          <td>
-            <p>{{ grantee.remarks }}</p>
-          </td>
-          <td colspan="2"><p>&nbsp;</p></td>
-        </tr>
+              {{ heiData.hei?.hei_name || "Unknown HEI" }}
+            </td>
+          </tr>
+
+          <!-- GRANTEES ROWS (match Form 3 style) -->
+          <tr v-for="(grantee, i) in heiData.grantees" :key="grantee.id">
+            <td>
+              <p>{{ String(i + 1).padStart(5, "0") }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.student_number }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.award_no }}</p>
+            </td>
+            <td>
+              <p
+                style="
+                  max-width: 100px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                "
+              >
+                {{ grantee.lastname }}
+              </p>
+            </td>
+            <td>
+              <p
+                style="
+                  max-width: 100px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                "
+              >
+                {{ grantee.firstname }}
+              </p>
+            </td>
+            <td>
+              <p
+                style="
+                  max-width: 100px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                "
+              >
+                {{ grantee.middlename }}
+              </p>
+            </td>
+            <td>
+              <p>{{ grantee.sex }}</p>
+            </td>
+            <td><p></p></td>
+            <td>
+              <p>{{ grantee.course_program }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.year_level }}</p>
+            </td>
+            <td>
+              <p>{{ grantee.remarks }}</p>
+            </td>
+            <td colspan="2"><p>&nbsp;</p></td>
+          </tr>
+        </template>
 
         <tr>
           <td colspan="12"><p>Page Total</p></td>
@@ -366,7 +382,7 @@
             <p style="font-size: 11px; font-weight: bold">
               {{ this.signatories.form3_accountant }}
             </p>
-            <p>{{ this.signatories.form3_accountant_position}}</p>
+            <p>{{ this.signatories.form3_accountant_position }}</p>
           </td>
           <td class="border-left border-bottom" colspan="5">
             <p style="margin-top: 20px">Approved by:</p>
@@ -444,7 +460,7 @@ export default {
 
     fetchBillingDetails(page = 1) {
       this.$api
-        .get(`/fetch-delisted-grantees/${this.billingId}?page=${page}`, {
+        .get(`/fetch-suc-delisted-grantees/${this.billingId}?page=${page}`, {
           params: {
             hei_id: this.heiId,
           },
@@ -457,7 +473,7 @@ export default {
           this.billing_data = res.data.billing;
           // this.grantees_count = res.data.grantees_count;
           this.signatories = res.data.signatories;
-          this.grantees = res.data.delisted_grantees;
+          this.grantees = res.data.grouped_grantees;
           this.loading = false;
 
           setTimeout(() => {

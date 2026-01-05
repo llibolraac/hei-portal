@@ -511,8 +511,10 @@
                 text-align: right;
               "
             >
-              Add 1 percent (1%) 
-              <span v-if="this.billing_data.schoolyear.id >= 3">Management Fee</span>
+              Add 1 percent (1%)
+              <span v-if="this.billing_data.schoolyear.id >= 3"
+                >Management Fee</span
+              >
               <span v-else>Administrative Support </span> for Partner
               Instsitutions:
               {{
@@ -634,8 +636,10 @@
         <tr>
           <td colspan="16">
             <p>
-              Add 1 percent (1%) 
-              <span v-if="this.billing_data.schoolyear.id >= 3">Management Fee</span>
+              Add 1 percent (1%)
+              <span v-if="this.billing_data.schoolyear.id >= 3"
+                >Management Fee</span
+              >
               <span v-else>Administrative Support </span> for Partner
               Instsitutions
             </p>
@@ -699,7 +703,7 @@
             <p style="font-size: 11px; font-weight: bold">
               {{ this.signatories.form2_registrar }}
             </p>
-            <p>{{this.signatories.form2_registrar_position}}</p>
+            <p>{{ this.signatories.form2_registrar_position }}</p>
           </td>
           <td class="border-left border-bottom" colspan="3">
             <p>Certified by (as to correctness of financial data):</p>
@@ -823,7 +827,7 @@ export default {
           this.loading = false;
 
           setTimeout(() => {
-            window.print();
+            // window.print();
           }, 1000);
           window.onafterprint = function () {
             window.close();
